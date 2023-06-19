@@ -1,0 +1,89 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  --bg_dark: linear-gradient(-45deg, #272727 0.81%, #121212 98.9%);
+  --btn_bg: linear-gradient(180deg, #00a299 0%, #0b4e4a 100%);
+  --txt: #fff;
+  --light_green: #00a299;
+  --dark_green: #0b4e4a;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  font-size: 16px;
+  background-image: var(--bg_dark);
+  height: 100vh;
+  color: var(--txt);
+}
+
+.App {
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  width: 320px;
+  height: 60px;
+  position: relative;
+  background: var(--btn_bg);
+  border: 0;
+  border-radius: 20px;
+  color: var(--txt);
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  text-transform: uppercase;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.btn::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--y, 0) * 1px - 50px);
+  left: calc(var(--x, 0) * 1px - 125px);
+  width: 250px;
+  height: 100px;
+  background: radial-gradient(white, #3984ff00 80%);
+  transition: opacity 0.4s;
+  opacity: 0;
+}
+
+.btn:hover::after {
+  opacity: 0.2;
+}
+
+.btn_hallow {
+  width: 320px;
+  height: 60px;
+  position: relative;
+  background: transparent;
+  border: 2px solid var(--light_green);
+  border-radius: 20px;
+  color: var(--txt);
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  text-transform: uppercase;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.btn_hallow::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--y, 0) * 1px - 50px);
+  left: calc(var(--x, 0) * 1px - 125px);
+  width: 250px;
+  height: 100px;
+  background: radial-gradient(white, #3984ff00 80%);
+  transition: opacity 0.4s;
+  opacity: 0;
+}
+
+.btn_hallow:hover::after {
+  opacity: 0.2;
+}

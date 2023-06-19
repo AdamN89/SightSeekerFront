@@ -1,0 +1,35 @@
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-clicked {
+  display: block;
+}
+
+.dropbtn {
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown-content-clicked {
+  display: block;
+  position: absolute;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.dropdown-content img {
+  display: block;
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
+}
