@@ -1,4 +1,6 @@
 import "./loginPage.css";
+import Button from "../../components/Button";
+import { Link } from "react-router-dom";
 
 export default function LoginPage() {
   return (
@@ -7,7 +9,7 @@ export default function LoginPage() {
         <img
           className="login-page_img"
           src=""
-          alt="A man about to go on a journey, wearing a backpack, dragging a wheeled siutcase."
+          alt="A man about to go on a journey, wearing a backpack, dragging a wheeled suitcase."
         />
       </div>
       <hgroup className="login-page__hgroup">
@@ -29,7 +31,12 @@ export default function LoginPage() {
           id="password"
           placeholder="password"
         />
+        <Button txt="login" />
       </form>
+      <div className="login-page__signup-wrapper">
+        <p className="login-page__signup-text">Don't have an account?</p>
+        <Link className="login-page__signup-link">Sign Up</Link>
+      </div>
     </div>
   );
 }

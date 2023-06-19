@@ -35,6 +35,17 @@
 
 .login-page__subtitle {
   font-weight: 300;
+  margin: 0 auto;
+}
+
+.login-page__form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.login-page__form > :last-child {
+  margin-top: 30px;
 }
 
 .login-page__input {
@@ -47,9 +58,27 @@
   color: var(--txt);
   font-family: "Lato", sans-serif;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 14px;
+  letter-spacing: 1.25px;
   text-transform: lowercase;
   cursor: pointer;
   overflow: hidden;
   text-align: center;
+}
+
+.login-page__signup-wrapper {
+  margin: 10px auto;
+  width: 320px;
+  display: flex;
+  justify-content: space-between;
+}
+.login-page__signup-text {
+  text-align: left;
+  font-weight: 300;
+}
+.login-page__signup-link {
+  text-align: right;
+  color: #00a299;
+  text-decoration: none;
+  font-weight: 300;
 }
