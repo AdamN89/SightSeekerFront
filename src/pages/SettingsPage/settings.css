@@ -1,0 +1,38 @@
+.center{
+    width: 499px;
+    margin: 0 auto;
+}
+
+.flex {
+    width: 80%;
+    display: flex;
+    gap: 7px;
+}
+
+.flex-collumn {
+    display: flex;
+    flex-direction: column;
+    gap: 7px
+}
+
+.avatar{
+    align-self: center;
+}
+
+h1{
+    margin-bottom: 10px
+}
+
+h2{
+    margin-top: 30px;
+    margin-bottom: 12px;
+}
+
+.warning-btn{
+    background: darkred !important;
+}
+
+.small-dark{
+    font-size: smaller;
+    color: grey;
+}

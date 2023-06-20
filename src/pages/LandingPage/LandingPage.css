@@ -1,0 +1,42 @@
+.landing_page {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 40px;
+  padding: 50px 0;
+  height: 100vh;
+}
+
+.first_element {
+  width: 80%;
+}
+
+.second_element {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+img {
+  width: 100%;
+}
+
+svg {
+  width: 100%;
+}
+
+p {
+  text-align: center;
+  font-weight: 300;
+  font-size: 18px;
+}
+
+.btn_container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}

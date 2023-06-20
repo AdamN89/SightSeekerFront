@@ -6,9 +6,11 @@ import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import SettingsPage from "./pages/SettingsPage/SettingsPage";
 import FeaturesPage from "./pages/FeaturesPage/FeaturesPage";
 import AboutPage from "./pages/AboutPage/AboutPage";
+import InitialSetupPage from "./pages/InitialSetupPage/InitialSetupPage";
 import HomePage from "./pages/HomePage/HomePage";
 import InitialSetupPage from "./pages/InitialSetupPage/InitialSetupPage"
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import AuthContextProvider from "./context/AuthContext";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +50,8 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthContextProvider>
+      <RouterProvider router={router} />
+    </AuthContextProvider>
   </React.StrictMode>
 );
