@@ -1,5 +1,4 @@
 .center{
-  width: 499px;
   margin: 0 auto;
 }
 
@@ -8,44 +7,46 @@
 
 }
 
-.dropdown {
-  position: relative;
-  display: inline-block;
+.modal{
+  background-color: rgb(239, 239, 239);
+  z-index: 3;
+  width: 80%;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
 }
 
-.dropdown-clicked {
+.show{
   display: block;
-}
-
-.dropbtn {
-  padding: 16px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.dropdown-content {
-  display: none;
   position: absolute;
-  z-index: 1;
+  background-color: grey;
+  height: 100vh;
+  width: 100%;
+  z-index: 2;
+  opacity: 0.5;
 }
 
-.dropdown-content img {
-  display: block;
+.hide{
+  display: none;
 }
-
-.dropdown-content-clicked {
-  display: block;
-  position: relative;
-}
-
-.dropdown-content-clicked img{
+.avatars img{
   width: 128px;
-
+  border-radius: 20px;
 }
 
 .avatars{
   display: flex;
-  gap: 5px;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.model_container{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .upload{
@@ -53,13 +54,13 @@
   font-size: 14px;
 }
 
-.flex {
+.flex_inital_setup {
   display: flex;
   gap: 7px;
   justify-content: space-between;
 }
 
-.flex-collumn {
+.flex_collumn_inital_setup {
   display: flex;
   flex-direction: column;
   gap: 7px
@@ -119,7 +120,6 @@ input:checked + .slider:before {
 
 /* Customize the label (the container) */
 .container {
-
   display: block;
   position: relative;
   padding-left: 35px;
@@ -140,14 +140,14 @@ input:checked + .slider:before {
   width: 0;
 }
 
-/* Create a custom radio button */
 .checkmark {
   position: absolute;
   top: 0;
   left: 0;
   height: 25px;
   width: 25px;
-  background-color: #eee;
+  background-color: #ffffff;
+  border: black 1px solid;
   border-radius: 50%;
 }
 
@@ -175,8 +175,8 @@ input:checked + .slider:before {
 
 /* Style the indicator (dot/circle) */
 .container .checkmark:after {
-  top: 9px;
-  left: 9px;
+  top: 8px;
+  left: 8px;
   width: 8px;
   height: 8px;
   border-radius: 50%;
