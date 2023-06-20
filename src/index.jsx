@@ -7,6 +7,7 @@ import SettingsPage from "./pages/SettingsPage/SettingsPage";
 import FeaturesPage from "./pages/FeaturesPage/FeaturesPage";
 import AboutPage from "./pages/AboutPage/AboutPage";
 import HomePage from "./pages/HomePage/HomePage";
+import InitialSetupPage from "./pages/InitialSetupPage/InitialSetupPage"
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
