@@ -1,13 +1,7 @@
-export default function LogoHorizontal() {
+export default function LogoHorizontal(width) {
   return (
     <>
-      <svg
-        width="257"
-        height="144"
-        viewBox="0 0 257 144"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+      <svg viewBox="0 0 257 144" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           d="M12.1238 126.014C8.69077 126.014 5.85242 125.214 3.60877 123.614C1.39215 121.986 0.189224 119.613 0 116.494H9.56931C9.70447 118.148 10.4343 118.976 11.7589 118.976C12.2455 118.976 12.651 118.867 12.9753 118.65C13.3267 118.406 13.5025 118.04 13.5025 117.552C13.5025 116.873 13.1375 116.331 12.4077 115.924C11.6778 115.49 10.5425 115.002 9.00164 114.459C7.16347 113.808 5.63616 113.171 4.41972 112.547C3.23032 111.923 2.2031 111.014 1.33808 109.821C0.473059 108.627 0.0540639 107.095 0.0810959 105.223C0.0810959 103.352 0.554155 101.765 1.50027 100.463C2.47342 99.1338 3.78447 98.1302 5.43342 97.4521C7.1094 96.774 8.98812 96.4349 11.0696 96.4349C14.5837 96.4349 17.368 97.2486 19.4225 98.8761C21.5039 100.504 22.5987 102.796 22.7068 105.752H13.0159C12.9889 104.939 12.7861 104.355 12.4077 104.003C12.0292 103.65 11.5697 103.474 11.029 103.474C10.6506 103.474 10.3397 103.609 10.0964 103.881C9.85314 104.125 9.7315 104.477 9.7315 104.939C9.7315 105.59 10.0829 106.132 10.7857 106.566C11.5156 106.973 12.6645 107.475 14.2323 108.071C16.0435 108.75 17.5302 109.401 18.6926 110.024C19.882 110.648 20.9092 111.516 21.7742 112.628C22.6393 113.741 23.0718 115.137 23.0718 116.819C23.0718 118.582 22.6393 120.169 21.7742 121.58C20.9092 122.963 19.6522 124.048 18.0033 124.835C16.3543 125.621 14.3945 126.014 12.1238 126.014Z"
           fill="white"
@@ -92,8 +86,8 @@ export default function LogoHorizontal() {
             y2="41.5"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#662D91" />
-            <stop offset="1" stop-color="#92278F" />
+            <stop stopColor="#662D91" />
+            <stop offset="1" stopColor="#92278F" />
           </linearGradient>
           <linearGradient
             id="paint1_linear_88_289"
@@ -103,8 +97,8 @@ export default function LogoHorizontal() {
             y2="41.5"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#92278F" />
-            <stop offset="1" stop-color="#662D91" />
+            <stop stopColor="#92278F" />
+            <stop offset="1" stopColor="#662D91" />
           </linearGradient>
           <linearGradient
             id="paint2_linear_88_289"
@@ -114,8 +108,8 @@ export default function LogoHorizontal() {
             y2="41.7666"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#00A79D" />
-            <stop offset="1" stop-color="#008B83" />
+            <stop stopColor="#00A79D" />
+            <stop offset="1" stopColor="#008B83" />
           </linearGradient>
           <linearGradient
             id="paint3_linear_88_289"
@@ -125,10 +119,10 @@ export default function LogoHorizontal() {
             y2="31.8791"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#008B83" />
-            <stop offset="0.24" stop-color="#00968D" />
-            <stop offset="0.62" stop-color="#00A299" />
-            <stop offset="1" stop-color="#00A79D" />
+            <stop stopColor="#008B83" />
+            <stop offset="0.24" stopColor="#00968D" />
+            <stop offset="0.62" stopColor="#00A299" />
+            <stop offset="1" stopColor="#00A79D" />
           </linearGradient>
           <image id="image0_88_289" width="1130" height="101" />
         </defs>
