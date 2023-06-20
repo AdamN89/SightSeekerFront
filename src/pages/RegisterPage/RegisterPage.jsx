@@ -116,8 +116,8 @@ export default function RegisterPage() {
                   By registering, you are agreeing to our Terms of Use and Privacy
                   Policy
                 </p>
-                  <Link to="/initialsetup" >
-                    <Button txt={"Register"} func={() => handleSubmitButtonClick(submitForm)} />
+                  <Link to="/features" >
+                    <Button txt={"REGISTER"} func={() => handleSubmitButtonClick(submitForm)} />
                   </Link>
                   <div className="registerpage__footer-bottom">
                     <p>Already have an account?</p>
