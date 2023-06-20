@@ -2,14 +2,17 @@ import "./RegisterPage.css";
 import LogoHorizontal from "../../components/LogoHorizontal";
 import LogoVertical from "../../components/LogoVertical";
 import Button from "../../components/Button";
+import { Link, NavLink, useNavigate } from "react-router-dom"
 
 export default function RegisterPage() {
+
+  const navigate = useNavigate()
+
   return (
     <div className="registerpage__wrapper">
       <div className="registerpage__header">
         <div className="registerpage__header-img_container">
           <LogoHorizontal />
-          {/* <LogoVertical /> */}
         </div>
       </div>
       <div className="registerpage__body">
@@ -30,10 +33,12 @@ export default function RegisterPage() {
         </div>
       </div>
       <div className="registerpage__footer">
-        <Button text={"Register"} />
+        <Link to="/" >
+        <Button txt={"Register"} />
+        </Link>
         <div className="registerpage__footer-bottom">
-          Already have an account?
-          <button>Login</button>
+          <p>Already have an account?</p>
+          <NavLink>Login</NavLink>
         </div>
       </div>
     </div>

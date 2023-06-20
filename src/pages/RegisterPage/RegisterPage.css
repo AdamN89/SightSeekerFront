@@ -3,16 +3,17 @@
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  color: white;
+  color: rgb(109, 103, 103);
   justify-content: space-around;
-  margin-top: 20px;
 }
 
 .registerpage__header {
-  height: 20%;
+  height: 10%;
 }
 
 .registerpage__header-img_container {
+  display: flex;
+  justify-content: center;
 }
 
 .registerpage__body {
@@ -30,6 +31,8 @@
 
 .registerpage__body-top h1 {
   font-size: 3rem;
+  color:#662D91;
+
 }
 
 .registerpage__body-middle {
@@ -38,14 +41,16 @@
   align-items: center;
   justify-content: space-evenly;
   height: 100%;
+  gap: 15px;
 }
 
-.registerpage__body-middle p {
+p {
   text-align: center;
+  width: 70%;
 }
 
 .registerpage__body-middle input {
-  height: 30px;
+  height: 40px;
   width: 80%;
   border-radius: 20px;
   text-align: center;
@@ -63,4 +68,13 @@
 }
 
 .registerpage__footer-bottom {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.active {
+  text-decoration: none;
+  color: rgba(0, 139, 131, 1);
+
 }
