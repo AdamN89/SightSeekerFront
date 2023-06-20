@@ -8,7 +8,6 @@ import FeaturesPage from "./pages/FeaturesPage/FeaturesPage";
 import AboutPage from "./pages/AboutPage/AboutPage";
 import InitialSetupPage from "./pages/InitialSetupPage/InitialSetupPage";
 import HomePage from "./pages/HomePage/HomePage";
-import InitialSetupPage from "./pages/InitialSetupPage/InitialSetupPage"
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthContextProvider from "./context/AuthContext";
 

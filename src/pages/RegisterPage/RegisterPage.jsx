@@ -6,49 +6,53 @@ import * as yup from "yup"
 import { Formik, Form, Field } from "formik"
 
 const registerSchema = yup.object().shape({
-  name: yup.string().required("required"),
-  userName: yup.string().required("required"),
-  email: yup.string().email("Invalid email").required("required"),
-  password: yup.string().required("required"),
-  confirmPassword: yup.string().required("required"),
-})
+  name: yup.string().required('Full name is required'),
+  userName: yup.string().required('Username is required'),
+  email: yup.string().email('Invalid email').required('Email is required'),
+  password: yup.string().required('Password is required'),
+  confirmPassword: yup.string()
+    .oneOf([yup.ref('password'), null], 'Passwords must match')
+    .required('Confirm Password is required'),
+});
 
 const initialRegisterValues = {
   name: "",
   userName: "",
   email: "",
-  password: ""
+  password: "",
+  confirmPassword: ""
 }
 
 export default function RegisterPage() {
 
-  const register = async (values, onSubmitProps) => {
+  const register = async (values) => {
+    try {
+      const response = await fetch('http://localhost:8080/user/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
 
-    if (values.password !== values.confirmPassword) {
-      return null
+      if (response.ok) {
+        const registeredUser = await response.json();
+      } else {
+        console.log('Error occurred while registering');
+      }
+    } catch (error) {
+      console.error('Error occurred while registering', error);
     }
+  };
 
-    const signupUser = await fetch('http://localhost:8080/user/signup',{
-      method: "POST",
-      body: {
-        name: values.name,
-        userName: values.userName,
-        email: values.email,
-        password: values.password
-      },
-    })
-    const registeredUser = await signupUser.json()
-    onSubmitProps.resetForm()
+  const handleFormSubmit = async (values, { setSubmitting }) => {
+    await register(values);
+    setSubmitting(false);
+  };
 
-    if (registeredUser) {
-      console.log("registered user", registeredUser)
-    }
-  }
-
-  const handleFormSubmit = async (values, onSubmitProps) => {
-    await register(values, onSubmitProps)
-    console.log("this is handleFormSubmit + values + onSubmitProps", values, onSubmitProps)
-  }
+  const handleSubmitButtonClick = async (submitForm) => {
+    await submitForm();
+  };
 
   return (
     <div className="registerpage__wrapper">
@@ -69,75 +73,60 @@ export default function RegisterPage() {
               validationSchema={registerSchema}
               onSubmit={handleFormSubmit}
             >
-              {({
-                values,
-                errors,
-                touched,
-                handleChange,
-                handleBlur,
-                handleSubmit,
-                isSubmitting,
-                /* and other goodies */
-              }) => (
-                <form onSubmit={handleSubmit}>
-                  <input
-                    type="text"
-                    placeholder="full name"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.name}
-                    name="name"
-                  />
-            <input
-              type="text"
-              placeholder="username"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.userName}
-              name="userName"
-            />
-            <input
-              type="text"
-              placeholder="email"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.email}
-              name="email"
-            />
-            <input
-              type="text"
-              placeholder="password"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.password}
-              name="password"
-            />
-            <input
-              type="text"
-              placeholder="confirm password"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.confirmPassword}
-              name="confirmPassword"
-            />
-                {errors.password && touched.password && errors.password}
-                </form>
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              isSubmitting,
+              submitForm
+              /* and other goodies */
+            }) => (
+              <Form onSubmit={handleSubmit}>
+                <Field
+                  type="text"
+                  placeholder="full name"
+                  name="name"
+                />
+                <Field
+                  type="text"
+                  placeholder="username"
+                  name="userName"
+                />
+                <Field
+                  type="text"
+                  placeholder="email"
+                  name="email"
+                />
+                <Field
+                  type="text"
+                  placeholder="password"
+                  name="password"
+                />
+                <Field
+                  type="text"
+                  placeholder="confirm password"
+                  name="confirmPassword"
+                />
+
+                <div className="registerpage__footer">
+                <p>
+                  By registering, you are agreeing to our Terms of Use and Privacy
+                  Policy
+                </p>
+                  <Link to="/initialsetup" >
+                    <Button txt={"Register"} func={() => handleSubmitButtonClick(submitForm)} />
+                  </Link>
+                  <div className="registerpage__footer-bottom">
+                    <p>Already have an account?</p>
+                    <NavLink to="/login">Login</NavLink>
+                  </div>
+                </div>
+                </Form>
             )}
-            
             </Formik>
-            <p>
-              By registering, you are agreeing to our Terms of Use and Privacy
-              Policy
-            </p>
-          </div>
-        </div>
-        <div className="registerpage__footer">
-          <Link to="/register" >
-          <Button txt={"Register"} func={handleFormSubmit} />
-          </Link>
-          <div className="registerpage__footer-bottom">
-            <p>Already have an account?</p>
-            <NavLink>Login</NavLink>
           </div>
         </div>
       </div>

@@ -26,7 +26,7 @@
 .registerpage__body {
   display: flex;
   flex-direction: column;
-  height: 50%;
+  height: 70%;
   gap: 45px;
 }
 
@@ -51,11 +51,6 @@
   gap: 15px;
 }
 
-p {
-  text-align: center;
-  width: 70%;
-}
-
 .registerpage__body-middle input {
   height: 40px;
   width: 80%;
@@ -76,17 +71,28 @@ p {
   gap: 5px;
 }
 
+.registerpage__footer > p {
+  text-align: center;
+  width: 70%;
+  font-size: 12px;
+}
+
 .registerpage__footer-bottom {
   display: flex;
   width: 100%;
   justify-content: space-between;
 }
 
-.registerpage__footer-bottom p {
-  width: 40%;
+.registerpage__footer-bottom > p {
+  width: 70%;
 }
 
 .active {
+  text-decoration: none;
+  color: rgba(0, 139, 131, 1);
+}
+
+.registerpage__footer-bottom > a {
   text-decoration: none;
   color: rgba(0, 139, 131, 1);
 }
@@ -99,4 +105,8 @@ form {
   gap: 15px;
   align-items: center;
   width: -webkit-fill-available;
+}
+
+.registerpage__footer > a {
+  width: 100%;
 }
