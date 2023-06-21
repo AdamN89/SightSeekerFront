@@ -10,6 +10,7 @@ import InitialSetupPage from "./pages/InitialSetupPage/InitialSetupPage";
 import HomePage from "./pages/HomePage/HomePage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthContextProvider from "./context/AuthContext";
+import Loader from "./components/Loader/Loader";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
   {
     path: "/home",
     element: <HomePage />,
+  },
+  {
+    path: "/spiner",
+    element: <Loader />,
   },
 ]);
 
