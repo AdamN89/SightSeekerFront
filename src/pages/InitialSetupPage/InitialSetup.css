@@ -1,81 +1,125 @@
-.center {
+/* .center {
   width: 499px;
   margin: 0 auto;
-}
+} */
 
-.initial-settings-page_img {
-  width: 304px;
-}
-
-.modal{
-  background-color: rgb(239, 239, 239);
-  z-index: 3;
-  width: 80%;
-  top:50%;
-  left:50%;
-  transform: translate(-50%, -50%);
-  padding: 20px;
-}
-
-.showClickAway{
-  display: block;
-  position: absolute;
-  background-color: grey;
-  height: 100vh;
-  width: 100%;
-  z-index: 2;
-  opacity: 0.5;
-}
-
-.hide{
-  display: none;
-}
-
-.avatars img{
-  width: 128px;
-  border-radius: 20px;
-}
-
-.avatars{
+.avatars {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
 }
 
-.model_container{
+.avatars img {
+  width: 128px;
+  border-radius: 20px;
+}
+
+.modal_container {
   display: flex;
   align-items: center;
   flex-direction: column;
   gap: 20px;
 }
 
-.upload {
-  width: 128px;
+.inital_setup_form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.inital_setup_form .modal {
+  /* background: var(--bg_dark_liniar); */
+  background: transparent;
+  z-index: 15;
+  width: 90%;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 0;
+  border-radius: 30px;
+  padding: 20px;
+}
+
+.inital_setup_form p {
+  color: var(--txt);
+}
+
+.inital_setup_form h2 {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  text-align: left;
+  margin: 0 0 20px 0;
+}
+
+.inital_setup_form h3 {
+  color: var(--txt);
+  font-size: 18px;
+  width: fit-content;
+  font-weight: 300;
+}
+
+.inital_setup_form svg {
+  width: 32px;
+  fill: var(--dark_green);
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.inital_setup_form svg:hover {
+  fill: var(--light_green);
+}
+
+.inital_setup_upload {
+  width: 180px;
   font-size: 14px;
 }
 
-.inital_setup_flex {
+.initial_setup_privacy {
   display: flex;
-  gap: 7px;
   justify-content: space-between;
 }
 
-.inital_setup_flex_collumn {
+.initial_setup_radio {
+  width: fit-content;
+  display: flex;
+  justify-content: end;
+  gap: 20px;
+}
+
+.initial_setup_toggle {
+  display: flex;
+  justify-content: space-between;
+  margin: 25px 0;
+}
+
+/* .inital_setup_flex {
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+} */
+
+/* .inital_setup_flex_collumn {
   display: flex;
   flex-direction: column;
   gap: 7px;
-}
+  width: 100%;
+} */
 
-.switch {
+/* .switch {
   position: relative;
   display: inline-block;
   width: 50px;
   height: 20px;
-}
+} */
 
 /* Hide default HTML checkbox */
-.switch input {
+/* .switch input {
   opacity: 0;
   width: 0;
   height: 0;
@@ -114,10 +158,10 @@ input:checked + .slider:before {
   -webkit-transform: translateX(22px);
   -ms-transform: translateX(22px);
   transform: translateX(22px);
-}
+} */
 
 /* Customize the label (the container) */
-.settings_container {
+/* .settings_container {
   display: block;
   position: relative;
   padding-left: 35px;
@@ -147,36 +191,36 @@ input:checked + .slider:before {
   background-color: #ffffff;
   border: black 1px solid;
   border-radius: 50%;
-}
+} */
 
 /* On mouse-over, add a grey background color */
-.settings_container:hover input ~ .checkmark {
+/* .settings_container:hover input ~ .checkmark {
   background-color: #ccc;
-}
+} */
 
 /* When the radio button is checked, add a blue background */
-.settings_container input:checked ~ .checkmark {
+/* .settings_container input:checked ~ .checkmark {
   background-color: var(--light_green);
-}
+} */
 
 /* Create the indicator (the dot/circle - hidden when not checked) */
-.settings_container:after {
+/* .settings_container:after {
   content: "";
   position: absolute;
   display: none;
-}
+} */
 
 /* Show the indicator (dot/circle) when checked */
-.settings_container input:checked ~ .checkmark:after {
+/* .settings_container input:checked ~ .checkmark:after {
   display: block;
-}
+} */
 
 /* Style the indicator (dot/circle) */
-.settings_container .checkmark:after {
+/* .settings_container .checkmark:after {
   top: 8px;
   left: 8px;
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: white;
-}
+} */

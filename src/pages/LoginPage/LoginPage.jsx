@@ -61,26 +61,28 @@ export default function LoginPage() {
           <p>{error ? error : "Login to your account"}</p>
         </div>
         <form onSubmit={handleLogin}>
-          <input
-            type="text"
-            name="loginOne"
-            id="loginOne"
-            placeholder="username or email"
-            onChange={(e) => setLoginOne(e.target.value)}
-            value={loginOne}
-          />
-          <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="password"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-          />
-          <Button txt="login" key="login-btn" func={null} />
-          <div className="login_page_signup">
-            <p>Don't have an account?</p>
-            <Link to={"/register"}>Sign Up</Link>
+          <div className="login_page_form">
+            <input
+              type="text"
+              name="loginOne"
+              id="loginOne"
+              placeholder="username or email"
+              onChange={(e) => setLoginOne(e.target.value)}
+              value={loginOne}
+            />
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="password"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+            />
+            <Button txt="login" key="login-btn" func={null} />
+            <div className="login_page_signup">
+              <p>Don't have an account?</p>
+              <Link to={"/register"}>Sign Up</Link>
+            </div>
           </div>
         </form>
       </div>

@@ -1,112 +1,42 @@
-.registerpage__wrapper {
+.register_page_form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
-  color: rgb(109, 103, 103);
-  justify-content: space-around;
-}
-
-.registerpage__header {
-  height: 10%;
-}
-
-.registerpage__header-img_container {
-  display: flex;
-  justify-content: center;
-}
-
-.registerpage__body-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.registerpage__body {
-  display: flex;
-  flex-direction: column;
-  height: 70%;
-  gap: 45px;
-}
-
-.registerpage__body-top {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.registerpage__body-top h1 {
-  font-size: 3rem;
-  color:#662D91;
-
-}
-
-.registerpage__body-middle {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  height: 100%;
   gap: 15px;
+  margin-bottom: 40px;
 }
 
-.registerpage__body-middle input {
-  height: 40px;
+.register_page_form span {
   width: 80%;
-  border-radius: 20px;
   text-align: center;
-  background-color: transparent;
-  border: 2px solid #008b83;
-  color: white;
+  font-size: 16px;
+  font-weight: 300;
+  opacity: 0.5;
 }
 
-.registerpage__footer {
-  height: 10%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  width: 80%;
-  gap: 5px;
-}
-
-.registerpage__footer > p {
-  text-align: center;
-  width: 70%;
-  font-size: 12px;
-}
-
-.registerpage__footer-bottom {
-  display: flex;
+.register_page_login {
   width: 100%;
+  display: flex;
   justify-content: space-between;
 }
 
-.registerpage__footer-bottom > p {
+.register_page_login p {
+  margin-top: 15px;
   width: 70%;
+  text-align: left;
+  font-weight: 300;
+  font-size: 16px;
 }
-
-.active {
+.register_page_login a {
+  margin-top: 15px;
+  text-align: right;
+  color: var(--light_green);
   text-decoration: none;
-  color: rgba(0, 139, 131, 1);
+  font-weight: 300;
+  transition: all 0.3s ease-in-out;
 }
 
-.registerpage__footer-bottom > a {
-  text-decoration: none;
-  color: rgba(0, 139, 131, 1);
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  height: 100%;
-  gap: 15px;
-  align-items: center;
-  width: -webkit-fill-available;
-}
-
-.registerpage__footer > a {
-  width: 100%;
+.register_page_login a:hover {
+  font-weight: 500;
+  color: var(--txt);
 }

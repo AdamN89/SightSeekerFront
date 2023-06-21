@@ -5,13 +5,20 @@
   padding: 0;
   box-sizing: border-box;
   --bg_dark: radial-gradient(hsl(200, 40%, 20%), hsl(200, 30%, 6%));
+  --bg_dark_liniar: linear-gradient(258.25deg, #272727 0.81%, #121212 98.9%);
   --btn_bg: linear-gradient(180deg, #00a299 0%, #0b4e4a 100%);
+  --btn_delete_bg: linear-gradient(180deg, #a20000 0%, #4e0b0b 100%);
+  --btn_delete_hover: #ff0000;
+  --modal_bg: rgba(13, 13, 13, 0.9);
   --title: linear-gradient(136.97deg, #662d91 11.75%, #92278f 80%);
   --txt: #fff;
   --light_green: #00a299;
   --dark_green: #0b4e4a;
   --light_purple: #92278f;
   --dark_purple: #662d91;
+  --delete: #a20000;
+  --radio_border: rgba(255, 255, 255, 0.5);
+  --toggle: linear-gradient(180deg, #ffffff 0%, #646464 100%);
 }
 
 body {
@@ -51,7 +58,8 @@ h1 {
 .first_element {
   width: 80%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .second_element {
@@ -61,6 +69,14 @@ h1 {
   flex-direction: column;
   justify-content: space-between;
   gap: 40px;
+}
+
+/*=============================================
+  class for handeling form and input fields
+=============================================*/
+
+form {
+  width: 100%;
 }
 
 input {
@@ -87,7 +103,132 @@ input:active {
   border: 2px solid var(--light_purple);
 }
 
+label {
+  width: fit-content;
+  color: var(--txt);
+  font-family: "Lato", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 1.25px;
+  line-height: 1.1;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  cursor: pointer;
+}
+
+/*=========================================
+  class for handeling input radio fields
+=========================================*/
+
+input[type="radio"] {
+  margin: 0;
+  appearance: none;
+  display: inline-block;
+  background: transparent;
+  width: 25px;
+  height: 25px;
+  border: 2px solid var(--radio_border);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+}
+
+input[type="radio"]:hover {
+  border: 2px solid var(--light_purple);
+}
+
+input[type="radio"]:checked {
+  border: 2px solid var(--light_green);
+}
+
+input[type="radio"]::before {
+  content: "";
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: all 0.3s ease-in-out;
+  /* box-shadow: inset 10px 10px red; */
+  background: var(--btn_bg);
+}
+
+input[type="radio"]:checked::before {
+  transform: scale(1);
+}
+
+/*=======================================================
+  class for handeling input check box as toggle switch
+=======================================================*/
+
+.toggle {
+  cursor: pointer;
+  display: inline-block;
+}
+
+.toggle_switch {
+  display: inline-block;
+  background: transparent;
+  border: 2px solid var(--radio_border);
+  border-radius: 16px;
+  width: 58px;
+  height: 30px;
+  position: relative;
+  vertical-align: middle;
+  transition: all 0.3s ease-in-out;
+}
+
+.toggle_switch:hover {
+  border: 2px solid var(--light_purple);
+}
+
+.toggle_switch:before,
+.toggle_switch:after {
+  content: "";
+}
+
+.toggle_switch:before {
+  display: block;
+  background: var(--toggle);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  opacity: 0.4;
+  top: 3px;
+  left: 3px;
+  transition: all 0.3s ease-in-out;
+}
+
+.toggle_checkbox:checked + .toggle_switch {
+  border: 2px solid var(--light_green);
+}
+
+.toggle_checkbox:checked + .toggle_switch:before {
+  left: 30px;
+  opacity: 1;
+  background: var(--btn_bg);
+}
+
+.toggle_checkbox {
+  position: absolute;
+  visibility: hidden;
+}
+
+.toggle_label {
+  margin-left: 5px;
+  position: relative;
+  top: 2px;
+}
+
 .btn {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 60px;
   position: relative;
@@ -101,6 +242,11 @@ input:active {
   text-transform: uppercase;
   cursor: pointer;
   overflow: hidden;
+}
+
+.btn span {
+  z-index: 5;
+  position: absolute;
 }
 
 .btn::after {
@@ -121,6 +267,10 @@ input:active {
 }
 
 .btn_hallow {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 60px;
   position: relative;
@@ -153,6 +303,49 @@ input:active {
   opacity: 0.4;
 }
 
+.btn_delete {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  position: relative;
+  background: var(--btn_delete_bg);
+  border: 0;
+  border-radius: 20px;
+  color: var(--txt);
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  text-transform: uppercase;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.btn_delete span {
+  z-index: 5;
+  position: absolute;
+  pointer-events: none;
+}
+
+.btn_delete::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--y, 0) * 1px - 50px);
+  left: calc(var(--x, 0) * 1px - 100px);
+  width: 200px;
+  height: 100px;
+  background-color: var(--btn_delete_hover);
+  filter: blur(50px);
+  transition: opacity 0.4s;
+  opacity: 0;
+}
+
+.btn_delete:hover::after {
+  opacity: 0.4;
+}
+
 .map-container {
   position: absolute;
   inset: 0;
@@ -170,4 +363,32 @@ input:active {
   left: 0;
   margin: 12px;
   border-radius: 4px;
+}
+
+/*===================================
+      class for handeling modal
+===================================*/
+
+.modal {
+  z-index: 15;
+  width: 100%;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 0;
+  padding: 20px;
+}
+
+.showClickAway {
+  display: block;
+  position: absolute;
+  background: var(--modal_bg);
+  backdrop-filter: blur(5px);
+  height: 100vh;
+  width: 100%;
+  z-index: 10;
+}
+
+.hide {
+  display: none;
 }
