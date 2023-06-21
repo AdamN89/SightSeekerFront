@@ -17,7 +17,7 @@
   padding: 20px;
 }
 
-.show{
+.showClickAway{
   display: block;
   position: absolute;
   background-color: grey;
@@ -30,6 +30,7 @@
 .hide{
   display: none;
 }
+
 .avatars img{
   width: 128px;
   border-radius: 20px;
