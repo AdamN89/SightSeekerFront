@@ -3,6 +3,9 @@ import ProgressBar from "../../components/ProgressBar";
 import { Link, NavLink } from "react-router-dom"
 import { useState } from "react";
 import "./FeaturesPage.css";
+import FeaturesPlanGraphic from "./FeaturesPlanGraphic";
+import FeaturesShareGrapfic from "./FeaturesShareGrapfic"
+import FeaturesBonVoyageGraphic from "./FeaturesBonVoyageGraphic"
 
 export default function FeaturesPage() {
  const [ activeSlide, setActiveSlide ] = useState(0)
@@ -24,6 +27,7 @@ export default function FeaturesPage() {
           }`}>
                 <ProgressBar />
                 <h1>Plan your travel</h1>
+                <FeaturesPlanGraphic />
                 <p>
                     Introducing our new travel planning tool!
                     Now you can easily plan your next adventure with just a few clicks.
@@ -41,6 +45,7 @@ export default function FeaturesPage() {
             >
                 <ProgressBar />
                 <h1>Share the adventure</h1>
+                <FeaturesShareGrapfic />
                 <p>
                 Sharing your travel plans with friends and family is as simple as sending them an invitation to join your SightSeeker group.
                 They can then access the itinerary, contribute their ideas, and stay updated on the latest developments.
@@ -57,6 +62,7 @@ export default function FeaturesPage() {
             >
             <ProgressBar />
                 <h1>Bon Voyage!</h1>
+                <FeaturesBonVoyageGraphic />
                 <p>
                     Capture new memories and share experiences with others to inspire their own travel adventures.
                     Remember, every journey is an opportunity growth and exploration.
