@@ -54,13 +54,13 @@
   font-size: 14px;
 }
 
-.flex_inital_setup {
+.inital_setup_flex {
   display: flex;
   gap: 7px;
   justify-content: space-between;
 }
 
-.flex_collumn_inital_setup {
+.inital_setup_flex_collumn {
   display: flex;
   flex-direction: column;
   gap: 7px;
@@ -116,7 +116,7 @@ input:checked + .slider:before {
 }
 
 /* Customize the label (the container) */
-.container_initial_settings {
+.settings_container {
   display: block;
   position: relative;
   padding-left: 35px;
@@ -129,7 +129,7 @@ input:checked + .slider:before {
   user-select: none;
 }
 
-.container_initial_settings input {
+.settings_container input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -149,29 +149,29 @@ input:checked + .slider:before {
 }
 
 /* On mouse-over, add a grey background color */
-.container:hover input ~ .checkmark {
+.settings_container:hover input ~ .checkmark {
   background-color: #ccc;
 }
 
 /* When the radio button is checked, add a blue background */
-.container input:checked ~ .checkmark {
+.settings_container input:checked ~ .checkmark {
   background-color: var(--light_green);
 }
 
 /* Create the indicator (the dot/circle - hidden when not checked) */
-.checkmark:after {
+.settings_container:after {
   content: "";
   position: absolute;
   display: none;
 }
 
 /* Show the indicator (dot/circle) when checked */
-.container input:checked ~ .checkmark:after {
+.settings_container input:checked ~ .checkmark:after {
   display: block;
 }
 
 /* Style the indicator (dot/circle) */
-.container .checkmark:after {
+.settings_container .checkmark:after {
   top: 8px;
   left: 8px;
   width: 8px;
