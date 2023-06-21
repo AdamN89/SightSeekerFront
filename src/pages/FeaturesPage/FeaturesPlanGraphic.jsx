@@ -61,7 +61,6 @@ export default function FeaturesPlanGraphic() {
           />
           <mask
             id="mask0_65_1033"
-            style="mask-type:luminance"
             maskUnits="userSpaceOnUse"
             x="19"
             y="95"
