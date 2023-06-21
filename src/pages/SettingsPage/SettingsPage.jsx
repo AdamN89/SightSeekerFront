@@ -33,7 +33,7 @@ export default function Settings() {
           <h3>Can be found by</h3>
             <div className="flex">
               <label class="container">All
-                <input type="checkbox" checked="true"/>
+                <input type="checkbox"/>
                 <span class="checkmark"></span>
               </label>
 
@@ -59,7 +59,7 @@ export default function Settings() {
         <div className="flex">
             <h3>Show email</h3>
             <label class="switch">
-              <input type="checkbox" checked="true"/>
+              <input type="checkbox"/>
               <span class="slider round"></span>
             </label>
         </div>

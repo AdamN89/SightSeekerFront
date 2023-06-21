@@ -3,6 +3,7 @@ import { useState, useRef } from "react";
 import Button from "../../components/Button";
 import ButtonHallow from "../../components/ButtonHallow";
 
+
 export default function InitalSetup() {
   const avatarDialog = useRef(null);
   const preferenceDialog = useRef(null)
