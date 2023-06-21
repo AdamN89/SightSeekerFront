@@ -1,15 +1,11 @@
-.center{
-    width: 499px;
-    margin: 0 auto;
-}
-
-.flex {
+.settings_page_flex {
     width: 80%;
     display: flex;
+    justify-content: space-between;
     gap: 7px;
 }
 
-.flex-collumn {
+.settings_page_flex_collumn {
     display: flex;
     flex-direction: column;
     gap: 7px

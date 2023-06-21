@@ -1,162 +1,179 @@
 import "./InitialSetup.css";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import Button from "../../components/Button";
+import ButtonHallow from "../../components/ButtonHallow";
+
 
 export default function InitalSetup() {
+  const avatarDialog = useRef(null);
+  const preferenceDialog = useRef(null)
+  const privacyDialog = useRef(null)
   const [openDrop1, setOpenDrop1] = useState(false);
   const [openDrop2, setOpenDrop2] = useState(false);
   const [openDrop3, setOpenDrop3] = useState(false);
 
   const handleClick = (event) => {
-    if (event.target.id == "choose-avatar") {
+    
+    if (event.target.innerHTML == "choose avatar") {
+      if(openDrop1){
+        avatarDialog.current.close()
+      }
+      else{
+        avatarDialog.current.show()
+      }
       setOpenDrop1(!openDrop1);
       setOpenDrop2(false);
       setOpenDrop3(false);
     }
-    if (event.target.id == "point-preferences") {
+    if (event.target.innerHTML == "point preferences") {
+      if(openDrop1){
+        preferenceDialog.current.close()
+      }
+      else{
+        preferenceDialog.current.show()
+      }
       setOpenDrop1(false);
       setOpenDrop2(!openDrop2);
       setOpenDrop3(false);
     }
-    if (event.target.id == "privacy-settings") {
+    if (event.target.innerHTML == "privacy settings") {
+      if(openDrop1){
+        privacyDialog.current.close()
+      }
+      else{
+        privacyDialog.current.show()
+      }
       setOpenDrop1(false);
       setOpenDrop2(false);
       setOpenDrop3(!openDrop3);
     }
   };
 
+  const handleClickaway= ()=>{
+    avatarDialog.current.close()
+    preferenceDialog.current.close()
+    privacyDialog.current.close()
+    setOpenDrop1(false);
+    setOpenDrop2(false);
+    setOpenDrop3(false);
+  }
   return (
     <>
-      <div className="center">
-        <h1>Initial setup</h1>
-        <img
-          className="initial-settings-page_img"
-          src="https://fakeimg.pl/304x423/e6bde6/878487"
-        />
-        <div className="flex-collumn">
+    <div className={openDrop1 || openDrop2 || openDrop3 ? "show" : "hide"} onClick={handleClickaway}></div>
+    <div className="container">
+        <h1 className="title">Initial setup</h1>
+      <div className="first_element">
+        <img className="initial-settings-page_img" src="https://fakeimg.pl/304x423/e6bde6/878487" />
+      </div>
+      <div className="second_element">
+        <div className="inital_setup_flex_collumn">
           <div className={openDrop1 ? "dropdown-clicked" : "dropdown "}>
-            <button
-              className="dropbtn btn_hallow"
-              type="button"
-              id="choose-avatar"
-              onClick={handleClick}
-            >
-              choose avatar
-            </button>
-            <div
+              <ButtonHallow
+              txt="choose avatar"
+                className="dropbtn"
+                func={handleClick}
+              />
+            <dialog ref={avatarDialog}
               className={
-                openDrop1 ? "dropdown-content-clicked" : "dropdown-content"
+                openDrop1 ? "dropdown-content-clicked modal" : "dropdown-content modal"
               }
             >
-              <div className="avatars">
+              <div className="model_container">
+                <div className="avatars">
                 <img src="https://fakeimg.pl/128x128/e6bde6/878487" />
                 <img src="https://fakeimg.pl/128x128/e6bde6/878487" />
                 <img src="https://fakeimg.pl/128x128/e6bde6/878487" />
                 <img src="https://fakeimg.pl/128x128/e6bde6/878487" />
+                </div>
+                <button className="btn upload" type="button">
+                  + upload Picture
+                </button>
               </div>
-              <button className="btn upload" type="button">
-                + upload Picture
-              </button>
-            </div>
+            </dialog>
           </div>
-          <div className={openDrop2 ? "dropdown-clicked" : "dropdown "}>
-            <button
-              className="dropbtn btn_hallow"
-              type="button"
-              id="point-preferences"
-              onClick={handleClick}
-            >
-              point preferences
-            </button>
-            <div
+          <div className={openDrop2 ? "dropdown-clicked" : "dropdown"}>
+            <ButtonHallow
+              className="dropbtn"
+              txt="point preferences"
+              func={handleClick}
+            />
+            <dialog ref={preferenceDialog} 
               className={
-                openDrop2 ? "dropdown-content-clicked" : "dropdown-content"
+                openDrop2 ? "dropdown-content-clicked modal" : "dropdown-content modal"
               }
             >
-              <form action="">
-                <label for="fname">
-                  Filter suggested points of interest by:
-                </label>
-                <br />
-                <input
-                  type="text"
-                  id="fname"
-                  name="fname"
-                  placeholder="Castles, Sports, Restraunts"
-                />
-                <br />
-              </form>
-            </div>
+              <div className="model_container">
+                <form action="">
+                  <label for="fname">Filter suggested points of interest by:</label>
+                  <br/>
+                  <input type="text" id="fname" name="fname" placeholder="Castles, Sports, Restraunts" />
+                  <br/>
+                </form>
+              </div>
+            </dialog>
           </div>
-          <div className={openDrop3 ? "dropdown-clicked" : "dropdown "}>
-            <button
-              className="dropbtn btn_hallow"
-              type="button"
-              id="privacy-settings"
-              onClick={handleClick}
-            >
-              privacy settings
-            </button>
-            <div
+          <div className={openDrop3 ? "dropdown-clicked" : "dropdown"}>
+            <ButtonHallow
+              className="dropbtn"
+              txt="privacy settings"
+              func={handleClick}
+            />
+            <dialog ref={privacyDialog} 
               className={
-                openDrop3
-                  ? "dropdown-content-clicked flex-collumn"
-                  : "dropdown-content"
+                openDrop3 ? "dropdown-content-clicked modal" : "dropdown-content modal"
               }
             >
-              <div className="flex">
+              <div className="inital_setup_flex">
                 <h3>Can be found by</h3>
-                <div className="flex-collumn">
-                  <label class="container_initial_settings">
-                    All
-                    <input type="radio" name="found-by" />
-                    <span class="checkmark"></span>
-                  </label>
+                <div className="inital_setup_flex_collumn">
+                <label class="settings_container">All
+                  <input type="radio" name="found-by"/>
+                  <span class="checkmark"></span>
+                </label>
 
-                  <label class="container_initial_settings">
-                    Friends
-                    <input type="radio" name="found-by" />
-                    <span class="checkmark"></span>
-                  </label>
+                    <label class="settings_container">
+                      Friends
+                      <input type="radio" name="found-by" />
+                      <span class="checkmark"></span>
+                    </label>
 
-                  <label class="container_initial_settings">
-                    None
-                    <input type="radio" name="found-by" />
-                    <span class="checkmark"></span>
+                    <label class="settings_container">
+                      None
+                      <input type="radio" name="found-by" />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                </div>
+                <div className="inital_setup_flex">
+                  <h3>Location Services</h3>
+                  <label class="switch">
+                    <input type="checkbox" />
+                    <span class="slider round"></span>
                   </label>
                 </div>
-              </div>
-              <div className="flex">
-                <h3>Location Services</h3>
-                <label class="switch">
-                  <input type="checkbox" />
-                  <span class="slider round"></span>
-                </label>
-              </div>
-              <div className="flex">
-                <h3>Show email</h3>
-                <label class="switch">
-                  <input type="checkbox" checked="true" />
-                  <span class="slider round"></span>
-                </label>
-              </div>
-              <div className="flex">
-                <h3>Show name</h3>
-                <label class="switch">
-                  <input type="checkbox" />
-                  <span class="slider round"></span>
-                </label>
-              </div>
+                <div className="inital_setup_flex">
+                  <h3>Show email</h3>
+                  <label class="switch">
+                    <input type="checkbox" />
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+                <div className="inital_setup_flex">
+                  <h3>Show name</h3>
+                  <label class="switch">
+                    <input type="checkbox" />
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+              </dialog>
             </div>
-          </div>
-          <button
-            className="btn"
-            type="button"
-            id="privacy-settings"
-            // onClick={handleDone}
-          >
-            DONE
-          </button>
+            <Button
+              txt="done"
+              // onClick={handleDone}
+            >
+            </Button>
         </div>
+      </div>
       </div>
     </>
   );
