@@ -99,22 +99,19 @@ export default function RegisterPage() {
                     name="confirmPassword"
                   />
 
-                  <div className="registerpage__footer">
-                    <p>
-                      By registering, you are agreeing to our Terms of Use and
-                      Privacy Policy
-                    </p>
-                    <Link to="/initialsetup">
-                      <Button
-                        txt={"Register"}
-                        func={() => handleSubmitButtonClick(submitForm)}
-                      />
-                    </Link>
-                    <div className="registerpage__footer-bottom">
-                      <p>Already have an account?</p>
-                      <NavLink to="/login">Login</NavLink>
-                    </div>
+                <div className="registerpage__footer">
+                <p>
+                  By registering, you are agreeing to our Terms of Use and Privacy
+                  Policy
+                </p>
+                  <Link to="/initialsetup" >
+                    <Button txt={"Register"} func={() => handleSubmitButtonClick(submitForm)} />
+                  </Link>
+                  <div className="registerpage__footer-bottom">
+                    <p>Already have an account?</p>
+                    <NavLink to="/login">Login</NavLink>
                   </div>
+                </div>
                 </Form>
               )}
             </Formik>
