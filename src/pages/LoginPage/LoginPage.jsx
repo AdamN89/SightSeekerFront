@@ -4,6 +4,7 @@ import Button from "../../components/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import LoginGraphic from "./LoginGraphic";
 
 export default function LoginPage() {
   const { login, setUser } = useContext(AuthContext);
@@ -50,46 +51,38 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="login-page">
-      <div className="login-page__image login-page_placeholder">
-        <img
-          className="login-page_img"
-          src=""
-          alt="A man about to go on a journey, wearing a backpack, dragging a wheeled suitcase."
-        />
+    <div className="container">
+      <div className="first_element">
+        <LoginGraphic />
       </div>
-      <hgroup className="login-page__hgroup">
-        <h1 className="login-page__heading">Welcome Back</h1>
-        <p className="login-page__subtitle">
-          {error ? error : "Login to your account"}
-        </p>
-      </hgroup>
-      <form className="login-page__form" onSubmit={handleLogin}>
-        <input
-          className="login-page__input"
-          type="text"
-          name="loginOne"
-          id="loginOne"
-          placeholder="username or email"
-          onChange={(e) => setLoginOne(e.target.value)}
-          value={loginOne}
-        />
-        <input
-          className="login-page__input"
-          type="password"
-          name="password"
-          id="password"
-          placeholder="password"
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-        />
-        <Button txt="login" key="login-btn" func={null} />
-      </form>
-      <div className="login-page__signup-wrapper">
-        <p className="login-page__signup-text">Don't have an account?</p>
-        <Link className="login-page__signup-link" to={"/register"}>
-          Sign Up
-        </Link>
+      <div className="second_element login_page_element">
+        <div>
+          <h1 className="title">Welcome Back</h1>
+          <p>{error ? error : "Login to your account"}</p>
+        </div>
+        <form onSubmit={handleLogin}>
+          <input
+            type="text"
+            name="loginOne"
+            id="loginOne"
+            placeholder="username or email"
+            onChange={(e) => setLoginOne(e.target.value)}
+            value={loginOne}
+          />
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="password"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+          />
+          <Button txt="login" key="login-btn" func={null} />
+          <div className="login_page_signup">
+            <p>Don't have an account?</p>
+            <Link to={"/register"}>Sign Up</Link>
+          </div>
+        </form>
       </div>
     </div>
   );

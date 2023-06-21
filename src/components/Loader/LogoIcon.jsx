@@ -1,0 +1,78 @@
+export default function LogoIcon() {
+  return (
+    <>
+      <svg viewBox="0 0 134 83" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M39.7997 83L32.4951 53.9817L133.148 0L39.7997 83Z"
+          fill="url(#paint0_linear_173_1798)"
+        />
+        <path
+          d="M45.8884 61.8973L39.8003 83L133.149 0L45.8884 61.8973Z"
+          fill="url(#paint1_linear_173_1798)"
+        />
+        <path
+          d="M84.0386 83L45.8882 61.8973L133.149 0L84.0386 83Z"
+          fill="url(#paint2_linear_173_1798)"
+        />
+        <path
+          opacity="0.6"
+          d="M83.75 66.8299L84.0388 83L133.149 0L83.75 66.8299Z"
+          fill="#00A79D"
+        />
+        <path
+          d="M0 35.4008L32.4956 53.9817L133.149 0L0 35.4008Z"
+          fill="url(#paint3_linear_173_1798)"
+        />
+        <path d="M0 21.8915V35.4008L133.149 0L0 21.8915Z" fill="#00A79D" />
+        <defs>
+          <linearGradient
+            id="paint0_linear_173_1798"
+            x1="32.4951"
+            y1="41.5"
+            x2="133.148"
+            y2="41.5"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stopColor="#662D91" />
+            <stop offset="1" stopColor="#92278F" />
+          </linearGradient>
+          <linearGradient
+            id="paint1_linear_173_1798"
+            x1="39.8003"
+            y1="41.5"
+            x2="133.149"
+            y2="41.5"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stopColor="#92278F" />
+            <stop offset="1" stopColor="#662D91" />
+          </linearGradient>
+          <linearGradient
+            id="paint2_linear_173_1798"
+            x1="70.9459"
+            y1="19.6751"
+            x2="107.341"
+            y2="41.7666"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stopColor="#00A79D" />
+            <stop offset="1" stopColor="#008B83" />
+          </linearGradient>
+          <linearGradient
+            id="paint3_linear_173_1798"
+            x1="67.1521"
+            y1="19.8918"
+            x2="70.3073"
+            y2="31.8791"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stop-color="#008B83" />
+            <stop offset="0.24" stopColor="#00968D" />
+            <stop offset="0.62" stopColor="#00A299" />
+            <stop offset="1" stopColor="#00A79D" />
+          </linearGradient>
+        </defs>
+      </svg>
+    </>
+  );
+}
