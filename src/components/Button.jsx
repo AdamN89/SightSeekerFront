@@ -23,7 +23,7 @@ export default function Button({ txt, func }) {
   return (
     <>
       <button onClick={func} className="btn" ref={buttonRef}>
-        {txt}
+        <span>{txt}</span>
       </button>
     </>
   );

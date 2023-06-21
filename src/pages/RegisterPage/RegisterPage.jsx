@@ -1,5 +1,5 @@
 import "./RegisterPage.css";
-import LogoHorizontal from "../../components/LogoHorizontal";
+import LogoVertical from "../../components/LogoVertical";
 import Button from "../../components/Button";
 import { Link, NavLink } from "react-router-dom";
 import * as yup from "yup";
@@ -55,36 +55,34 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="registerpage__wrapper">
-      <div className="registerpage__header">
-        <div className="registerpage__header-img_container">
-          <LogoHorizontal />
-        </div>
+    <div className="container">
+      <div className="first_element">
+        <LogoVertical />
       </div>
-      <div className="registerpage__body-wrapper">
-        <div className="registerpage__body">
-          <div className="registerpage__body-top">
-            <h1>Register</h1>
-            Create your account
-          </div>
-          <div className="registerpage__body-middle">
-            <Formik
-              initialValues={initialRegisterValues}
-              validationSchema={registerSchema}
-              onSubmit={handleFormSubmit}
-            >
-              {({
-                values,
-                errors,
-                touched,
-                handleChange,
-                handleBlur,
-                handleSubmit,
-                isSubmitting,
-                submitForm,
-                /* and other goodies */
-              }) => (
-                <Form onSubmit={handleSubmit}>
+      <div className="second_element">
+        <div>
+          <h1 className="title">Register</h1>
+          <p>Create your account</p>
+        </div>
+        <div>
+          <Formik
+            initialValues={initialRegisterValues}
+            validationSchema={registerSchema}
+            onSubmit={handleFormSubmit}
+          >
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              isSubmitting,
+              submitForm,
+              /* and other goodies */
+            }) => (
+              <Form onSubmit={handleSubmit}>
+                <div className="register_page_form">
                   <Field type="text" placeholder="full name" name="name" />
                   <Field type="text" placeholder="username" name="userName" />
                   <Field type="text" placeholder="email" name="email" />
@@ -98,24 +96,27 @@ export default function RegisterPage() {
                     placeholder="confirm password"
                     name="confirmPassword"
                   />
+                  <span>
+                    By registering, you are agreeing to our Terms of Use and
+                    Privacy Policy
+                  </span>
+                </div>
 
-                <div className="registerpage__footer">
-                <p>
-                  By registering, you are agreeing to our Terms of Use and Privacy
-                  Policy
-                </p>
-                  <Link to="/initialsetup" >
-                    <Button txt={"Register"} func={() => handleSubmitButtonClick(submitForm)} />
+                <div>
+                  <Link to="/initialsetup">
+                    <Button
+                      txt={"Register"}
+                      func={() => handleSubmitButtonClick(submitForm)}
+                    />
                   </Link>
-                  <div className="registerpage__footer-bottom">
+                  <div className="register_page_login">
                     <p>Already have an account?</p>
-                    <NavLink to="/login">Login</NavLink>
+                    <Link to={"/login"}>Login</Link>
                   </div>
                 </div>
-                </Form>
-              )}
-            </Formik>
-          </div>
+              </Form>
+            )}
+          </Formik>
         </div>
       </div>
     </div>
