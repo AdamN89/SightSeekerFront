@@ -59,7 +59,7 @@ export default function InitalSetup() {
   }
   return (
     <>
-    <div className={openDrop1 || openDrop2 || openDrop3 ? "show" : "hide"} onClick={handleClickaway}></div>
+    <div className={openDrop1 || openDrop2 || openDrop3 ? "showClickAway" : "hide"} onClick={handleClickaway}></div>
     <div className="container">
         <h1 className="title">Initial setup</h1>
       <div className="first_element">
@@ -67,7 +67,6 @@ export default function InitalSetup() {
       </div>
       <div className="second_element">
         <div className="inital_setup_flex_collumn">
-          <div className={openDrop1 ? "dropdown-clicked" : "dropdown "}>
               <ButtonHallow
               txt="choose avatar"
                 className="dropbtn"
@@ -75,7 +74,7 @@ export default function InitalSetup() {
               />
             <dialog ref={avatarDialog}
               className={
-                openDrop1 ? "dropdown-content-clicked modal" : "dropdown-content modal"
+                openDrop1 ? "modal" : null
               }
             >
               <div className="model_container">
@@ -90,8 +89,6 @@ export default function InitalSetup() {
                 </button>
               </div>
             </dialog>
-          </div>
-          <div className={openDrop2 ? "dropdown-clicked" : "dropdown"}>
             <ButtonHallow
               className="dropbtn"
               txt="point preferences"
@@ -99,7 +96,7 @@ export default function InitalSetup() {
             />
             <dialog ref={preferenceDialog} 
               className={
-                openDrop2 ? "dropdown-content-clicked modal" : "dropdown-content modal"
+                openDrop2 ?  "modal" : null
               }
             >
               <div className="model_container">
@@ -111,8 +108,6 @@ export default function InitalSetup() {
                 </form>
               </div>
             </dialog>
-          </div>
-          <div className={openDrop3 ? "dropdown-clicked" : "dropdown"}>
             <ButtonHallow
               className="dropbtn"
               txt="privacy settings"
@@ -120,7 +115,7 @@ export default function InitalSetup() {
             />
             <dialog ref={privacyDialog} 
               className={
-                openDrop3 ? "dropdown-content-clicked modal" : "dropdown-content modal"
+                openDrop3 ?  "modal" : null
               }
             >
               <div className="inital_setup_flex">
@@ -166,7 +161,6 @@ export default function InitalSetup() {
                   </label>
                 </div>
               </dialog>
-            </div>
             <Button
               txt="done"
               // onClick={handleDone}
