@@ -1,11 +1,12 @@
 import Button from "../../components/Button";
-import ProgressBar from "../../components/ProgressBar";
+import StepsBar from "../../components/ProgressBar";
 import { Link, NavLink } from "react-router-dom"
 import { useState } from "react";
 import "./FeaturesPage.css";
 import FeaturesPlanGraphic from "./FeaturesPlanGraphic";
 import FeaturesShareGrapfic from "./FeaturesShareGrapfic"
 import FeaturesBonVoyageGraphic from "./FeaturesBonVoyageGraphic"
+import CheckMark from "./CheckMark";
 
 export default function FeaturesPage() {
  const [ activeSlide, setActiveSlide ] = useState(0)
@@ -20,12 +21,21 @@ export default function FeaturesPage() {
   return (
     <div className="featurespage__wrapper">
         <div className="featurespage__slides-container">
+                    <div className="step-progress">
+                            <div className="step-progress-bar">
+                            <div className="step-progress-line"></div>
+                    </div>
+                    <div className="step-progress-step">
+                        <div className="step-progress-step-item active"><CheckMark/></div>
+                        <div className="step-progress-step-item"><CheckMark/></div>
+                        <div className="step-progress-step-item"><CheckMark/></div>
+                    </div>
+                    </div>
             <div 
             id="slide1"
             className={`featurespage__slide ${
             activeSlide === 0 ? 'active' : ''
           }`}>
-                <ProgressBar />
                 <h1>Plan your travel</h1>
                 <FeaturesPlanGraphic />
                 <p>
@@ -43,7 +53,7 @@ export default function FeaturesPage() {
                 activeSlide === 1 ? 'active' : ''
               }`}
             >
-                <ProgressBar />
+                {/* <StepsBar /> */}
                 <h1>Share the adventure</h1>
                 <FeaturesShareGrapfic />
                 <p>
@@ -60,7 +70,7 @@ export default function FeaturesPage() {
                 activeSlide === 2 ? 'active' : ''
               }`}
             >
-            <ProgressBar />
+            {/* <StepsBar /> */}
                 <h1>Bon Voyage!</h1>
                 <FeaturesBonVoyageGraphic />
                 <p>
