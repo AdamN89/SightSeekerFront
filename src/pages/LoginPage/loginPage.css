@@ -1,84 +1,42 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  --bg_dark: linear-gradient(-45deg, #272727 0.81%, #121212 98.9%);
-  --btn_bg: linear-gradient(180deg, #00a299 0%, #0b4e4a 100%);
-  --txt: #fff;
-  --light_green: #00a299;
-  --dark_green: #0b4e4a;
-}
-
 .login-page {
-  color: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.login-page_placeholder {
-  width: 347px;
-  height: 530px;
-  margin-top: 50px;
-  background-image: linear-gradient(137deg, #662d91 11.75%, #92278f 79.8%);
-}
-
-.login-page__hgroup {
-  position: relative;
-  top: -25px;
-  text-align: center;
-}
-
-.login-page__heading {
-  font-size: 40px;
-}
-
-.login-page__subtitle {
-  font-weight: 300;
-  margin: 0 auto;
-}
-
-.login-page__form {
+.login_page_element {
+  margin-top: -85px;
+  width: 80%;
   display: flex;
+  align-items: center;
   flex-direction: column;
-  gap: 10px;
+  justify-content: space-between;
+  gap: 40px;
 }
 
-.login-page__form > :last-child {
-  margin-top: 30px;
+.login-page svg {
+  padding: 0;
 }
 
-.login-page__input {
-  width: 320px;
-  height: 60px;
-  position: relative;
-  background: #272727;
-  border: 2px solid #00a299;
-  border-radius: 20px;
-  color: var(--txt);
-  font-family: "Lato", sans-serif;
-  font-weight: 500;
-  font-size: 14px;
-  letter-spacing: 1.25px;
-  text-transform: lowercase;
-  cursor: text;
-  overflow: hidden;
-  text-align: center;
-}
-
-.login-page__signup-wrapper {
-  margin: 10px auto;
-  width: 320px;
+.login_page_signup {
+  width: 100%;
   display: flex;
   justify-content: space-between;
 }
-.login-page__signup-text {
+.login_page_signup p {
   text-align: left;
   font-weight: 300;
+  font-size: 16px;
 }
-.login-page__signup-link {
+.login_page_signup a {
   text-align: right;
-  color: #00a299;
+  color: var(--light_green);
   text-decoration: none;
   font-weight: 300;
+  transition: all 0.3s ease-in-out;
+}
+
+.login_page_signup a:hover {
+  font-weight: 500;
+  color: var(--txt);
 }

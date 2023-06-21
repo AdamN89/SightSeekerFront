@@ -127,42 +127,43 @@ export default function InitalSetup() {
                 <span class="checkmark"></span>
               </label>
 
-              <label class="container">Friends
-                <input type="radio" name="found-by"/>
-                <span class="checkmark"></span>
-              </label>
+                  <label class="container_initial_settings">
+                    Friends
+                    <input type="radio" name="found-by" />
+                    <span class="checkmark"></span>
+                  </label>
 
-              <label class="container">
-                None
-                <input type="radio" name="found-by"/>
-                <span class="checkmark"></span>
-              </label>
+                  <label class="container_initial_settings">
+                    None
+                    <input type="radio" name="found-by" />
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
               </div>
-            </div>
-            <div className="flex_inital_setup">
-              <h3>Location Services</h3>
-              <label class="switch">
-                <input type="checkbox"/>
-                <span class="slider round"></span>
-              </label>
-            </div>
-            <div className="flex_inital_setup">
-              <h3>Show email</h3>
-              <label class="switch">
-                <input type="checkbox"/>
-                <span class="slider round"></span>
-              </label>
-            </div>
-            <div className="flex_inital_setup">
-              <h3>Show name</h3>
-              <label class="switch">
-                <input type="checkbox"/>
-                <span class="slider round"></span>
-              </label>
-            </div>
-          </dialog>
-        </div>
-        <Button
+              <div className="flex_inital_setup">
+                <h3>Location Services</h3>
+                <label class="switch">
+                  <input type="checkbox" />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <div className="flex_inital_setup">
+                <h3>Show email</h3>
+                <label class="switch">
+                  <input type="checkbox" />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <div className="flex_inital_setup">
+                <h3>Show name</h3>
+                <label class="switch">
+                  <input type="checkbox" />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </dialog>
+          </div>
+          <Button
             txt="done"
             // onClick={handleDone}
           >

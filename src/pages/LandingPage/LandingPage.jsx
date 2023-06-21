@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import ButtonHallow from "../../components/ButtonHallow";
-import LogoHorizontal from "../../components/LogoHorizontal";
 import "./LandingPage.css";
+import LogoVertical from "../../components/LogoVertical";
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ export default function LandingPage() {
         />
       </div>
       <div className="second_element">
-        <LogoHorizontal />
+        <LogoVertical />
         <p>
           Best way to plan and share your adventure with your friends and family
         </p>

@@ -4,20 +4,7 @@
   flex-direction: column;
   gap: 40px;
   padding: 50px 0;
-  height: 100vh;
-}
-
-.first_element {
-  width: 80%;
-}
-
-.second_element {
-  width: 80%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 40px;
+  min-height: 100vh;
 }
 
 img {
@@ -25,7 +12,8 @@ img {
 }
 
 svg {
-  width: 100%;
+  width: 80%;
+  padding: 20px 0;
 }
 
 p {
