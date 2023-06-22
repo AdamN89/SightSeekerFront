@@ -36,41 +36,43 @@ export default function TopMenu() {
 
 
   return (
-    <div className="topmenu__wrapper">
-        <div className="topmenu__topbar">
-            <LogoHorizontal />
-            <button onClick={openMenu} style={{ zIndex: isOpen ? 0: 3 }}><MenuIcon /></button>
-        </div>
-        <div className="topmenu__body-wrapper" ref={menuRef} style={{ opacity: isOpen ? 2 : 0 }}>
-          <div className="topmenu__body_header">
-            <img src="../../assets/defaultavatar/09.jpg" alt="user-img" />
-            <button onClick={closeMenu}><CloseIcon /></button>
+    // <div className="container">
+      <div className="topmenu__wrapper">
+          <div className="topmenu__topbar">
+              <LogoHorizontal />
+              <button onClick={openMenu} style={{ zIndex: isOpen ? 0: 3 }}><MenuIcon /></button>
           </div>
-          <div className="topmenu__body_body">
-            <Link to="/">
-              <p><TravelPlan />TravelPlan</p>
-            </Link>
-            <Link to="/">
-              <p><FavouritesIcon />Favourites</p>
-            </Link>
-            <Link to="/friends">
-              <p><FriendsIcon />Friends</p>
-            </Link>
-            <Link t0="/">
-              <p><ChatIcon />Chat</p>
-            </Link>
-            <Link to="/settings">
-              <p><SettingsIcon />Settings</p>
-            </Link>
-            <Link to="/about">
-              <p><AboutIcon />About</p>
-            </Link>
+          <div className="topmenu__body-wrapper" ref={menuRef} style={{ opacity: isOpen ? 2 : 0, transform: isOpen ? `translateY(${0}px)` : `translateY(${-1500}px)` }}>
+            <div className="topmenu__body_header">
+              <img src="../../assets/defaultavatar/09.jpg" alt="user-img" />
+              <button onClick={closeMenu}><CloseIcon /></button>
+            </div>
+            <div className="topmenu__body_body">
+              <Link to="/">
+                <p><TravelPlan />TravelPlan</p>
+              </Link>
+              <Link to="/">
+                <p><FavouritesIcon />Favourites</p>
+              </Link>
+              <Link to="/friends">
+                <p><FriendsIcon />Friends</p>
+              </Link>
+              <Link t0="/">
+                <p><ChatIcon />Chat</p>
+              </Link>
+              <Link to="/settings">
+                <p><SettingsIcon />Settings</p>
+              </Link>
+              <Link to="/about">
+                <p><AboutIcon />About</p>
+              </Link>
+            </div>
+              <div className="topmenu__body_footer">
+              <LogoHorizontal />
+            </div>
           </div>
-            <div className="topmenu__body_footer">
-            <LogoHorizontal />
-          </div>
-        </div>
-    </div>
+      </div>
+    // </div>
   )
 };
 

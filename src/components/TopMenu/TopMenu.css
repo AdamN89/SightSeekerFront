@@ -1,6 +1,19 @@
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 0;
+    padding: 50px 0;
+    min-height: 100vh;
+  }
+
 .topmenu__wrapper {
     height: 100vh;
     position: absolute;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: -webkit-fill-available;
 }
 
 .topmenu__topbar {
@@ -8,10 +21,11 @@
     flex-direction: row;
     justify-content: space-around;
     height: 7%;
-    gap:9px;
+    gap: 9px;
     opacity: 1;
     position: absolute;
     background: var(--bg_dark_liniar);
+    width: -webkit-fill-available;
 }
 
 .topmenu__topbar p {
@@ -28,13 +42,18 @@
     position: relative;
     width: 30%;
     left: 4%;   
-    z-index: 1;     
+    z-index: 1;  
 }
 
-.topmenu__topbar > button > svg {
+.topmenu__topbar svg {
     fill: #662D91;
     width: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
 }
+/* .topmenu__topbar svg:hover{
+    fill: var(--light_green);
+} */
 
 .topmenu__body-wrapper {
     height: 100%;
@@ -45,6 +64,7 @@
     backdrop-filter: blur(15px);
     opacity: 0;
     z-index: 2;
+    width: -webkit-fill-available;
 }
 
 .opening {
@@ -68,7 +88,7 @@
     backdrop-filter: blur(15px);
     opacity: 0;
     z-index: 2;
-    animation: slide-top 0.5s both;
+    animation: slide-top 0.8s both;
 }
 
 .topmenu__body_header {
@@ -84,22 +104,30 @@
     background: transparent;
     border: none;
     position: relative;
-    width: 30%;
-    left: 4%;
+    width: 120px;
     z-index: 1;
-    top: 15%;
+    /* left: 4%;
+    top: 15%; */
 }
 
 .topmenu__body_header > img {
-    width: 31%;
     position: relative;
     border-radius: 50%;
-    top: 20%;
+    top: 29%;
     left: 3%;
+    max-width: 120px;
+    height: auto;
 }
 
-.topmenu__body_header > button > svg {
-    width: 50%;
+.topmenu__body_header svg {
+    fill: rgba(11, 78, 74, 1);
+    width: 72%;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.topmenu__body_header svg:hover {
+    fill: var(--light_green);
 }
 
 .topmenu__body_body {
@@ -150,6 +178,6 @@
         transform: translateY(0px);
       }
       100% {
-        transform: translateY(-1000px);
+        transform: translateY(-2000px);
       }
 }
