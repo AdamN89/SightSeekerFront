@@ -1,33 +1,42 @@
 import Button from "../../components/Button";
-import ProgressBar from "../../components/ProgressBar";
 import { Link, NavLink } from "react-router-dom"
 import { useState } from "react";
 import "./FeaturesPage.css";
 import FeaturesPlanGraphic from "./FeaturesPlanGraphic";
 import FeaturesShareGrapfic from "./FeaturesShareGrapfic"
 import FeaturesBonVoyageGraphic from "./FeaturesBonVoyageGraphic"
+import ProgressBar from "../../components/ProgressBar";
+import CheckMark from "./CheckMark";
 
 export default function FeaturesPage() {
- const [ activeSlide, setActiveSlide ] = useState(0)
+ const [ activeSlide, setActiveSlide ] = useState(1)
 
  const handleNextSlide = () => {
-    setActiveSlide((prevSlide) => (prevSlide + 1));
-    console.log("working")
+    setActiveSlide((prevSlide) => prevSlide + 1);
   };
-
-  console.log(activeSlide)
 
   return (
     <div className="featurespage__wrapper">
         <div className="featurespage__slides-container">
+        <div className="step-progress">
+      <div className="step-progress-bar">
+      <div className={`step-progress-line ${activeSlide === 3 ? 'last-step' : ''}`} style={{ "--active-slide": activeSlide }}></div>
+        {/* <div className="step-progress-line" style={{ "--active-slide": activeSlide }}></div> */}
+      </div>
+      <div className="step-progress-step">
+        <div className={`step-progress-step-item ${activeSlide === 1 ? 'active' : ''}`}><CheckMark /></div>
+        <div className={`step-progress-step-item ${activeSlide === 2 ? 'active' : ''}`}><CheckMark /></div>
+        <div className={`step-progress-step-item ${activeSlide === 3 ? 'active' : ''}`}><CheckMark /></div>
+      </div>
+    </div>
+                    {/* <ProgressBar /> */}
             <div 
             id="slide1"
             className={`featurespage__slide ${
-            activeSlide === 0 ? 'active' : ''
+            activeSlide === 1 ? 'active' : ''
           }`}>
-                <ProgressBar />
                 <h1>Plan your travel</h1>
-                <FeaturesPlanGraphic />
+                <FeaturesPlanGraphic activeSlide={activeSlide} />
                 <p>
                     Introducing our new travel planning tool!
                     Now you can easily plan your next adventure with just a few clicks.
@@ -40,10 +49,10 @@ export default function FeaturesPage() {
             <div 
             id="slide2"
             className={`featurespage__slide ${
-                activeSlide === 1 ? 'active' : ''
+                activeSlide === 2 ? 'active' : ''
               }`}
             >
-                <ProgressBar />
+                {/* <StepsBar /> */}
                 <h1>Share the adventure</h1>
                 <FeaturesShareGrapfic />
                 <p>
@@ -57,10 +66,10 @@ export default function FeaturesPage() {
             <div 
             id="slide3"
             className={`featurespage__slide ${
-                activeSlide === 2 ? 'active' : ''
+                activeSlide === 3 ? 'active' : ''
               }`}
             >
-            <ProgressBar />
+            {/* <StepsBar /> */}
                 <h1>Bon Voyage!</h1>
                 <FeaturesBonVoyageGraphic />
                 <p>
