@@ -11,6 +11,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthContextProvider from "./context/AuthContext";
 import Loader from "./components/Loader/Loader";
+import FriendsPage from "./pages/FriendsPage/FriendsPage";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
     path: "/spiner",
     element: <Loader />,
   },
+  {
+    path: "/friends",
+    element: <FriendsPage />
+  }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
