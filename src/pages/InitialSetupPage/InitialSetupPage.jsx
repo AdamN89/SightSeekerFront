@@ -214,16 +214,25 @@ export default function InitalSetup() {
                 </div>
                 <div className="initial_setup_toggle">
                   <h3>Location Services</h3>
-                  <ToggleSwitch />
+                  <label class="toggle">
+                    <Field type="checkbox" className="toggle_checkbox" name="locationServices"/>
+                    <div class="toggle_switch"></div>
+                  </label>
 
                 </div>
                 <div className="initial_setup_toggle">
                   <h3>Show email</h3>
-                  <ToggleSwitch />
+                  <label class="toggle">
+                    <Field type="checkbox" className="toggle_checkbox" name="showEmail"/>
+                    <div class="toggle_switch"></div>
+                  </label>
                 </div>
                 <div className="initial_setup_toggle">
                   <h3>Show name</h3>
-                  <ToggleSwitch />
+                  <label class="toggle">
+                    <Field type="checkbox" className="toggle_checkbox" name="showName"/>
+                    <div class="toggle_switch"></div>
+                  </label>
                 </div>
               </dialog>
             <Button
