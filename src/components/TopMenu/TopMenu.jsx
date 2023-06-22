@@ -9,6 +9,7 @@ import SettingsIcon from "./Icons/SettingsIcon"
 import AboutIcon from "./Icons/AboutIcon"
 import CloseIcon from "./Icons/CloseIcon";
 import { useState, useRef } from "react";
+import { Link } from "react-router-dom"
 
 export default function TopMenu() {
   const [isOpen, setIsOpen ] = useState(false)
@@ -46,12 +47,24 @@ export default function TopMenu() {
             <button onClick={closeMenu}><CloseIcon /></button>
           </div>
           <div className="topmenu__body_body">
-            <p><TravelPlan />TravelPlan</p>
-            <p><FavouritesIcon />Favourites</p>
-            <p><FriendsIcon />Friends</p>
-            <p><ChatIcon />Chat</p>
-            <p><SettingsIcon />Settings</p>
-            <p><AboutIcon />About</p>
+            <Link to="/">
+              <p><TravelPlan />TravelPlan</p>
+            </Link>
+            <Link to="/">
+              <p><FavouritesIcon />Favourites</p>
+            </Link>
+            <Link to="/friends">
+              <p><FriendsIcon />Friends</p>
+            </Link>
+            <Link t0="/">
+              <p><ChatIcon />Chat</p>
+            </Link>
+            <Link to="/settings">
+              <p><SettingsIcon />Settings</p>
+            </Link>
+            <Link to="/about">
+              <p><AboutIcon />About</p>
+            </Link>
           </div>
             <div className="topmenu__body_footer">
             <LogoHorizontal />

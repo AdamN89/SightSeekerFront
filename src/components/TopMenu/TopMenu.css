@@ -1,5 +1,6 @@
 .topmenu__wrapper {
     height: 100vh;
+    position: absolute;
 }
 
 .topmenu__topbar {
@@ -151,8 +152,4 @@
       100% {
         transform: translateY(-1000px);
       }
-}
-
-$0 {
-    
 }
