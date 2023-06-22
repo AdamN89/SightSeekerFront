@@ -5,6 +5,7 @@
   padding: 0;
   box-sizing: border-box;
   --bg_dark: radial-gradient(hsl(200, 40%, 20%), hsl(200, 30%, 6%));
+  box-sizing: border-box;
   --bg_dark_liniar: linear-gradient(258.25deg, #272727 0.81%, #121212 98.9%);
   --btn_bg: linear-gradient(180deg, #00a299 0%, #0b4e4a 100%);
   --btn_delete_bg: linear-gradient(180deg, #a20000 0%, #4e0b0b 100%);
@@ -348,8 +349,8 @@ input[type="radio"]:checked::before {
   position: absolute;
   background: var(--modal_bg);
   backdrop-filter: blur(5px);
-  height: 100vh;
   width: 100%;
+  min-height: 100%;
   z-index: 10;
 }
 
