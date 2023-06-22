@@ -303,66 +303,30 @@ input[type="radio"]:checked::before {
   opacity: 0.4;
 }
 
-.btn_delete {
-  position: relative;
+.main-menu {
+  position: absolute;
+  z-index: 2;
+  bottom: 5px;
+  left: 15px;
+  right: 15px;
   display: flex;
-  justify-content: center;
+  /* gap: 20px; */
+  justify-content: space-between;
   align-items: center;
-  width: 100%;
+}
+.main-menu__btn,
+.main-menu__avatar {
+  background-color: var(--light_green);
+  border: 3px solid var(--dark_green);
+  border-radius: 50%;
+  width: 60px;
   height: 60px;
-  position: relative;
-  background: var(--btn_delete_bg);
-  border: 0;
-  border-radius: 20px;
-  color: var(--txt);
-  font-family: "Poppins", sans-serif;
-  font-weight: 700;
-  font-size: 22px;
-  text-transform: uppercase;
-  cursor: pointer;
+}
+
+.main-menu__avatar {
+  width: 80px;
+  height: 80px;
   overflow: hidden;
-}
-
-.btn_delete span {
-  z-index: 5;
-  position: absolute;
-  pointer-events: none;
-}
-
-.btn_delete::after {
-  content: "";
-  position: absolute;
-  top: calc(var(--y, 0) * 1px - 50px);
-  left: calc(var(--x, 0) * 1px - 100px);
-  width: 200px;
-  height: 100px;
-  background-color: var(--btn_delete_hover);
-  filter: blur(50px);
-  transition: opacity 0.4s;
-  opacity: 0;
-}
-
-.btn_delete:hover::after {
-  opacity: 0.4;
-}
-
-.map-container {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-}
-
-.sidebar {
-  background-color: rgba(35, 55, 75, 0.9);
-  color: #fff;
-  padding: 6px 12px;
-  font-family: monospace;
-  z-index: 1;
-  position: absolute;
-  top: 0;
-  left: 0;
-  margin: 12px;
-  border-radius: 4px;
 }
 
 /*===================================
