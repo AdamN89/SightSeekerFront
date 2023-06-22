@@ -12,7 +12,7 @@ export default function FeaturesPage() {
  const [ activeSlide, setActiveSlide ] = useState(1)
 
  const handleNextSlide = () => {
-    setActiveSlide((prevSlide) => (prevSlide + 1));
+    setActiveSlide((prevSlide) => prevSlide + 1);
   };
 
   return (
@@ -20,7 +20,7 @@ export default function FeaturesPage() {
         <div className="featurespage__slides-container">
         <div className="step-progress">
       <div className="step-progress-bar">
-      <div className="step-progress-line" style={{ "--active-slide": activeSlide }}></div>
+      <div className={`step-progress-line ${activeSlide === 3 ? 'last-step' : ''}`} style={{ "--active-slide": activeSlide }}></div>
         {/* <div className="step-progress-line" style={{ "--active-slide": activeSlide }}></div> */}
       </div>
       <div className="step-progress-step">
