@@ -37,6 +37,7 @@ export default function RegisterPage() {
 
       if (response.ok) {
         const registeredUser = await response.json();
+        localStorage.setItem("token", registeredUser.token);
       } else {
         console.log("Error occurred while registering");
       }
