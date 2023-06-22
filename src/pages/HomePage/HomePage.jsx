@@ -1,7 +1,10 @@
-import Map, { Marker } from "react-map-gl";
-import { useEffect, useState, useRef, useMemo, useCallback } from "react";
-import mapboxgl from "mapbox-gl";
+import Map, { Marker, Popup, NavigationControl } from "react-map-gl";
+import { useEffect, useState } from "react";
+import LogoHorizontal from "../../components/LogoHorizontal";
+import MenuIcon from "../../components/MenuIcon";
+import Menu from "../../components/Menu";
 import "mapbox-gl/dist/mapbox-gl.css";
+import "./HomePage.css";
 
 const TOKEN =
   "pk.eyJ1Ijoic3RlcGhhbnVsbG1hbm4iLCJhIjoiY2xqNWVyZjV4MDF2cTNkcG0weTE4cjB6ZSJ9.FeahDy79a69Y5JxlkBkfIA";
@@ -13,16 +16,7 @@ export default function HomePage() {
     latitude: 52.457056,
     zoom: 15,
   });
-
-  const markerRef = useRef();
-
-  const popup = useMemo(() => {
-    return new mapboxgl.Popup().setText("Hello world!");
-  }, []);
-
-  const togglePopup = useCallback(() => {
-    markerRef.current?.togglePopup();
-  }, []);
+  const [showPopup, setShowPopup] = useState(true);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -55,24 +49,56 @@ export default function HomePage() {
 
   return (
     <div className="container map-container">
+      <nav className="home__nav">
+        <LogoHorizontal />
+        <button>
+          <MenuIcon />
+        </button>
+      </nav>
       {userCoords.latitude && userCoords.longitude && (
         <Map
           {...viewState}
           mapboxAccessToken={TOKEN}
           mapStyle="mapbox://styles/mapbox/streets-v12"
-          style={{ width: "100%", height: "100%", overflow: "hidden" }}
+          style={{
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: "100vh",
+            overflow: "hidden",
+          }}
           onMove={handleMapMove}
           reuseMaps={true}
           cursor="drag"
         >
+          <NavigationControl />
+          {showPopup && (
+            <Popup
+              latitude={userCoords.latitude}
+              longitude={userCoords.longitude}
+              onClose={() => setShowPopup(false)}
+              // closeButton={true}
+              closeOnClick={true}
+              // offsetTop={-30}
+            >
+              <h3>Current location</h3>
+              <p>Lat: {userCoords.latitude}</p>
+              <p>Lng: {userCoords.longitude}</p>
+            </Popup>
+          )}
           <Marker
             longitude={userCoords.longitude}
             latitude={userCoords.latitude}
-            popup={popup}
-            ref={markerRef}
-          />
+            onClick={(e) => {
+              e.originalEvent.stopPropagation();
+              setShowPopup(true);
+            }}
+          >
+            <img src="./assets/marker.png" alt="marker" />
+          </Marker>
         </Map>
       )}
+      <Menu />
     </div>
   );
 }
