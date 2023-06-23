@@ -63,6 +63,8 @@
     z-index: 2;
     width: -webkit-fill-available;
     align-items: center;
+    background: rgba(13, 13, 13, 0.7);
+
 }
 
 .opening {
