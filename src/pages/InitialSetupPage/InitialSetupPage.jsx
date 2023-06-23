@@ -1,5 +1,5 @@
 import "./InitialSetup.css";
-import { useState, useRef, useContext } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import InitialSetupGraphic from "./InitialSetupGraphic";
 import Button from "../../components/Button";
 import ButtonHallow from "../../components/ButtonHallow";
@@ -17,9 +17,10 @@ const initialSetupValues = {
 
 export default function InitalSetup() {
   const avatarDialog = useRef(null);
-  const poiDialog = useRef(null)
-  const privacyDialog = useRef(null)
-
+  const poiDialog = useRef(null);
+  const privacyDialog = useRef(null);
+  const modalRef = useRef(null);
+  const [modalHeight, setModalHeight] = useState(0);
   const [openDrop1, setOpenDrop1] = useState(false);
   const [openDrop2, setOpenDrop2] = useState(false);
   const [openDrop3, setOpenDrop3] = useState(false);
@@ -31,13 +32,12 @@ export default function InitalSetup() {
   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDhkZjY2MWY0OGZiOWIzMjEzYTgzMWEiLCJpYXQiOjE2ODc1MzUzNTQsImV4cCI6MTY4NzYyMTc1NH0.8cQ_DB36kBNLxsXM8yri19IniaL7LVUzFXGoRO1Cbig"
 
   const handleFormSubmit = async (values) => {
-    await saveInitialSettings(values)
-  }
+    await saveInitialSettings(values);
+  };
 
   const handleSubmitButtonClick = async (submitForm) => {
     await submitForm();
   };
-
   const submitAvatar = async (theChosenOne) => {
     if(uploadedImgURL === theChosenOne){
       const formData = new FormData();
@@ -83,16 +83,19 @@ export default function InitalSetup() {
   }
 
   const saveInitialSettings = async (values) => {
-    console.log(values)
+    console.log(values);
     try {
-      const response = await fetch("http://localhost:8080/user/initalsettings", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify(values),
-      });
+      const response = await fetch(
+        "http://localhost:8080/user/initalsettings",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(values),
+        }
+      );
 
       if (response.ok) {
         const responseData = await response.json();
@@ -118,11 +121,10 @@ export default function InitalSetup() {
       setOpenDrop3(false);
     }
     if (event.target.innerHTML == "point preferences") {
-      if(openDrop1){
-        poiDialog.current.close()
-      }
-      else{
-        poiDialog.current.show()
+      if (openDrop1) {
+        poiDialog.current.close();
+      } else {
+        poiDialog.current.show();
       }
       setOpenDrop1(false);
       setOpenDrop2(!openDrop2);
@@ -147,7 +149,19 @@ export default function InitalSetup() {
     setOpenDrop1(false);
     setOpenDrop2(false);
     setOpenDrop3(false);
-  }
+  };
+
+  const fullHeight = "100%";
+
+  useEffect(() => {
+    // openDrop1 ? setModalHeight(avatarDialog.current.offsetHeight) : null;
+    if (openDrop1) {
+      setModalHeight(avatarDialog.current.offsetHeight);
+    }
+  }, [openDrop1]);
+
+  const calcHeight = `max(${modalHeight + 40}px, 100%)`;
+  console.log(calcHeight);
 
   const handleChosenOne = (event) => {
     setTheChosenOne(event.target.src)
@@ -256,11 +270,10 @@ export default function InitalSetup() {
 
                   </label>
 
-                    <label>
-                      
-                      <Field type="radio" name="foundBy" value="friends"/>Friends
-
-                    </label>
+                        <label>
+                          <Field type="radio" name="foundBy" value="friends" />
+                          Friends
+                        </label>
 
                     <label >
                       

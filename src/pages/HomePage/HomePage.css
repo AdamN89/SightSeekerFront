@@ -86,7 +86,7 @@
 }
 
 .mapboxgl-marker {
-  z-index: 10;
+  z-index: 2;
 }
 
 .mapboxgl-popup-tip,
@@ -117,3 +117,9 @@
 /* .mapboxgl-ctrl-group > :last-child {
   display: none;
 } */
+
+.mapboxgl-ctrl-top-right{
+  right: 0;
+  top: 7%;
+  z-index: 0;
+}

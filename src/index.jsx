@@ -8,10 +8,13 @@ import FeaturesPage from "./pages/FeaturesPage/FeaturesPage";
 import AboutPage from "./pages/AboutPage/AboutPage";
 import InitialSetupPage from "./pages/InitialSetupPage/InitialSetupPage";
 import HomePage from "./pages/HomePage/HomePage";
+import FriendsPage from "./pages/FriendsPage/FriendsPage";
+import ReceivedInvitation from "./pages/FriendsPage/ReceivedInvitation";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthContextProvider from "./context/AuthContext";
 import Loader from "./components/Loader/Loader";
 import DataContextProvider from "./context/DataContext";
+import Chat from "./components/Chat/Chat";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +52,18 @@ const router = createBrowserRouter([
   {
     path: "/spiner",
     element: <Loader />,
+  },
+  {
+    path: "/friends",
+    element: <FriendsPage />,
+  },
+  {
+    path: "/chat",
+    element: <Chat />,
+  },
+  {
+    path: "/invitation",
+    element: <ReceivedInvitation />,
   },
 ]);
 

@@ -21,10 +21,8 @@ export default function ButtonHallow({ txt, func }) {
   }, [buttonRef]);
 
   return (
-    <div>
-      <button onClick={func} className="btn_hallow" ref={buttonRef}>
-        {txt}
-      </button>
-    </div>
+    <button onClick={func} className="btn_hallow" ref={buttonRef}>
+      {txt}
+    </button>
   );
 }

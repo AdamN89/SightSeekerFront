@@ -21,10 +21,8 @@ export default function ButtonDelete({ txt, func }) {
   }, [buttonRef]);
 
   return (
-    <div>
-      <button onClick={func} className="btn_delete" ref={buttonRef}>
-        <span>{txt}</span>
-      </button>
-    </div>
+    <button onClick={func} className="btn_delete" ref={buttonRef}>
+      <span>{txt}</span>
+    </button>
   );
 }

@@ -21,10 +21,8 @@ export default function Button({ txt, func }) {
   }, [buttonRef]);
 
   return (
-    <>
-      <button onClick={func} className="btn" ref={buttonRef}>
-        <span>{txt}</span>
-      </button>
-    </>
+    <button onClick={func} className="btn" ref={buttonRef}>
+      <span>{txt}</span>
+    </button>
   );
 }

@@ -5,10 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import LoginGraphic from "./LoginGraphic";
+import Loader from "../../components/Loader/Loader";
 
 export default function LoginPage() {
   const { login, setUser } = useContext(AuthContext);
-
   const [loginOne, setLoginOne] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -42,8 +42,13 @@ export default function LoginPage() {
         login(data.token);
         setUser(data.data);
         setIsLoading(false);
-        // console.log("data from login fetch: ", data);
-        // navigate("/home");
+        console.log("data from login fetch: ", data);
+
+        const invitationsReceived = data.data.friends.some(
+          (friend) => friend.received
+        );
+        if (invitationsReceived) navigate("/invitation");
+        else navigate("/friends");
       }
     };
 
@@ -52,6 +57,7 @@ export default function LoginPage() {
 
   return (
     <div className="container">
+      {isLoading ? <Loader /> : null}
       <div className="first_element">
         <LoginGraphic />
       </div>
