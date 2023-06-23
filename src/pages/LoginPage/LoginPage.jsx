@@ -42,8 +42,13 @@ export default function LoginPage() {
         login(data.token);
         setUser(data.data);
         setIsLoading(false);
-        // console.log("data from login fetch: ", data);
-        // navigate("/home");
+        console.log("data from login fetch: ", data);
+
+        const invitationsReceived = data.data.friends.some(
+          (friend) => friend.received
+        );
+        if (invitationsReceived) navigate("/invitation");
+        else navigate("/friends");
       }
     };
 

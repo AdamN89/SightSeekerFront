@@ -28,6 +28,7 @@ export default function AuthContextProvider({ children }) {
 
   useEffect(() => {
     console.log("from auth - user: ", user);
+    console.log("token: ", token);
   }, [user]);
 
   return (
