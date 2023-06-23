@@ -13,6 +13,7 @@ import ReceivedInvitation from "./pages/FriendsPage/ReceivedInvitation";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthContextProvider from "./context/AuthContext";
 import Loader from "./components/Loader/Loader";
+import DataContextProvider from "./context/DataContext";
 import Chat from "./components/Chat/Chat";
 
 const router = createBrowserRouter([
@@ -70,7 +71,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <AuthContextProvider>
-      <RouterProvider router={router} />
+      <DataContextProvider>
+        <RouterProvider router={router} />
+      </DataContextProvider>
     </AuthContextProvider>
   </React.StrictMode>
 );
