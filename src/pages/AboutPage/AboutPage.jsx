@@ -5,8 +5,8 @@ import ButtonDelete from "../../components/ButtonDelete";
 export default function About() {
   return (
     <div>
-      {/* <TopMenu /> */}
-      <ButtonDelete txt={"some  text"} />
+      <TopMenu />
+      {/* <ButtonDelete txt={"some  text"} /> */}
     </div>
   );
 }

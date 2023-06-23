@@ -1,3 +1,5 @@
+import Chat from "../components/Chat/Chat"
+
 export default function Menu({ user }) {
   return (
     <nav className="main-menu">
@@ -10,7 +12,7 @@ export default function Menu({ user }) {
           <img src="../assets/defaultavatar/01.jpg" alt="avatar" />
         )}
       </button>
-      <button className="main-menu__btn"></button>
+      <Chat />
       <button className="main-menu__btn"></button>
     </nav>
   );
