@@ -399,3 +399,22 @@ input[type="radio"]:checked::before {
 .hide {
   display: none;
 }
+
+/*===================================
+  close button (cross), title wrapper
+===================================*/
+.close_btn,
+.close_btn > svg {
+  fill: var(--dark_green);
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.title_wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 20px;
+}
