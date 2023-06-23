@@ -3,6 +3,11 @@
   margin: 0 auto;
 } */
 
+
+#uploadButton{
+  display: none;
+}
+
 .avatars {
   display: flex;
   justify-content: center;
@@ -11,10 +16,16 @@
 }
 
 .avatars img {
+  border: 2px solid transparent;
   width: 128px;
+  height: 128px;
+  object-fit: cover;
   border-radius: 20px;
 }
 
+.selectedAvatar{
+  border: 2px var(--light_green) solid !important;
+}
 .modal_container {
   display: flex;
   align-items: center;
