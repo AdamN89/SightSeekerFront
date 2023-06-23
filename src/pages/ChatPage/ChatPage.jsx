@@ -19,26 +19,39 @@ export default function ChatPage() {
             </div>
         </div>
         <div className="second_element">
-            <div className="chat_wall">
-                <div className="bla">
-                    blabla
-                    blabla
-                    blabla
-                    blabla
-                    <div className="blbalba">
-                        blabla
-                        blabla
-                        blabla
-                        blabla
+            <div className="chat_wall-container">
+                    <div className="chat_wall-date">
+                        <p>Today</p>
                     </div>
-                    <div className="blbalba">
-                        blabla
-                        blabla
-                        blabla
-                        blabla
+                <div className="chat_wall">
+                        <div className="senders_message">
+                            <div className="senders_message-body">
+                            <p>
+                                Introducing our new travel planning tool!
+                                Now you can easily plan your next adventure with just a few clicks.
+                            </p>
+                            </div>
+                            <div className="senders_message-footer">
+                                <p className="footer-p">Stephan</p>
+                                <p className="footer-p">14:53</p>
+                            </div>
+                        </div>
+                        <div className="users_message">
+                            <div className="users_message-body">
+                            <p>Introducing our new travel planning tool! </p>
+                            </div>
+                            <div className="users_message-footer">
+                                <p className="footer-p">You</p>
+                                <p className="footer-p">14:56</p>
+                            </div>
+                        </div>
+                    <div className="chat_input">
+                        <button onClick={() => console.log("this is working")}>
+                            <SendMessageIcon />
+                        </button>
+                        <input type="text" placeholder="Enter your message" />
                     </div>
                 </div>
-                <input type="text" placeholder="Enter your message" />
             </div>
         </div>
     </div>

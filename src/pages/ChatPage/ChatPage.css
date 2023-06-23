@@ -1,5 +1,7 @@
 .container {
     height: 100vh;
+    background: rgba(13, 13, 13, 0.9);
+
 }
 
 .first_element {
@@ -51,12 +53,34 @@
     height: 100%;
 }
 
-.chat_wall {
-    background: linear-gradient(180deg, #1E1E1E 0%, #121212 100%);
+.second_element > div > svg {
+    position: absolute;
+    top: 89.5%;
+    left: 75%;
+    width: 9%;
+}
+
+.chat_wall-container {
+    background: rgba(30, 30, 30, 1);
     width: 100%;
     height: 100%;
-    border: 2px solid white;
-    border-radius: 5px;
+    border-radius: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat_wall {
+    /* background: rgba(30, 30, 30, 1);
+    width: 100%;
+    height: 100%;
+    border-radius: 22px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; */
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -64,4 +88,44 @@
 
 .chat_wall input {
     height: 45px;
+    text-align: left;
+    text-indent: 10px;
+}
+
+.chat_wall button {
+    position: absolute;
+    top: 89.5%;
+    left: 73%;
+}
+
+.senders_message {
+
+}
+
+.senders_message-body {
+
+}
+
+.senders_message-body p {
+
+}
+
+.footer-p {
+
+}
+
+.senders_message-footer {
+
+}
+
+.users_message {
+
+}
+
+.users_message-body {
+    
+}
+
+.users_message-body p{
+    
 }
