@@ -49,22 +49,22 @@ export default function TopMenu() {
             </div>
             <div className="topmenu__body_body">
               <Link to="/">
-                <p><TravelPlan />TravelPlan</p>
+                <TravelPlan /><p>TravelPlan</p>
               </Link>
               <Link to="/">
-                <p><FavouritesIcon />Favourites</p>
+                <FavouritesIcon /><p>Favourites</p>
               </Link>
               <Link to="/friends">
-                <p><FriendsIcon />Friends</p>
+                <FriendsIcon /><p>Friends</p>
               </Link>
               <Link t0="/">
-                <p><ChatIcon />Chat</p>
+                <ChatIcon /><p>Chat</p>
               </Link>
               <Link to="/settings">
-                <p><SettingsIcon />Settings</p>
+                <SettingsIcon /><p>Settings</p>
               </Link>
               <Link to="/about">
-                <p><AboutIcon />About</p>
+                <AboutIcon /><p>About</p>
               </Link>
             </div>
               <div className="topmenu__body_footer">
