@@ -9,7 +9,9 @@ import { useNavigate } from "react-router-dom";
 
 export default function ReceivedInvitation() {
   const [invitationsStack, setInvitationsStack] = useState([]);
+  const [queuedUser, setQueuedUser] = useState(null);
   const [error, setError] = useState(null);
+  const [firstRun, setFirstRun] = useState(true);
   const { token, user, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
   // console.log(token);
@@ -20,10 +22,12 @@ export default function ReceivedInvitation() {
     if (invitations.length === 0) navigate("/home");
   }, [user]);
 
-  const queuedUser =
-    invitationsStack.length > 0
-      ? invitationsStack[invitationsStack.length - 1]
-      : navigate("/home");
+  useEffect(() => {
+    if (invitationsStack.length || firstRun) {
+      setQueuedUser(invitationsStack[invitationsStack.length - 1]);
+      setFirstRun(false);
+    } else navigate("/home");
+  }, [invitationsStack]);
 
   // console.log("invitationsStack: ", invitationsStack);
   console.log("queuedUser: ", queuedUser);
