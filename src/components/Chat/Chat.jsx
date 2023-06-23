@@ -34,7 +34,7 @@ export default function Chat() {
     <div className="chat__wrapper" style={{ transform: isOpen ? `translateY(${0}px)` : `translateY(${-1000}px)` }}>
         <div className="chat__body-wrapper" ref={menuRef} style={{ opacity: isOpen ? 2 : 0}}>
           <div className="chat__body_header">
-            <h1>Chats</h1>
+            <h1 className="title">Chats</h1>
             <button onClick={closeMenu}><CloseIcon /></button>
         </div>
         <SearchBar />
