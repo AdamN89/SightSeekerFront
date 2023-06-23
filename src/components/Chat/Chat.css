@@ -1,0 +1,58 @@
+.topmenu__body-wrapper {
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    backdrop-filter: blur(15px);
+    opacity: 0;
+    z-index: 2;
+}
+
+.lol {
+    height: 100%;
+    
+}
+
+.opening {
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    backdrop-filter: blur(15px);
+    opacity: 0;
+    z-index: 2;
+    animation: slide-top 0.5s both;
+}
+
+.closing {
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    backdrop-filter: blur(15px);
+    opacity: 0;
+    z-index: 2;
+    animation: slide-bottom 0.5s both;
+}
+
+
+@keyframes slide-top {
+    0% {
+      transform: translateY(1000px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
+@keyframes slide-bottom {
+    0% {
+        transform: translateY(0px);
+      }
+      100% {
+        transform: translateY(1000px);
+      }
+}

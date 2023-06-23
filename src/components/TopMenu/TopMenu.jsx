@@ -18,7 +18,6 @@ export default function TopMenu() {
     const openMenu = () => {
       menuRef.current.classList.add("opening")
       setIsOpen(!isOpen)
-      // setIsClosing(false)
       setTimeout(() => {
         menuRef.current.classList.remove("opening")
       }, 500)
