@@ -12,7 +12,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthContextProvider from "./context/AuthContext";
 import Loader from "./components/Loader/Loader";
 import FriendsPage from "./pages/FriendsPage/FriendsPage";
-import Chat from "./components/Chat/Chat";
+import ChatPage from "./pages/ChatPage/ChatPage";
 
 const router = createBrowserRouter([
   {
@@ -57,7 +57,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/chat",
-    element: <Chat />
+    element: <ChatPage />
   }
 ]);
 

@@ -1,4 +1,5 @@
 import { useState, useRef } from "react"
+import { Link } from "react-router-dom"
 import "./Chat.css"
 import CloseIcon from "../TopMenu/Icons/CloseIcon"
 import SearchBar from "../SearchBar"
@@ -39,7 +40,7 @@ export default function Chat() {
         </div>
         <SearchBar />
         <div className="chat__body_body">
-            <Button txt={"CREATE GROUP CHAT"} />
+            <Link to="/chat"><Button txt={"CREATE GROUP CHAT"} /></Link>
             <div className="groupchat">
                 <div className="groupchat-content">
                     <div className="groupchat-name">My group chat</div>

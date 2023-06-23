@@ -1,0 +1,67 @@
+.container {
+    height: 100vh;
+}
+
+.first_element {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.first_element > p {
+    text-align: left;
+    width: 100%;
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.first_element svg {
+    width: 32px;
+    fill: var(--dark_green);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.first_element svg:hover {
+    fill: var(--light_green);
+}
+
+.title_container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.title {
+    font-size: 30px;
+}
+
+.members {
+    width: 100%;
+}
+
+.members img {
+    border-radius: 50%;
+    width: 25%;
+}
+
+.second_element {
+    height: 100%;
+}
+
+.chat_wall {
+    background: linear-gradient(180deg, #1E1E1E 0%, #121212 100%);
+    width: 100%;
+    height: 100%;
+    border: 2px solid white;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.chat_wall input {
+    height: 45px;
+}
