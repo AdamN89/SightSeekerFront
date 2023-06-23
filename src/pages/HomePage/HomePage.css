@@ -117,3 +117,9 @@
 /* .mapboxgl-ctrl-group > :last-child {
   display: none;
 } */
+
+.mapboxgl-ctrl-top-right{
+  right: 0;
+  top: 61px;
+  z-index: 0;
+}

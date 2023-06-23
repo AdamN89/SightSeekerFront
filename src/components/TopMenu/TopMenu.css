@@ -14,6 +14,7 @@
     align-items: center;
     flex-direction: column;
     width: -webkit-fill-available;
+    z-index: 1;
 }
 
 .topmenu__topbar {

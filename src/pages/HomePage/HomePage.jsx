@@ -5,6 +5,7 @@ import MenuIcon from "../../components/MenuIcon";
 import Menu from "../../components/Menu";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "./HomePage.css";
+import TopMenu from "../../components/TopMenu/TopMenu"
 
 const TOKEN =
   "pk.eyJ1Ijoic3RlcGhhbnVsbG1hbm4iLCJhIjoiY2xqNWVyZjV4MDF2cTNkcG0weTE4cjB6ZSJ9.FeahDy79a69Y5JxlkBkfIA";
@@ -49,12 +50,13 @@ export default function HomePage() {
 
   return (
     <div className="container map-container">
-      <nav className="home__nav">
+      <TopMenu />
+      {/* <nav className="home__nav">
         <LogoHorizontal />
         <button>
           <MenuIcon />
         </button>
-      </nav>
+      </nav> */}
       {userCoords.latitude && userCoords.longitude && (
         <Map
           {...viewState}
