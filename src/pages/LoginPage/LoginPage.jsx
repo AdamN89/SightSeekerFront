@@ -5,10 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import LoginGraphic from "./LoginGraphic";
+import Loader from "../../components/Loader/Loader";
 
 export default function LoginPage() {
   const { login, setUser } = useContext(AuthContext);
-
   const [loginOne, setLoginOne] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -52,6 +52,7 @@ export default function LoginPage() {
 
   return (
     <div className="container">
+      {isLoading ? <Loader /> : null}
       <div className="first_element">
         <LoginGraphic />
       </div>
