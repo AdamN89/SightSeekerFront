@@ -13,7 +13,6 @@ import { Link } from "react-router-dom"
 
 export default function TopMenu() {
   const [isOpen, setIsOpen ] = useState(false)
-  const [ isClosing, setIsClosing ] = useState(false)
   const menuRef = useRef(null)
 
     const openMenu = () => {
@@ -35,7 +34,6 @@ export default function TopMenu() {
 
 
   return (
-    // <div className="container">
       <div className="topmenu__wrapper">
           <div className="topmenu__topbar">
               <LogoHorizontal />
@@ -71,7 +69,6 @@ export default function TopMenu() {
             </div>
           </div>
       </div>
-    // </div>
   )
 };
 

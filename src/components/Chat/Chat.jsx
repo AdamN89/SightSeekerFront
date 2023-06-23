@@ -10,8 +10,8 @@ export default function Chat() {
     const [isOpen, setIsOpen ] = useState(false)
     const menuRef = useRef(null)
 
-    // Take this code and paste it to open the modal. Don't forget to import deps.
-    const openMenu = () => {
+     const openMenu = () => {
+      if (isOpen === false)
       menuRef.current.classList.add("chatopening")
       setIsOpen(!isOpen)
       setTimeout(() => {
@@ -29,9 +29,10 @@ export default function Chat() {
     }
 
   return (
-    <div className="chat__wrapper">
-      {/* <button onClick={openMenu}>Open the modal</button> <button onClick={closeMenu}>Close Modal</button> */}
-        <div className="chat__body-wrapper" ref={menuRef} style={{ opacity: isOpen ? 2 : 0 }}>
+    <>
+    <div className="main-menu__btn" onClick={openMenu}></div>  
+    <div className="chat__wrapper" style={{ transform: isOpen ? `translateY(${0}px)` : `translateY(${-1000}px)` }}>
+        <div className="chat__body-wrapper" ref={menuRef} style={{ opacity: isOpen ? 2 : 0}}>
           <div className="chat__body_header">
             <h1>Chats</h1>
             <button onClick={closeMenu}><CloseIcon /></button>
@@ -70,6 +71,6 @@ export default function Chat() {
         </div>
         </div>
     </div>
+    </>
   )
 };
-
