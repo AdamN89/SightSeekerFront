@@ -85,6 +85,16 @@
   }
 }
 
+.mapboxgl-popup-content h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.mapboxgl-popup-content p {
+  font-size: 16px;
+  text-align: left;
+}
+
 .mapboxgl-marker {
   z-index: 2;
 }

@@ -2,7 +2,7 @@ export default function FeaturesBonVoyageGraphic() {
   return (
     <>
       <svg viewBox="0 0 340 466" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g clip-path="url(#clip0_65_1630)" filter="url(#filter0_d_65_1630)">
+        <g clipPath="url(#clip0_65_1630)" filter="url(#filter0_d_65_1630)">
           <path
             d="M188.201 42.5174C190.162 38.5506 192.872 34.9625 196.146 31.997C198.241 30.1035 200.586 28.4475 203.201 27.3948C208.019 25.4499 213.67 25.7002 218.303 28.0559C222.935 30.4116 226.466 34.8405 227.741 39.8857C228.625 43.3903 228.458 47.0747 227.939 50.6499C215.093 45.8423 201.695 40.9576 188.047 42.2606L188.207 42.5174H188.201Z"
             fill="url(#paint0_linear_65_1630)"
@@ -413,9 +413,9 @@ export default function FeaturesBonVoyageGraphic() {
             width="340"
             height="466"
             filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB"
+            colorInterpolationFilters="sRGB"
           >
-            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+            <feFlood floodOpacity="0" result="BackgroundImageFix" />
             <feColorMatrix
               in="SourceAlpha"
               type="matrix"
