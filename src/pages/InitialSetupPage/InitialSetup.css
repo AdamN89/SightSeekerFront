@@ -1,3 +1,6 @@
+#uploadButton {
+  display: none;
+}
 
 .avatars {
   display: flex;

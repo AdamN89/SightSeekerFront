@@ -5,9 +5,10 @@ import MenuIcon from "../../components/MenuIcon";
 import Menu from "../../components/Menu";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "./HomePage.css";
-import TopMenu from "../../components/TopMenu/TopMenu"
+import TopMenu from "../../components/TopMenu/TopMenu";
 import Chat from "../../components/Chat/Chat";
 
+const mapStyle = "mapbox://styles/stephanullmann/clj7lajvj005t01que278452b";
 const TOKEN =
   "pk.eyJ1Ijoic3RlcGhhbnVsbG1hbm4iLCJhIjoiY2xqNWVyZjV4MDF2cTNkcG0weTE4cjB6ZSJ9.FeahDy79a69Y5JxlkBkfIA";
 
@@ -60,10 +61,10 @@ export default function HomePage() {
       </nav> */}
       {userCoords.latitude && userCoords.longitude && (
         <Map
-        {...viewState}
-        mapboxAccessToken={TOKEN}
-        mapStyle="mapbox://styles/mapbox/streets-v12"
-        style={{
+          {...viewState}
+          mapboxAccessToken={TOKEN}
+          mapStyle={mapStyle}
+          style={{
             bottom: 0,
             left: 0,
             right: 0,
@@ -73,16 +74,16 @@ export default function HomePage() {
           onMove={handleMapMove}
           reuseMaps={true}
           cursor="drag"
-          >
+        >
           <NavigationControl />
           {showPopup && (
             <Popup
-            latitude={userCoords.latitude}
-            longitude={userCoords.longitude}
-            onClose={() => setShowPopup(false)}
-            // closeButton={true}
-            closeOnClick={true}
-            // offsetTop={-30}
+              latitude={userCoords.latitude}
+              longitude={userCoords.longitude}
+              onClose={() => setShowPopup(false)}
+              // closeButton={true}
+              closeOnClick={true}
+              // offsetTop={-30}
             >
               <h3>Current location</h3>
               <p>Lat: {userCoords.latitude}</p>
