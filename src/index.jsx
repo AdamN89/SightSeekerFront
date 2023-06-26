@@ -8,9 +8,13 @@ import FeaturesPage from "./pages/FeaturesPage/FeaturesPage";
 import AboutPage from "./pages/AboutPage/AboutPage";
 import InitialSetupPage from "./pages/InitialSetupPage/InitialSetupPage";
 import HomePage from "./pages/HomePage/HomePage";
+import FriendsPage from "./pages/FriendsPage/FriendsPage";
+import ReceivedInvitation from "./pages/FriendsPage/ReceivedInvitation";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthContextProvider from "./context/AuthContext";
 import Loader from "./components/Loader/Loader";
+import DataContextProvider from "./context/DataContext";
+import Chat from "./components/Chat/Chat";
 import FriendsPage from "./pages/FriendsPage/FriendsPage";
 import ChatPage from "./pages/ChatPage/ChatPage";
 
@@ -53,19 +57,27 @@ const router = createBrowserRouter([
   },
   {
     path: "/friends",
-    element: <FriendsPage />
+    element: <FriendsPage />,
   },
   {
     path: "/chat",
     element: <ChatPage />
   }
+    element: <Chat />,
+  },
+  {
+    path: "/invitation",
+    element: <ReceivedInvitation />,
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <AuthContextProvider>
-      <RouterProvider router={router} />
+      <DataContextProvider>
+        <RouterProvider router={router} />
+      </DataContextProvider>
     </AuthContextProvider>
   </React.StrictMode>
 );

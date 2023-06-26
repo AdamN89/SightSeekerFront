@@ -2,7 +2,7 @@ export default function LoginGraphic() {
   return (
     <>
       <svg viewBox="0 0 377 560" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g clip-path="url(#clip0_65_2021)" filter="url(#filter0_d_65_2021)">
+        <g clipPath="url(#clip0_65_2021)" filter="url(#filter0_d_65_2021)">
           <path
             d="M350.916 483.401C352.898 482.787 355.121 483.978 356.154 485.82C357.186 487.652 357.186 489.94 356.628 491.977C356.154 493.726 355.242 495.4 353.819 496.47C351.363 498.302 347.633 497.846 345.503 495.633C343.372 493.419 342.935 489.782 344.256 486.982C345.577 484.183 348.479 482.322 351.512 482.053L350.926 483.401H350.916Z"
             fill="#87C3A9"
@@ -502,9 +502,9 @@ export default function LoginGraphic() {
             width="377"
             height="560"
             filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB"
+            colorInterpolationFilters="sRGB"
           >
-            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+            <feFlood floodOpacity="0" result="BackgroundImageFix" />
             <feColorMatrix
               in="SourceAlpha"
               type="matrix"

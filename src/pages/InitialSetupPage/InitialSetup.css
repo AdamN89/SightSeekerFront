@@ -1,3 +1,7 @@
+#uploadButton {
+  display: none;
+}
+
 .avatars {
   display: flex;
   justify-content: center;
@@ -6,15 +10,12 @@
 }
 
 .avatars img {
+  border: 2px solid transparent;
   width: 128px;
+  height: 128px;
+  object-fit: cover;
   border-radius: 20px;
 }
-
-.inital_setup_element svg {
-  width: 80%;
-  margin-top: -30px;
-}
-
 .modal_container {
   display: flex;
   align-items: center;
