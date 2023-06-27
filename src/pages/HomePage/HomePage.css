@@ -128,9 +128,19 @@
   border-radius: 50% !important;
   height: 40px;
   width: 40px;
-  background-color: var(--light_green);
-  border: 2px solid var(--dark_green) !important;
-  transition: all 200ms ease;
+  background-color: var(--dark_green);
+  border: 2px solid var(--light_green) !important;
+  transition: all 0.3s ease;
+}
+
+.mapboxgl-ctrl-group button:hover {
+  background-color: var(--dark_purple) !important;
+  border: 2px solid var(--light_purple) !important;
+  transition: all 0.3s ease;
+}
+
+.mapboxgl-ctrl-icon {
+  filter: invert(100%);
 }
 
 /* .mapboxgl-ctrl-group > :last-child {
