@@ -10,7 +10,7 @@
 }
 
 .avatars img {
-  border: 2px solid transparent;
+  border: 4px solid transparent;
   width: 128px;
   height: 128px;
   object-fit: cover;
@@ -93,8 +93,16 @@
   gap: 20px;
 }
 
+.selectedAvatar{
+  border: 4px solid var(--light_green) !important;
+}
+
 .initial_setup_toggle {
   display: flex;
   justify-content: space-between;
   margin: 25px 0;
+}
+
+#uploadButton{
+  visibility: hidden;
 }
