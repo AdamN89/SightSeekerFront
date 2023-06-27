@@ -77,11 +77,9 @@ export default function Chat() {
 
       {/* Right Side */}
       <div className="Right-side-chat">
-        <div style={{width: "20rem", alignSelf: "flex-end"}}>
-      
+        <div style={{width: "100%", alignSelf: "flex-end"}}>
       {/* Chat Body */}
       <ChatBox chat={currentChat} currentUserId={user._id} setSendMessage={setSendMessage} receiveMessage={receiveMessage}/>
-
         </div>
       </div>
       

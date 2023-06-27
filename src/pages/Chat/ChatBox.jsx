@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react"
 import { format } from "timeago.js"
 import InputEmoji from "react-input-emoji"
+import "./chatbox.css"
 
 export default function ChatBox({ chat, currentUserId, setSendMessage, receiveMessage }) {
 

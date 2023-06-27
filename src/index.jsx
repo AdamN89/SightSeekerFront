@@ -63,6 +63,10 @@ const router = createBrowserRouter([
     element: <Chat/>
   },
   {
+    path: "/chat2",
+    element: <ChatPage />
+  },
+  {
     path: "/invitation",
     element: <ReceivedInvitation />,
   },
