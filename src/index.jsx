@@ -15,6 +15,7 @@ import AuthContextProvider from "./context/AuthContext";
 import Loader from "./components/Loader/Loader";
 import DataContextProvider from "./context/DataContext";
 import Chat from "./components/Chat/Chat";
+import TravelsPage from "./pages/TravelPage/TravelsPage";
 
 const router = createBrowserRouter([
   {
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
   {
     path: "/invitation",
     element: <ReceivedInvitation />,
+  },
+  {
+    path: "/travelplans",
+    element: <TravelsPage />,
   },
 ]);
 

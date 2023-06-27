@@ -56,7 +56,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="container">
+    <div className="register_page">
       <div className="first_element">
         <LogoVertical />
       </div>
