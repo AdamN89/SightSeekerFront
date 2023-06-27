@@ -6,9 +6,10 @@ import ButtonHallow from "../../components/ButtonHallow";
 import { Formik, Form, Field } from "formik";
 import CloseIcon from "../../components/CloseIcon";
 import{ DataContext} from "../../context/DataContext";
+import {AuthContext} from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const initialSetupValues = {
-  poi: ["Hi"],
   foundBy: "all",
   locationServices: false,
   showEmail: false,
@@ -28,8 +29,10 @@ export default function InitalSetup() {
   const [uploadedImgURL, setUploadedImgURL] = useState("")
   const [theChosenOne, setTheChosenOne] = useState("https://res.cloudinary.com/dokiz6udc/image/upload/v1687449571/02_v1rulc.jpg")
 
+  const navigate = useNavigate()
   const {avatars} = useContext(DataContext)
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDhkZjY2MWY0OGZiOWIzMjEzYTgzMWEiLCJpYXQiOjE2ODc1MzUzNTQsImV4cCI6MTY4NzYyMTc1NH0.8cQ_DB36kBNLxsXM8yri19IniaL7LVUzFXGoRO1Cbig"
+  const {token} = useContext(AuthContext)
+
 
   const handleFormSubmit = async (values) => {
     await saveInitialSettings(values);
@@ -37,9 +40,13 @@ export default function InitalSetup() {
 
   const handleSubmitButtonClick = async (submitForm) => {
     await submitForm();
+    handleCloseModel();
   };
+
   const submitAvatar = async (theChosenOne) => {
+    console.log(uploadedImgFile)
     if(uploadedImgURL === theChosenOne){
+      //console.log("saveuploaded initalized")
       const formData = new FormData();
       formData.append("avatar", uploadedImgFile);
       try{
@@ -62,6 +69,7 @@ export default function InitalSetup() {
     }
     else{
       try{
+        //console.log("savedefault initalized")
         const response = await fetch("http://localhost:8080/user/default_avatar", {
         method: "PUT",
         headers: {
@@ -161,22 +169,26 @@ export default function InitalSetup() {
   }, [openDrop1]);
 
   const calcHeight = `max(${modalHeight + 40}px, 100%)`;
-  console.log(calcHeight);
+  // console.log(calcHeight);
 
   const handleChosenOne = (event) => {
     setTheChosenOne(event.target.src)
   }
 
   const handleSaveSelectedAvatar = (event) => {
-    console.log("trogger")
     handleCloseModel()
-    submitAvatar(theChosenOne)
+    if(theChosenOne){
+      submitAvatar(theChosenOne)
+    }
   }
 
   const addAvatar= (event)=>{
-    setUploadedImgFile(event.target.files[0])
-    setUploadedImgURL(URL.createObjectURL(event.target.files[0]))
+    if(event.target.files[0]){
+      setUploadedImgFile(event.target.files[0])
+      setUploadedImgURL(URL.createObjectURL(event.target.files[0]))
+    }
   }
+
 
   return (
     <>
@@ -187,7 +199,6 @@ export default function InitalSetup() {
         <InitialSetupGraphic />
       </div>
       <div className="second_element">
-        
         <div className="inital_setup_form">
               <ButtonHallow
               txt="choose avatar"
@@ -202,7 +213,9 @@ export default function InitalSetup() {
               <CloseIcon func={handleCloseModel} />
               <div className="modal_container avatars">
                 <div className="avatars">
-                {avatars?.map((avatar, index) => <img className={theChosenOne === avatar? "selectedAvatar": "" } src={avatar} onClick={handleChosenOne}/>)}
+                {avatars?.map((avatar, index) => {
+                return <img className={theChosenOne === avatar? "selectedAvatar": "" } src={avatar} onClick={handleChosenOne}/>
+                })}
                 {uploadedImgURL?.length > 0? <img src={uploadedImgURL} className={theChosenOne === uploadedImgURL? "selectedAvatar": "" } onClick={handleChosenOne}/>: ""}
                 </div>
                 <label for="uploadButton" className="btn inital_setup_upload">+ Upload Image</label>
@@ -256,6 +269,8 @@ export default function InitalSetup() {
                 /* and other goodies */
               }) => (
             <Form onSubmit={handleSubmit}>
+            <div className="inital_setup_form">
+
             <dialog ref={privacyDialog} 
               className={
                 openDrop3 ?  "modal" : null
@@ -303,11 +318,12 @@ export default function InitalSetup() {
                     <div class="toggle_switch"></div>
                   </label>
                 </div>
-                <Button txt="save Changes" func={handleSubmitButtonClick}/>
+                <Button txt="save Changes" func={()=>handleSubmitButtonClick(submitForm)}/>
               </dialog>
+              </div>
             <Button
-              txt="done"
-            >
+              txt="done" func={()=>{navigate("/home")}}
+              >
             </Button>
         </Form>
               )}
@@ -315,7 +331,7 @@ export default function InitalSetup() {
         </Formik>
         <input onChange={addAvatar} type="file" id="uploadButton"/>
       </div>
-      </div>
+    </div>
     </>
-  );
+    );
 }

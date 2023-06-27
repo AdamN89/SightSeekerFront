@@ -10,6 +10,7 @@ import AboutIcon from "./Icons/AboutIcon"
 import CloseIcon from "./Icons/CloseIcon";
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom"
+import Button from "../Button";
 
 export default function TopMenu() {
   const [isOpen, setIsOpen ] = useState(false)
@@ -32,11 +33,15 @@ export default function TopMenu() {
       }, 700)
     }
 
+    const handleLogout = () => {
+      localStorage.removeItem("token");
+    }
 
   return (
       <div className="topmenu__wrapper">
           <div className="topmenu__topbar">
               <LogoHorizontal />
+              <Button func={handleLogout} txt="Logout"/>
               <button onClick={openMenu} style={{ zIndex: isOpen ? 0: 3 }}><MenuIcon /></button>
           </div>
           <div className="topmenu__body-wrapper" ref={menuRef} style={{ opacity: isOpen ? 2 : 0, transform: isOpen ? `translateY(${0}px)` : `translateY(${-1500}px)` }}>

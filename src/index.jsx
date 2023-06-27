@@ -16,38 +16,40 @@ import Loader from "./components/Loader/Loader";
 import DataContextProvider from "./context/DataContext";
 import Chat from "./components/Chat/Chat";
 
+const token = localStorage.getItem("token");
+
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: token? <HomePage /> : <App />,
   },
   {
     path: "/login",
-    element: <LoginPage />,
+    element: token? <HomePage /> : <LoginPage />,
   },
   {
     path: "/register",
-    element: <RegisterPage />,
+    element: token? <HomePage /> : <RegisterPage />,
   },
   {
     path: "/settings",
-    element: <SettingsPage />,
+    element: token? <SettingsPage /> : <App />,
   },
   {
     path: "/features",
-    element: <FeaturesPage />,
+    element: token? <FeaturesPage /> : <App />,
   },
   {
     path: "/about",
-    element: <AboutPage />,
+    element: token? <AboutPage /> : <App />,
   },
   {
     path: "/initialsetup",
-    element: <InitialSetupPage />,
+    element: token? <InitialSetupPage /> : <App />,
   },
   {
     path: "/home",
-    element: <HomePage />,
+    element: token? <HomePage /> : <App />,
   },
   {
     path: "/spiner",
@@ -55,15 +57,15 @@ const router = createBrowserRouter([
   },
   {
     path: "/friends",
-    element: <FriendsPage />,
+    element: token? <FriendsPage /> : <App />,
   },
   {
     path: "/chat",
-    element: <Chat />,
+    element: token? <Chat /> : <App />,
   },
   {
     path: "/invitation",
-    element: <ReceivedInvitation />,
+    element: token? <ReceivedInvitation /> : <App />,
   },
 ]);
 

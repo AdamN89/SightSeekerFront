@@ -6,6 +6,8 @@ export default function AuthContextProvider({ children }) {
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
 
+  console.log(token, user)
+
   //  first useEffect checks localStorage for token already being there
   useEffect(() => {
     const storedToken = localStorage.getItem("token");

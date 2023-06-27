@@ -44,6 +44,7 @@ export default function LoginPage() {
         setIsLoading(false);
         console.log("data from login fetch: ", data);
 
+        
         const invitationsReceived = data.data.friends.some(
           (friend) => friend.received
         );
@@ -51,7 +52,6 @@ export default function LoginPage() {
         else navigate("/friends");
       }
     };
-
     sendLogin();
   };
 
