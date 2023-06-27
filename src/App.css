@@ -612,6 +612,14 @@ add to about page */
   fill: var(--light_green);
 }
 
+.navigation_wrapper_body_content {
+  margin-top: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 /*=======================================
       classes for search component
 =======================================*/

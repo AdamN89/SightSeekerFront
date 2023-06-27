@@ -25,7 +25,7 @@ export default function DataContextProvider({ children }) {
   const openMenu = (menuRef) => {
     if (isOpen === false)
       menuRef.current.classList.add("navigaton_page_opening");
-    setIsOpen(!isOpen);
+    setIsOpen(true);
     setTimeout(() => {
       menuRef.current.classList.remove("navigaton_page_opening");
     }, 500);
@@ -35,7 +35,7 @@ export default function DataContextProvider({ children }) {
   const closeMenu = (menuRef) => {
     menuRef.current.classList.add("navigaton_page_closing");
     setTimeout(() => {
-      setIsOpen(!isOpen);
+      setIsOpen(false);
       menuRef.current.classList.remove("navigaton_page_closing");
     }, 700);
   };

@@ -44,9 +44,10 @@ export default function Menu({ user }) {
       {/* menu for tablet screen */}
       <nav className="main_menu_tablet">
         <div className="main_menu_left">
-          <button className="main_menu_btn">
+          <button className="main_menu_btn" onClick={() => openMenu(menuRef)}>
             <TravelPlanIcon />
           </button>
+          {renderTravelPage}
           <button className="main_menu_btn">
             <FavouritesIcon />
           </button>

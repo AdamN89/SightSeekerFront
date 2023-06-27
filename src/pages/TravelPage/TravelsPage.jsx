@@ -1,11 +1,11 @@
 import "./TravelsPage.css";
-import TravelPlanIcon from "../../components/NavigationIcons/TravelPlanIcon";
 import CloseIcon from "../../components/CloseIcon";
-import { useContext, useRef, useState } from "react";
+import { useContext, useRef } from "react";
 import TravelSearchBar from "./TravelSearchBar";
 import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
 import { DataContext } from "../../context/DataContext";
+import AuthorIcon from "../../components/AuthorIcon";
 
 export default function TravelPage() {
   const { openMenu, closeMenu, isOpen, openTopMenu, closeTopMenu } =
@@ -61,14 +61,26 @@ export default function TravelPage() {
             </div>
             <TravelSearchBar />
             {/* start of content of navigation page */}
-            <Button
-              txt={"Create new travel plan"}
-              func={() => navigate("/login")}
-              key="login"
-            />
-            <div className="travel_plan">
-              <span></span>
-              <div className="travel_plan_author"></div>
+            <div className="navigation_wrapper_body_content">
+              <Button
+                txt={"Create new travel plan"}
+                func={() => navigate("/login")}
+                key="login"
+              />
+              <div className="travel_plans">
+                <span>Travel plan name</span>
+                <AuthorIcon />
+              </div>
+              <div className="travel_plans">
+                <span>Travel plan name</span>
+              </div>
+              <div className="travel_plans">
+                <span>Travel plan name</span>
+              </div>
+              <div className="travel_plans">
+                <span>Travel plan name</span>
+                <AuthorIcon />
+              </div>
             </div>
             {/* end of content of navigation page */}
           </div>
