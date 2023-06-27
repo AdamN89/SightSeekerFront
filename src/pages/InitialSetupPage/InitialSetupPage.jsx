@@ -5,7 +5,7 @@ import Button from "../../components/Button";
 import ButtonHallow from "../../components/ButtonHallow";
 import { Formik, Form, Field } from "formik";
 import CloseIcon from "../../components/CloseIcon";
-import{ DataContext} from "../../context/DataContext";
+import { DataContext } from "../../context/DataContext";
 import {AuthContext} from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -25,9 +25,11 @@ export default function InitalSetup() {
   const [openDrop1, setOpenDrop1] = useState(false);
   const [openDrop2, setOpenDrop2] = useState(false);
   const [openDrop3, setOpenDrop3] = useState(false);
-  const [uploadedImgFile, setUploadedImgFile] = useState(undefined)
-  const [uploadedImgURL, setUploadedImgURL] = useState("")
-  const [theChosenOne, setTheChosenOne] = useState("https://res.cloudinary.com/dokiz6udc/image/upload/v1687449571/02_v1rulc.jpg")
+  const [uploadedImgFile, setUploadedImgFile] = useState(undefined);
+  const [uploadedImgURL, setUploadedImgURL] = useState("");
+  const [theChosenOne, setTheChosenOne] = useState(
+    "https://res.cloudinary.com/dokiz6udc/image/upload/v1687449571/02_v1rulc.jpg"
+  );
 
   const navigate = useNavigate()
   const {avatars} = useContext(DataContext)
@@ -44,51 +46,50 @@ export default function InitalSetup() {
   };
 
   const submitAvatar = async (theChosenOne) => {
-    console.log(uploadedImgFile)
-    if(uploadedImgURL === theChosenOne){
-      //console.log("saveuploaded initalized")
+    if (uploadedImgURL === theChosenOne) {
       const formData = new FormData();
       formData.append("avatar", uploadedImgFile);
-      try{
-      const response = await fetch("http://localhost:8080/user/avatar", {
-        method: "PUT",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-        },
-        body: formData,
+      try {
+        const response = await fetch("http://localhost:8080/user/avatar", {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
         });
-      if (response.ok){
-        const responseData = await response.json();
-        console.log(responseData)
-      } else{
-        console.log("Error")
+        if (response.ok) {
+          const responseData = await response.json();
+          console.log(responseData);
+        } else {
+          console.log("Error");
+        }
+      } catch (error) {
+        console.error("Error", error);
       }
-      }catch(error){
+    } else {
+      try {
+        const response = await fetch(
+          "http://localhost:8080/user/default_avatar",
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ avatar: theChosenOne }),
+          }
+        );
+        if (response.ok) {
+          const responseData = await response.json();
+          console.log(responseData);
+        } else {
+          console.log("Error");
+        }
+      } catch (error) {
         console.error("Error", error);
       }
     }
-    else{
-      try{
-        //console.log("savedefault initalized")
-        const response = await fetch("http://localhost:8080/user/default_avatar", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify({avatar: theChosenOne}),
-        });
-      if (response.ok){
-        const responseData = await response.json();
-        console.log(responseData)
-      } else{
-        console.log("Error")
-      }
-      }catch(error){
-        console.error("Error", error);
-      }
-    }
-  }
+  };
 
   const saveInitialSettings = async (values) => {
     console.log(values);
@@ -107,7 +108,7 @@ export default function InitalSetup() {
 
       if (response.ok) {
         const responseData = await response.json();
-        console.log(responseData)
+        console.log(responseData);
       } else {
         console.log("Error");
       }
@@ -151,9 +152,9 @@ export default function InitalSetup() {
   };
 
   const handleCloseModel = () => {
-    avatarDialog.current.close()
-    poiDialog.current.close()
-    privacyDialog.current.close()
+    avatarDialog.current.close();
+    poiDialog.current.close();
+    privacyDialog.current.close();
     setOpenDrop1(false);
     setOpenDrop2(false);
     setOpenDrop3(false);
@@ -172,8 +173,8 @@ export default function InitalSetup() {
   // console.log(calcHeight);
 
   const handleChosenOne = (event) => {
-    setTheChosenOne(event.target.src)
-  }
+    setTheChosenOne(event.target.src);
+  };
 
   const handleSaveSelectedAvatar = (event) => {
     handleCloseModel()
@@ -218,34 +219,26 @@ export default function InitalSetup() {
                 })}
                 {uploadedImgURL?.length > 0? <img src={uploadedImgURL} className={theChosenOne === uploadedImgURL? "selectedAvatar": "" } onClick={handleChosenOne}/>: ""}
                 </div>
-                <label for="uploadButton" className="btn inital_setup_upload">+ Upload Image</label>
-                <Button txt="Save" func={handleSaveSelectedAvatar}/>
+                <label for="uploadButton" className="btn inital_setup_upload">
+                  + Upload Image
+                </label>
+                <Button txt="Save" func={handleSaveSelectedAvatar} />
               </div>
             </dialog>
-            <ButtonHallow
-              txt="point preferences"
-              func={handleClick}
-            />
-            <dialog ref={poiDialog} 
-              className={
-                openDrop2 ?  "modal" : null
-              }
-            >
-                            <h2 className="title">Point preferences</h2>
+            <ButtonHallow txt="point preferences" func={handleClick} />
+            <dialog ref={poiDialog} className={openDrop2 ? "modal" : null}>
+              <h2 className="title">Point preferences</h2>
               <CloseIcon func={handleCloseModel} />
               <div className="modal_container">
-
-                <p for="fname">
-                    Add types of points of interest as preferred:
-                  </p>
-                  <br />
-                  <input
-                    type="text"
-                    id="fname"
-                    name="fname"
-                    placeholder="Castles, Sports, Restraunts"
-                  />
-                  <br />
+                <p for="fname">Add types of points of interest as preferred:</p>
+                <br />
+                <input
+                  type="text"
+                  id="fname"
+                  name="fname"
+                  placeholder="Castles, Sports, Restraunts"
+                />
+                <br />
               </div>
             </dialog>
             <ButtonHallow
@@ -285,10 +278,10 @@ export default function InitalSetup() {
 
                   </label>
 
-                        <label>
-                          <Field type="radio" name="foundBy" value="friends" />
-                          Friends
-                        </label>
+                      <label>
+                        <Field type="radio" name="foundBy" value="friends" />
+                        Friends
+                      </label>
 
                     <label >
                       

@@ -1,3 +1,12 @@
+.register_page {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 40px;
+  padding: 50px 0;
+  min-height: 100vh;
+}
+
 .register_page_form {
   display: flex;
   flex-direction: column;
@@ -29,6 +38,7 @@
 }
 .register_page_login a {
   margin-top: 15px;
+  width: 30%;
   text-align: right;
   color: var(--light_green);
   text-decoration: none;

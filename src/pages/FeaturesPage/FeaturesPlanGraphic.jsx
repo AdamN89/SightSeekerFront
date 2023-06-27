@@ -2,7 +2,7 @@ export default function FeaturesPlanGraphic() {
   return (
     <>
       <svg viewBox="0 0 206 491" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g clip-path="url(#clip0_65_1033)" filter="url(#filter0_d_65_1033)">
+        <g clipPath="url(#clip0_65_1033)" filter="url(#filter0_d_65_1033)">
           <path
             d="M138.489 210.353C123.599 204.218 107.416 201.23 91.3208 201.637C90.0913 201.669 88.8139 201.733 87.7281 202.316C85.1414 203.706 84.814 207.213 84.806 210.145C84.7901 228.206 84.9976 246.268 85.4288 264.329C85.4687 265.951 85.5246 267.636 86.2272 269.098C87.4247 271.598 90.1871 272.876 92.7739 273.883C105.237 278.764 118.394 281.863 131.727 283.077C133.371 283.229 135.144 283.325 136.565 282.47C137.858 281.695 138.617 280.281 139.192 278.883C142.026 271.99 141.802 264.281 141.539 256.828C140.996 241.371 140.445 225.914 139.902 210.456L138.489 210.353Z"
             fill="#01A299"
@@ -439,9 +439,9 @@ export default function FeaturesPlanGraphic() {
             width="227"
             height="491"
             filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB"
+            colorInterpolationFilters="sRGB"
           >
-            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+            <feFlood floodOpacity="0" result="BackgroundImageFix" />
             <feColorMatrix
               in="SourceAlpha"
               type="matrix"

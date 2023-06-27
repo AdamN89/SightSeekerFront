@@ -15,6 +15,7 @@ import AuthContextProvider from "./context/AuthContext";
 import Loader from "./components/Loader/Loader";
 import DataContextProvider from "./context/DataContext";
 import Chat from "./components/Chat/Chat";
+import TravelsPage from "./pages/TravelPage/TravelsPage";
 
 const token = localStorage.getItem("token");
 
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
   {
     path: "/invitation",
     element: token? <ReceivedInvitation /> : <App />,
+  },
+  {
+    path: "/travelplans",
+    element: <TravelsPage />,
   },
 ]);
 

@@ -85,8 +85,27 @@
   }
 }
 
+.mapboxgl-popup-content h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.mapboxgl-popup-content p {
+  font-size: 16px;
+  text-align: left;
+}
+
 .mapboxgl-marker {
-  z-index: 2;
+  position: relative;
+  width: 24px;
+  height: 32px;
+}
+
+.mapboxgl-marker img {
+  position: absolute;
+  width: 24px;
+  height: 32;
+  z-index: 10;
 }
 
 .mapboxgl-popup-tip,
@@ -118,8 +137,8 @@
   display: none;
 } */
 
-.mapboxgl-ctrl-top-right{
+.mapboxgl-ctrl-top-right {
   right: 0;
-  top: 7%;
+  top: 70px;
   z-index: 0;
 }

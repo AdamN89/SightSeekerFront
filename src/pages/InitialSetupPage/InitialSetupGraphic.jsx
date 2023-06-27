@@ -2,7 +2,7 @@ export default function InitialSetupGraphic() {
   return (
     <>
       <svg viewBox="0 0 334 453" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g clip-path="url(#clip0_65_1873)" filter="url(#filter0_d_65_1873)">
+        <g clipPath="url(#clip0_65_1873)" filter="url(#filter0_d_65_1873)">
           <path
             d="M233.586 89.0171C233.616 92.282 234.206 96.0242 236.983 97.7437C238.798 98.8649 241.075 98.8043 243.208 98.6982C244.865 98.6224 246.514 98.5391 248.171 98.4634C248.988 98.4255 249.949 98.4482 250.44 99.1148C250.97 99.8421 250.546 100.94 249.797 101.433C249.048 101.925 248.103 101.986 247.21 102.024C244.215 102.16 241.204 102.296 238.208 102.099C235.742 101.94 233.094 101.448 231.407 99.6451C230.863 99.0694 230.454 98.38 230.068 97.6907C228.608 95.0621 227.511 92.2441 226.8 89.3277C226.77 89.2065 226.74 89.0777 226.793 88.9641C226.876 88.7671 227.118 88.7216 227.33 88.6989C229.41 88.5095 231.521 88.6535 233.556 89.1231L233.609 89.0171H233.586Z"
             fill="black"
@@ -410,9 +410,9 @@ export default function InitialSetupGraphic() {
             width="334"
             height="453"
             filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB"
+            colorInterpolationFilters="sRGB"
           >
-            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+            <feFlood floodOpacity="0" result="BackgroundImageFix" />
             <feColorMatrix
               in="SourceAlpha"
               type="matrix"

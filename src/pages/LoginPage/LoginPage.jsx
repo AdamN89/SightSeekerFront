@@ -49,14 +49,14 @@ export default function LoginPage() {
           (friend) => friend.received
         );
         if (invitationsReceived) navigate("/invitation");
-        else navigate("/friends");
+        else navigate("/home");
       }
     };
     sendLogin();
   };
 
   return (
-    <div className="container">
+    <div className="login_page">
       {isLoading ? <Loader /> : null}
       <div className="first_element">
         <LoginGraphic />
