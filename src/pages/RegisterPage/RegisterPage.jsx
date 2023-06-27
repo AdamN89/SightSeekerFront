@@ -1,7 +1,7 @@
 import "./RegisterPage.css";
 import LogoVertical from "../../components/LogoVertical";
 import Button from "../../components/Button";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { Formik, Form, Field } from "formik";
 import { useContext, useState } from "react";
@@ -27,8 +27,9 @@ const initialRegisterValues = {
 };
 
 export default function RegisterPage() {
-  const {login, setUser} = useContext(AuthContext)
+  const {login, setUser} = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate()
 
   const register = async (values) => {
     setIsLoading(true)
@@ -49,6 +50,7 @@ export default function RegisterPage() {
         localStorage.setItem("token", registeredUser.token);
         login(registeredUser.token);
         setUser(registeredUser.data);
+        navigate("/initialsetup")
       }
       // else {
       //   console.log("Error occurred while registering");
@@ -118,16 +120,24 @@ export default function RegisterPage() {
                 </div>
 
                 <div>
-                  <Link to="/initialsetup">
                     <Button
                       txt={"Register"}
-                      func={() => handleSubmitButtonClick(submitForm)}
+                      func={() => {
+                          handleSubmitButtonClick(submitForm)
+                        
+                          if(errors.confirmPassword)
+                          {alert(errors.confirmPassword)}
+                          if(errors.email)
+                          {alert(errors.email)}
+                          if(errors.name)
+                          {alert(errors.name)}
+                          if (errors.userName)
+                          {alert(errors.userName)}
+                        }}
                     />
-                  </Link>
                   <div className="register_page_login">
                     <p>Already have an account?</p>
-                    <Link to={
-                      "/login"}>Login</Link>
+                    <Link to="/login">Login</Link>
                   </div>
                 </div>
               </Form>

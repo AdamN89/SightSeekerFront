@@ -8,11 +8,12 @@ import ChatIcon from "./Icons/ChatIcon";
 import SettingsIcon from "./Icons/SettingsIcon";
 import AboutIcon from "./Icons/AboutIcon";
 import CloseIcon from "./Icons/CloseIcon";
-import { useState, useRef, useContext } from "react";
-import { Link } from "react-router-dom";
+import { useState, useRef, useContext} from "react";
+import { Link, useNavigate  } from "react-router-dom";
 import TravelsPage from "../../pages/TravelPage/TravelsPage";
 import { DataContext } from "../../context/DataContext";
 import Button from "../Button";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function TopMenu() {
   const {
@@ -24,9 +25,16 @@ export default function TopMenu() {
     topMenuRef,
   } = useContext(DataContext);
   const { renderTravelPage, menuRef } = TravelsPage();
-    const handleLogout = () => {
-      localStorage.removeItem("token");
-    }
+  const navigate = useNavigate()
+  const{setToken, setUser} = useContext(AuthContext)
+  
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setToken(null)
+    setUser(null)
+    //navigate("/")
+  }
+  
 
   return (
     <div className="topmenu__wrapper">
