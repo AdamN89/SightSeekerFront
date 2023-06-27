@@ -17,7 +17,7 @@ export default function ReceivedInvitation() {
   // console.log(token);
 
   useEffect(() => {
-    const invitations = user.friends.map((friend) => friend.received && friend);
+    const invitations = user.friends.filter((friend) => friend.received);
     setInvitationsStack(invitations);
     if (invitations.length === 0) navigate("/home");
   }, [user]);
@@ -54,6 +54,11 @@ export default function ReceivedInvitation() {
       console.log("from pos res - user: ", data.data);
       setUser(data.data);
       setInvitationsStack((prev) => prev.slice(0, -1));
+      if (invitationsStack.length > 1) {
+        setQueuedUser(invitationsStack[invitationsStack.length - 2]);
+      } else {
+        setQueuedUser(null);
+      }
     }
   };
   const handleReject = async () => {
@@ -75,6 +80,12 @@ export default function ReceivedInvitation() {
       console.error(data.error);
     }
     if (res.ok) setUser(data.data);
+    setInvitationsStack((prev) => prev.slice(0, -1));
+    if (invitationsStack.length > 1) {
+      setQueuedUser(invitationsStack[invitationsStack.length - 2]);
+    } else {
+      setQueuedUser(null);
+    }
   };
 
   return (

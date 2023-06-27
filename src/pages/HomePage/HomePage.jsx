@@ -1,12 +1,11 @@
 import Map, { Marker, Popup, NavigationControl } from "react-map-gl";
-import { useEffect, useState } from "react";
-import LogoHorizontal from "../../components/LogoHorizontal";
-import MenuIcon from "../../components/MenuIcon";
-import Menu from "../../components/Menu";
+// import { SearchBoxCore, SearchSession } from "mapbox-gl";
+import { v4 as uuidv4 } from "uuid";
+import { useEffect, useState, useRef } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "./HomePage.css";
 import TopMenu from "../../components/TopMenu/TopMenu";
-import Chat from "../../components/Chat/Chat";
+import Menu from "../../components/Menu";
 
 const mapStyle = "mapbox://styles/stephanullmann/clj7lajvj005t01que278452b";
 const TOKEN =
@@ -20,11 +19,28 @@ export default function HomePage() {
     zoom: 15,
   });
   const [showPopup, setShowPopup] = useState(true);
+  const sessionUUID = useRef(null);
+  // const mapboxSearchRef = useRef(null);
+  // const mapboxSession = useRef(null);
+
+  // useEffect(() => {
+  //   mapboxSearchRef.current = new SearchBoxCore({ accessToken: TOKEN });
+  // }, []);
+
+  // const getSession = () => {
+  //   if (!mapboxSession.current)
+  //     mapboxSession.current = new SearchSession(mapboxSearchRef.current);
+  //   return mapboxSession.current;
+  // };
+
+  const getUUID = () => {
+    if (!sessionUUID.current) sessionUUID.current = uuidv4();
+    return sessionUUID.current;
+  };
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        // console.log(position);
         setViewState({
           ...viewState,
           longitude: position.coords.longitude,
@@ -46,19 +62,33 @@ export default function HomePage() {
   }, []);
 
   const handleMapMove = (e) => {
-    // console.log("map moving: ", e);
     setViewState(e.viewState);
+  };
+
+  const handleMapClick = async (e) => {
+    console.log(e);
+    const resGeocoding = await fetch(
+      `https://api.mapbox.com/geocoding/v5/mapbox.places/${e.lngLat.lng},${e.lngLat.lat}.json?limit=1&types=poi%2Caddress&access_token=${TOKEN}`
+    );
+    const dataGeocoding = await resGeocoding.json();
+    // SearchBox
+    const resSearchBox = await fetch(
+      `https://api.mapbox.com/search/searchbox/v1/suggest?q=${
+        dataGeocoding.features[0].id
+      }&language=en&proximity=${e.lngLat.lng},${
+        e.lngLat.lat
+      }&navigation_profile=driving&origin=${userCoords.longitude},${
+        userCoords.latitude
+      }&session_token=${getUUID()}&access_token=${TOKEN}`
+    );
+    const dataSearchBox = await resSearchBox.json();
+    console.log(dataGeocoding);
+    console.log(dataSearchBox);
   };
 
   return (
     <div className="container map-container">
       <TopMenu />
-      {/* <nav className="home__nav">
-        <LogoHorizontal />
-        <button>
-        <MenuIcon />
-        </button>
-      </nav> */}
       {userCoords.latitude && userCoords.longitude && (
         <Map
           {...viewState}
@@ -74,6 +104,7 @@ export default function HomePage() {
           onMove={handleMapMove}
           reuseMaps={true}
           cursor="drag"
+          onClick={handleMapClick}
         >
           <NavigationControl />
           {showPopup && (
