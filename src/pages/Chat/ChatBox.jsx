@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { format } from "timeago.js"
 import InputEmoji from "react-input-emoji"
 
@@ -7,6 +7,7 @@ export default function ChatBox({ chat, currentUserId, setSendMessage, receiveMe
   const [ userData, setUserData ] = useState(null)
   const [ messages, setMessages ] = useState([])
   const [ newMessage, setNewMessage ] = useState(" ")
+  const scroll = useRef()
 
   useEffect(() => {
     if(receiveMessage !== null && receiveMessage.chatId === chat?._id) {
@@ -78,8 +79,12 @@ console.log(response)
     // send messages to socket server
     const receiverId =  chat.members.find((id) => id !== currentUserId)
     setSendMessage({...message, receiverId})
-
   }
+
+  // always scroll to the last message
+  useEffect(() => {
+    scroll.current?.scrollIntoView({ behavior: "smooth" })
+  })
 
   return (
     <>
@@ -101,7 +106,7 @@ console.log(response)
         <div className="chat-body">
           {messages.map((message) => (
             <>
-            <div className= {message.senderId === currentUserId ? "message-own" : "message"}>
+            <div ref={scroll} className= {message.senderId === currentUserId ? "message-own" : "message"}>
               <span>{message.text}</span>
               <span>{format(message.createdAt)}</span>
             </div>
