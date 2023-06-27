@@ -56,7 +56,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="container">
+    <div className="login_page">
       {isLoading ? <Loader /> : null}
       <div className="first_element">
         <LoginGraphic />

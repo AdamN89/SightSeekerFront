@@ -1,18 +1,28 @@
+import TravelsPage from "../pages/TravelPage/TravelsPage";
+
 import Chat from "../components/Chat/Chat";
 import TravelPlanIcon from "./NavigationIcons/TravelPlanIcon";
 import FavouritesIcon from "./NavigationIcons/FavouritesIcon";
 import FriendsIcon from "./NavigationIcons/FriendsIcon";
 import SettingsIcon from "./NavigationIcons/SettingsIcon";
 import SearchIcon from "./NavigationIcons/SearchIcon";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { DataContext } from "../context/DataContext";
 
 export default function Menu({ user }) {
+  const navigate = useNavigate();
+  const { openMenu, openTopMenu, closeTopMenu } = useContext(DataContext);
+  const { renderTravelPage, menuRef } = TravelsPage();
+
   return (
     <>
       <nav className="main_menu_smartphone">
         <div className="main_menu_left">
-          <button className="main_menu_btn">
+          <button className="main_menu_btn" onClick={() => openMenu(menuRef)}>
             <TravelPlanIcon />
           </button>
+          {renderTravelPage}
           <button className="main_menu_btn">
             <FavouritesIcon />
           </button>
