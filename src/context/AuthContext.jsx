@@ -6,6 +6,8 @@ export default function AuthContextProvider({ children }) {
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
 
+  console.log(token, user)
+
   //  first useEffect checks localStorage for token already being there
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -32,7 +34,7 @@ export default function AuthContextProvider({ children }) {
   }, [user]);
 
   return (
-    <AuthContext.Provider value={{ token, login, logout, user, setUser }}>
+    <AuthContext.Provider value={{ token, login, logout, user, setUser, setToken }}>
       {children}
     </AuthContext.Provider>
   );
