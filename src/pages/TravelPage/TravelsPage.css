@@ -1,0 +1,29 @@
+.travel_plans {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 2px solid var(--light_green);
+  border-radius: 20px;
+  padding: 0 30px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 200;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.travel_plans:hover {
+  border: 2px solid var(--light_purple);
+}
+
+.travel_plans svg {
+  width: 30px;
+  fill: var(--dark_purple);
+  transition: all 0.3s ease;
+}
+
+.travel_plans:hover svg {
+  fill: var(--txt);
+}
