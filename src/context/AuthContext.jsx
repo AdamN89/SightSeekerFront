@@ -1,17 +1,49 @@
 import { createContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 
 export const AuthContext = createContext();
 
 export default function AuthContextProvider({ children }) {
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
-  console.log(token, user)
+  console.log(token, user);
 
   //  first useEffect checks localStorage for token already being there
+
+  const retrieveUser = async () => {
+    setIsLoading(true);
+    const storedToken = localStorage.getItem("token");
+    console.log("in retrieveUser: ", storedToken);
+    const res = await fetch("http://localhost:8080/user/retrieve", {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${storedToken}`,
+      },
+    });
+    const data = await res.json();
+    console.log(res, data);
+    if (!res.ok) {
+      setIsLoading(false);
+      logout();
+    }
+    if (res.ok) {
+      setIsLoading(false);
+      setUser(data.data);
+      const invitationsReceived = data.data.friends.some(
+        (friend) => friend.received
+      );
+      if (invitationsReceived) navigate("/invitation");
+      // else navigate("/home");
+    }
+  };
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     if (storedToken) setToken(storedToken);
+    if (storedToken && !user) retrieveUser();
+    // console.log("there is a token: ", storedToken, "but no user: ", user);
   }, []);
 
   // sec useEffect either saves token to localStorage or removes it
@@ -34,7 +66,18 @@ export default function AuthContextProvider({ children }) {
   }, [user]);
 
   return (
-    <AuthContext.Provider value={{ token, login, logout, user, setUser, setToken }}>
+    <AuthContext.Provider
+      value={{
+        token,
+        login,
+        logout,
+        user,
+        setUser,
+        setToken,
+        isLoading,
+        setIsLoading,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -14,7 +14,7 @@ import { DataContext } from "../context/DataContext";
 import FriendsPage from "../pages/FriendsPage/FriendsPage";
 
 export default function Menu({ getUUID, viewState, userCoords }) {
-  const { user } = useContext(AuthContext);
+  const { user, isLoading } = useContext(AuthContext);
   const [showSearchbar, setShowSearchbar] = useState(false);
 
   const navigate = useNavigate();
@@ -57,10 +57,13 @@ export default function Menu({ getUUID, viewState, userCoords }) {
           </button>
         ) : null}
         <button className="main_menu_avatar">
-          {user ? (
-            <img src={user.avatar} alt={user.name} />
+          {!user || isLoading ? (
+            <img
+              src="https://res.cloudinary.com/dokiz6udc/image/upload/v1686943211/default_avatar_yfsudh.jpg?width=100&height=100"
+              alt="avatar"
+            />
           ) : (
-            <img src="../assets/defaultavatar/01.jpg" alt="avatar" />
+            <img src={user.avatar} alt={user.name} />
           )}
         </button>
         <div className="main_menu_right">
