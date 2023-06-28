@@ -21,7 +21,6 @@ export default function Conversation({ data, currentUserId, online, chat, setSen
 
   return (
     <>
-
             <div className="groupchat">
               <div className="groupchat-content">
                 <div className="groupchat-name">My group chat</div>

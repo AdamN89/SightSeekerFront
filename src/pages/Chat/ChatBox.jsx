@@ -1,17 +1,19 @@
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState, useRef, useContext } from "react"
+import { DataContext } from "../../context/DataContext"
 import { format } from "timeago.js"
 import InputEmoji from "react-input-emoji"
 import "./chatbox.css"
 
-export default function ChatBox({ chat, currentUserId, setSendMessage, receiveMessage }) {
 
+export default function ChatBox({ chat, currentUserId}) {
+  const { currentChat, setCurrentChat, sendMessage, setSendMessage, receiveMessage, setReceiveMessage } = useContext(DataContext)
   const [ userData, setUserData ] = useState(null)
   const [ messages, setMessages ] = useState([])
   const [ newMessage, setNewMessage ] = useState(" ")
   const scroll = useRef()
 
   useEffect(() => {
-    if(receiveMessage !== null && receiveMessage.chatId === chat?._id) {
+    if(receiveMessage !== null && receiveMessage.chatId === currentChat?._id) {
       setMessages([...messages, receiveMessage])
     }
   },[receiveMessage])
@@ -19,8 +21,7 @@ export default function ChatBox({ chat, currentUserId, setSendMessage, receiveMe
 
   // fetching data for header
   useEffect(() => {
-    const userId = chat?.members?.find((id) => id !== currentUserId)
-    // const userId = "649a962a8f1d741bbea44dd1"
+    const userId = currentChat?.members?.find((id) => id !== currentUserId)
 
     const getUserData = async() => {
       try {
@@ -31,22 +32,22 @@ export default function ChatBox({ chat, currentUserId, setSendMessage, receiveMe
           console.log(error)
       }
   }
-    if (chat !== null) getUserData()
-  },[chat, currentUserId])
+    if (currentChat !== null) getUserData()
+  },[currentChat, currentUserId])
 
   // fetching data for messages
   useEffect(() => {
     const fetchMessages = async() => {
       try {
-        const response = await fetch(`http://localhost:8080/message/${chat._id}`)
+        const response = await fetch(`http://localhost:8080/message/${currentChat._id}`)
         const data = await response.json()
         setMessages(data)
       } catch (error) {
         console.log(error)
       }
     }
-    if (chat !== null) fetchMessages()
-  },[chat])
+    if (currentChat !== null) fetchMessages()
+  },[currentChat])
 
   const handleChange = async (newMessage) => {
     await setNewMessage(newMessage)
@@ -55,7 +56,7 @@ export default function ChatBox({ chat, currentUserId, setSendMessage, receiveMe
   const handleSend = async (e) => {
     e.preventDefault()
     const message = {
-      chatId : chat._id,
+      chatId : currentChat._id,
       senderId : currentUserId,
       text : newMessage,
     }
@@ -78,7 +79,7 @@ console.log(response)
     }
 
     // send messages to socket server
-    const receiverId =  chat.members.find((id) => id !== currentUserId)
+    const receiverId =  currentChat.members.find((id) => id !== currentUserId)
     setSendMessage({...message, receiverId})
   }
 
@@ -90,7 +91,7 @@ console.log(response)
   return (
     <>
     <div className="ChatBox-container">
-      {chat ? (
+      {currentChat ? (
         <>
         <div className="chat-header">
           <div className="follower">

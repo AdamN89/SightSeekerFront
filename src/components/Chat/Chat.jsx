@@ -7,6 +7,7 @@ import Button from "../Button";
 import ChatImage from "./ChatImage";
 import ChatIcon from "../NavigationIcons/ChatIcon";
 import { AuthContext } from "../../context/AuthContext";
+import { DataContext } from "../../context/DataContext"
 import Conversation from "../../pages/Chat/Conversation"
 import { io } from "socket.io-client"
 
@@ -16,11 +17,13 @@ export default function Chat() {
   const navigate = useNavigate()
   // ----------------------------------------------------------------------------------------------------//
   const { user, setUser, token } = useContext(AuthContext);
+  const { currentChat, setCurrentChat, sendMessage, setSendMessage, receiveMessage, setReceiveMessage } = useContext(DataContext)
+
   const [ chats, setChats ] = useState([])
-  const [ currentChat, setCurrentChat ] = useState(null)
+  // const [ currentChat, setCurrentChat ] = useState(null)
   const [ onlineUsers, setOnlineUsers ] = useState([])
-  const [ sendMessage, setSendMessage ] = useState(null)
-  const [ receiveMessage, setReceiveMessage ] = useState(null)
+  // const [ sendMessage, setSendMessage ] = useState(null)
+  // const [ receiveMessage, setReceiveMessage ] = useState(null)
   const socket = useRef()
 
   //initialize socket server
@@ -107,6 +110,7 @@ export default function Chat() {
             </button>
           </div>
           <SearchBar />
+          <ChatImage />
           <div className="chat__body_body">
             <Link to="/chat"><Button txt={"CREATE GROUP CHAT"} /></Link>
             {/* <div className="groupchat">
@@ -116,7 +120,7 @@ export default function Chat() {
                   {chats.map((chat) => (
                     <div onClick={() =>  {setCurrentChat(chat); navigate("/chat")}}>
                       <Conversation data={chat} currentUserId={user._id} online={checkOnlineStatus(chat)}
-                      chat={currentChat} setSendMessage={setSendMessage} receiveMessage={receiveMessage}
+                      /* chat={currentChat} setSendMessage={setSendMessage} receiveMessage={receiveMessage} */
                       />
                     </div>
                   ))}

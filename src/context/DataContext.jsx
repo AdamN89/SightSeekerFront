@@ -1,4 +1,4 @@
-import { createContext } from "react"
+import { createContext, useState } from "react"
 
 export const DataContext = createContext()
 
@@ -17,8 +17,13 @@ export default function DataContextProvider({ children }) {
     "https://res.cloudinary.com/dokiz6udc/image/upload/v1687449572/11_l5omrg.jpg",
     "https://res.cloudinary.com/dokiz6udc/image/upload/v1687449572/12_wggivu.jpg"]
 
+
+    const [ currentChat, setCurrentChat ] = useState(null)
+    const [ sendMessage, setSendMessage ] = useState(null)
+    const [ receiveMessage, setReceiveMessage ] = useState(null)
+
     return(
-        <DataContext.Provider value={{avatars}}>
+        <DataContext.Provider value={{avatars, currentChat, setCurrentChat, sendMessage, setSendMessage, receiveMessage, setReceiveMessage }}>
             {children}
         </DataContext.Provider>
     )

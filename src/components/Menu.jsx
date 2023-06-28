@@ -1,4 +1,5 @@
 import Chat from "../components/Chat/Chat";
+// import Chat from "../pages/Chat/chat"
 import TravelPlanIcon from "./NavigationIcons/TravelPlanIcon";
 import FavouritesIcon from "./NavigationIcons/FavouritesIcon";
 import FriendsIcon from "./NavigationIcons/FriendsIcon";
