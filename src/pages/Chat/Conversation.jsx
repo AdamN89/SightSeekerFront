@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
+import ChatImage from "../../components/Chat/ChatImage"
 
-export default function Conversation({ data, currentUserId, online }) {
+export default function Conversation({ data, currentUserId, online, chat, setSendMessage, receiveMessage }) {
 
     const [ userData, setUserData ] = useState(null) // This is who we send the messages to
 
@@ -20,7 +21,21 @@ export default function Conversation({ data, currentUserId, online }) {
 
   return (
     <>
-        <div className="follower conversation">
+
+            <div className="groupchat">
+              <div className="groupchat-content">
+                <div className="groupchat-name">My group chat</div>
+                <div className="groupchat-members">
+                    <span>{userData?.name}</span>
+                    <span>{online? "Online" : "Offline"}</span>
+                </div>
+              </div>
+              <div className="groupchat-graphic">
+                <ChatImage />
+              </div>
+            </div>
+
+        {/* <div className="follower conversation">
         <div>
             {online && <div className="online-dot"></div>}
                 <img src={userData?.avatar} alt="recipients avatar" style={{ width: "50px", height:"50px"}} />
@@ -30,7 +45,7 @@ export default function Conversation({ data, currentUserId, online }) {
                 </div>
         </div>
         <hr style={{width: "85%", border: "0.1px solid #ececec"}} />
-        </div>
+        </div> */}
     </>
   )
 };

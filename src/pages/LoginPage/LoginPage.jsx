@@ -48,7 +48,7 @@ export default function LoginPage() {
           (friend) => friend.received
         );
         if (invitationsReceived) navigate("/invitation");
-        else navigate("/chat");
+        else navigate("/home");
       }
     };
 
