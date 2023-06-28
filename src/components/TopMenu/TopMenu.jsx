@@ -16,6 +16,8 @@ import Button from "../Button";
 import LogoutIcon from "../LogoutIcon";
 import { AuthContext } from "../../context/AuthContext";
 import FavoritesPage from "../../pages/FavoritePage/FavoritesPage";
+import FriendsPage from "../../pages/FriendsPage/FriendsPage";
+import Chat from "../Chat/Chat";
 
 export default function TopMenu() {
   const {
@@ -29,6 +31,8 @@ export default function TopMenu() {
   const navigate = useNavigate();
   const { renderTravelPage, trevelRef } = TravelsPage();
   const { renderFavoritesPage, favoritesRef } = FavoritesPage();
+  const { renderFriendsPage, friendsRef } = FriendsPage();
+  const { renderChatsPage, chatsRef } = Chat();
   const { setToken, setUser } = useContext(AuthContext);
 
   const handleLogout = () => {
@@ -101,11 +105,21 @@ export default function TopMenu() {
               <FavouritesIcon />
               <span>Favourites</span>
             </Link>
-            <Link to="/friends">
+            <Link
+              onClick={() => {
+                openMenu(friendsRef);
+                closeTopMenu();
+              }}
+            >
               <FriendsIcon />
               <span>Friends</span>
             </Link>
-            <Link t0="/">
+            <Link
+              onClick={() => {
+                openMenu(chatsRef);
+                closeTopMenu();
+              }}
+            >
               <ChatIcon />
               <span>Chat</span>
             </Link>
@@ -125,6 +139,8 @@ export default function TopMenu() {
       </div>
       {renderTravelPage}
       {renderFavoritesPage}
+      {renderFriendsPage}
+      {renderChatsPage}
     </>
   );
 }
