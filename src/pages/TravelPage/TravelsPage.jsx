@@ -16,17 +16,10 @@ export default function TravelPage() {
     trevelRef,
     renderTravelPage: (
       <>
-        <div
-          className="navigation_wrapper "
-          // style={{
-          //   transform: isOpen ? `translateY(${0}px)` : `translateY(${-1000}px)`,
-          // }}
-        >
+        <div className="navigation_wrapper">
           <div
             ref={trevelRef}
             className="navigation_wrapper_body navigaton_page_not_visible"
-
-            // style={{ opacity: isOpen ? 2 : 0 }}
           >
             <div className="navigation_wrapper_body_header">
               <h1 className="title">Travel Plans</h1>

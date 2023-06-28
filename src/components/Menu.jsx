@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { DataContext } from "../context/DataContext";
 import FriendsPage from "../pages/FriendsPage/FriendsPage";
+import ChatIcon from "./NavigationIcons/ChatIcon";
 
 export default function Menu({ getUUID, viewState, userCoords }) {
   const { user } = useContext(AuthContext);
@@ -22,6 +23,7 @@ export default function Menu({ getUUID, viewState, userCoords }) {
   const { renderTravelPage, trevelRef } = TravelsPage();
   const { renderFavoritesPage, favoritesRef } = FavoritesPage();
   const { renderFriendsPage, friendsRef } = FriendsPage();
+  const { renderChatsPage, chatsRef } = Chat();
   const [tablet, setTablet] = useState(
     window.matchMedia("(min-width: 768px)").matches
   );
@@ -64,9 +66,14 @@ export default function Menu({ getUUID, viewState, userCoords }) {
           )}
         </button>
         <div className="main_menu_right">
-          <Chat />
+          <button className="main_menu_btn" onClick={() => openMenu(chatsRef)}>
+            <ChatIcon />
+          </button>
           {tablet ? (
-            <button className="main_menu_btn">
+            <button
+              className="main_menu_btn"
+              onClick={() => navigate("/settings")}
+            >
               <SettingsIcon />
             </button>
           ) : null}
@@ -90,6 +97,7 @@ export default function Menu({ getUUID, viewState, userCoords }) {
       {renderTravelPage}
       {renderFavoritesPage}
       {renderFriendsPage}
+      {renderChatsPage}
       <div className="main_menu_bg"></div>
     </>
   );
