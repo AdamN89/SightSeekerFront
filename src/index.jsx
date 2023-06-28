@@ -15,7 +15,6 @@ import AuthContextProvider from "./context/AuthContext";
 import Loader from "./components/Loader/Loader";
 import DataContextProvider from "./context/DataContext";
 import ChatPage from "./pages/ChatPage/ChatPage";
-import Chat from "./pages/Chat/chat";
 import CorrectChatPage from "./pages/Chat/CorrectChatPage";
 
 const router = createBrowserRouter([
@@ -62,10 +61,6 @@ const router = createBrowserRouter([
   {
     path: "/chat",
     element: <CorrectChatPage />
-  },
-  {
-    path: "/chat2",
-    element: <ChatPage />
   },
   {
     path: "/invitation",
