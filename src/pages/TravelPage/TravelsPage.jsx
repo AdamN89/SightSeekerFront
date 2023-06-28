@@ -12,7 +12,6 @@ export default function TravelPage() {
     useContext(DataContext);
   const menuRef = useRef(null);
   const navigate = useNavigate();
-  console.log(menuRef.current);
 
   // const openMenu = () => {
   //   if (isOpen === false)

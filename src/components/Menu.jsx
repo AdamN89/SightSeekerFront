@@ -6,11 +6,16 @@ import FavouritesIcon from "./NavigationIcons/FavouritesIcon";
 import FriendsIcon from "./NavigationIcons/FriendsIcon";
 import SettingsIcon from "./NavigationIcons/SettingsIcon";
 import SearchIcon from "./NavigationIcons/SearchIcon";
+import SearchBar from "./SearchBar";
+import { AuthContext } from "../context/AuthContext";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
 import { DataContext } from "../context/DataContext";
 
-export default function Menu({ user }) {
+export default function Menu({ getUUID, viewState, userCoords }) {
+  const { user } = useContext(AuthContext);
+  const [showSearchbar, setShowSearchbar] = useState(false);
+
   const navigate = useNavigate();
   const { openMenu, openTopMenu, closeTopMenu } = useContext(DataContext);
   const { renderTravelPage, menuRef } = TravelsPage();
@@ -36,10 +41,18 @@ export default function Menu({ user }) {
         </button>
         <div className="main_menu_right">
           <Chat />
-          <button className="main_menu_btn">
+          <button
+            className="main_menu_btn"
+            onClick={() => setShowSearchbar((prev) => !prev)}
+          >
             <SearchIcon />
           </button>
         </div>
+        {showSearchbar && (
+          <div className="main_menu_searchbar-wrapper">
+            <SearchBar />
+          </div>
+        )}
       </nav>
       {/* menu for tablet screen */}
       <nav className="main_menu_tablet">
@@ -67,10 +80,23 @@ export default function Menu({ user }) {
           <button className="main_menu_btn">
             <SettingsIcon />
           </button>
-          <button className="main_menu_btn">
+          <button
+            className="main_menu_btn"
+            onClick={() => setShowSearchbar((prev) => !prev)}
+            // onClick={handleSearchButtonClick}
+          >
             <SearchIcon />
           </button>
         </div>
+        {showSearchbar && (
+          <div className="main_menu_searchbar-wrapper">
+            <SearchBar
+              getUUID={getUUID}
+              viewState={viewState}
+              userCoords={userCoords}
+            />
+          </div>
+        )}
       </nav>
       <div className="main_menu_bg"></div>
     </>
