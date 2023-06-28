@@ -9,13 +9,12 @@ import SearchIcon from "./NavigationIcons/SearchIcon";
 import SearchBar from "./SearchBar";
 import { AuthContext } from "../context/AuthContext";
 import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { DataContext } from "../context/DataContext";
 
-export default function Menu({ getUUID, viewState }) {
+export default function Menu({ getUUID, viewState, userCoords }) {
   const { user } = useContext(AuthContext);
   const [showSearchbar, setShowSearchbar] = useState(false);
-import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { DataContext } from "../context/DataContext";
 
   const navigate = useNavigate();
   const { openMenu, openTopMenu, closeTopMenu } = useContext(DataContext);
@@ -91,7 +90,11 @@ import { DataContext } from "../context/DataContext";
         </div>
         {showSearchbar && (
           <div className="main_menu_searchbar-wrapper">
-            <SearchBar getUUID={getUUID} viewState={viewState} />
+            <SearchBar
+              getUUID={getUUID}
+              viewState={viewState}
+              userCoords={userCoords}
+            />
           </div>
         )}
       </nav>
