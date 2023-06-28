@@ -23,9 +23,11 @@ export default function DataContextProvider({ children }) {
   const topMenuRef = useRef(null);
 
   const openMenu = (menuRef) => {
-    if (isOpen === false)
-      menuRef.current.classList.add("navigaton_page_opening");
-    setIsOpen(true);
+    console.log(menuRef.current.parentNode);
+    menuRef.current.classList.remove("navigaton_page_not_visible");
+    menuRef.current.parentNode.classList.add("navigation_wrapper--up");
+    menuRef.current.classList.add("navigaton_page_visible");
+    menuRef.current.classList.add("navigaton_page_opening");
     setTimeout(() => {
       menuRef.current.classList.remove("navigaton_page_opening");
     }, 500);
@@ -34,8 +36,9 @@ export default function DataContextProvider({ children }) {
 
   const closeMenu = (menuRef) => {
     menuRef.current.classList.add("navigaton_page_closing");
+    console.log(menuRef.current.classList);
     setTimeout(() => {
-      setIsOpen(false);
+      menuRef.current.parentNode.classList.remove("navigation_wrapper--up");
       menuRef.current.classList.remove("navigaton_page_closing");
     }, 700);
   };

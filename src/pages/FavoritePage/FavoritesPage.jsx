@@ -1,46 +1,45 @@
-import "./TravelsPage.css";
-import CloseIcon from "../../components/CloseIcon";
+import "./FavoritesPage.css";
 import { useContext, useRef } from "react";
-import TravelSearchBar from "./TravelSearchBar";
-import Button from "../../components/Button";
-import { useNavigate } from "react-router-dom";
 import { DataContext } from "../../context/DataContext";
-import AuthorIcon from "../../components/AuthorIcon";
+import { useNavigate } from "react-router-dom";
+import CloseIcon from "../../components/CloseIcon";
+import FavoritesSearchBar from "./FavoritesSearchBar";
+import Button from "../../components/Button";
+import DeleteIcon from "../../components/DeleteIcon";
 
-export default function TravelPage() {
+export default function FavoritesPage() {
   const { closeMenu, isOpen, closeTopMenu } = useContext(DataContext);
-  const trevelRef = useRef(null);
+  const favoritesRef = useRef(null);
   const navigate = useNavigate();
 
   return {
-    trevelRef,
-    renderTravelPage: (
+    favoritesRef,
+    renderFavoritesPage: (
       <>
         <div
-          className="navigation_wrapper "
+          className="navigation_wrapper"
           // style={{
           //   transform: isOpen ? `translateY(${0}px)` : `translateY(${-1000}px)`,
           // }}
         >
           <div
-            ref={trevelRef}
             className="navigation_wrapper_body navigaton_page_not_visible"
-
+            ref={favoritesRef}
             // style={{ opacity: isOpen ? 2 : 0 }}
           >
             <div className="navigation_wrapper_body_header">
-              <h1 className="title">Travel Plans</h1>
+              <h1 className="title">Favorites</h1>
               <button
                 className="navigation_close_btn"
                 onClick={() => {
-                  closeMenu(trevelRef);
+                  closeMenu(favoritesRef);
                   closeTopMenu();
                 }}
               >
                 <CloseIcon />
               </button>
             </div>
-            <TravelSearchBar />
+            <FavoritesSearchBar />
             {/* start of content of navigation page */}
             <div className="navigation_wrapper_body_content">
               <Button
@@ -48,19 +47,23 @@ export default function TravelPage() {
                 func={() => navigate("/login")}
                 key="login"
               />
-              <div className="travel_plans">
-                <span>Travel plan name</span>
-                <AuthorIcon />
+              <div className="favorites_page">
+                <span>My favorite plase</span>
+                <div className="favorites_page_icons">
+                  <DeleteIcon />
+                </div>
               </div>
-              <div className="travel_plans">
-                <span>Travel plan name</span>
+              <div className="favorites_page">
+                <span>My favorite plase</span>
+                <div className="favorites_page_icons">
+                  <DeleteIcon />
+                </div>
               </div>
-              <div className="travel_plans">
-                <span>Travel plan name</span>
-              </div>
-              <div className="travel_plans">
-                <span>Travel plan name</span>
-                <AuthorIcon />
+              <div className="favorites_page">
+                <span>My favorite plase</span>
+                <div className="favorites_page_icons">
+                  <DeleteIcon />
+                </div>
               </div>
             </div>
             {/* end of content of navigation page */}
