@@ -31,7 +31,6 @@ export default function DataContextProvider({ children }) {
     setTimeout(() => {
       menuRef.current.classList.remove("navigaton_page_opening");
     }, 500);
-    console.log("click is working");
   };
 
   const closeMenu = (menuRef) => {
@@ -54,7 +53,7 @@ export default function DataContextProvider({ children }) {
 
   const closeTopMenu = () => {
     topMenuRef.current.classList.add("closing");
-    console.log(topMenuRef.current);
+    // console.log(topMenuRef.current);
     setTimeout(() => {
       setIsOpenTopMenu(false);
       topMenuRef.current.classList.remove("closing");

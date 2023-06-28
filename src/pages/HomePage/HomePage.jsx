@@ -133,7 +133,7 @@ export default function HomePage() {
           </Marker>
         </Map>
       )}
-      <Menu />
+      <Menu getUUID={getUUID} viewState={viewState} userCoords={userCoords} />
     </div>
   );
 }

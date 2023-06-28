@@ -348,7 +348,7 @@ input[type="radio"]:checked::before {
 }
 
 /*===================================
-      class for handeling map
+      class for handling map
 ===================================*/
 
 .main_menu {
@@ -423,6 +423,7 @@ input[type="radio"]:checked::before {
   filter: blur(10px);
   transition: all 0.3s ease-in-out;
   opacity: 0;
+  pointer-events: none;
 }
 
 .main_menu_btn svg {
@@ -451,6 +452,40 @@ input[type="radio"]:checked::before {
   width: 80px;
   height: 80px;
   overflow: hidden;
+}
+
+.main_menu_searchbar-wrapper {
+  position: absolute;
+  top: -70px;
+  width: clamp(340px, 360px, 500px);
+}
+
+.main_menu_searchbar-wrapper form input {
+  border: none;
+  background-image: var(--bg_dark_liniar);
+  text-align: left;
+  padding-left: 25px;
+}
+
+.main_menu_searchbar-wrapper form > button {
+  position: absolute;
+  background-color: transparent;
+  border: none;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 70px;
+  cursor: pointer;
+}
+.main_menu_searchbar-wrapper form > button > svg {
+  height: 30px;
+  width: 30px;
+  fill: var(--light_green);
+  transition: fill 200ms ease;
+}
+
+.main_menu_searchbar-wrapper form > button:hover > svg {
+  fill: #09b8b0;
 }
 
 .mapboxgl-popup-content h3 {

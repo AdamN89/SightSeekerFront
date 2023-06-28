@@ -6,11 +6,16 @@ import FavouritesIcon from "./NavigationIcons/FavouritesIcon";
 import FriendsIcon from "./NavigationIcons/FriendsIcon";
 import SettingsIcon from "./NavigationIcons/SettingsIcon";
 import SearchIcon from "./NavigationIcons/SearchIcon";
+import SearchBar from "./SearchBar";
+import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { DataContext } from "../context/DataContext";
 
-export default function Menu({ user }) {
+export default function Menu({ getUUID, viewState, userCoords }) {
+  const { user } = useContext(AuthContext);
+  const [showSearchbar, setShowSearchbar] = useState(false);
+
   const navigate = useNavigate();
   const { openMenu, openTopMenu, closeTopMenu } = useContext(DataContext);
   const { renderTravelPage, trevelRef } = TravelsPage();
@@ -34,7 +39,6 @@ export default function Menu({ user }) {
           <button className="main_menu_btn" onClick={() => openMenu(trevelRef)}>
             <TravelPlanIcon />
           </button>
-
           <button
             className="main_menu_btn"
             onClick={() => openMenu(favoritesRef)}
@@ -61,10 +65,22 @@ export default function Menu({ user }) {
               <SettingsIcon />
             </button>
           ) : null}
-          <button className="main_menu_btn">
+          <button
+            className="main_menu_btn"
+            onClick={() => setShowSearchbar((prev) => !prev)}
+          >
             <SearchIcon />
           </button>
         </div>
+        {showSearchbar && (
+          <div className="main_menu_searchbar-wrapper">
+            <SearchBar
+              getUUID={getUUID}
+              viewState={viewState}
+              userCoords={userCoords}
+            />
+          </div>
+        )}
       </nav>
       {renderTravelPage}
       {renderFavoritesPage}
