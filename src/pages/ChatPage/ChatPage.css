@@ -233,8 +233,8 @@
     left: 1%;
 }
 
-.message.text {
-
+.message-text {
+    font-size: 12px;
 }
 
 #root > div > div.second_element > div > div.chat-sender {
@@ -264,4 +264,14 @@
     height: 42px;
     border-radius: 0px 20px 20px 0px;
     left: -1%;
+}
+
+#root > div > div.second_element > div > div.chat-sender > div.react-emoji > div.react-emoji-picker--container > div {
+    position: absolute;
+    bottom: 0;
+    right: -50px;
+    height: 435px;
+    width: 352px;
+    overflow: hidden;
+    z-index: 10;
 }
