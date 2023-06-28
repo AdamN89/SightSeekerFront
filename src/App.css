@@ -93,7 +93,7 @@ input {
   font-weight: 500;
   font-size: 16px;
   letter-spacing: 1.25px;
-  text-transform: lowercase;
+  /* text-transform: lowercase; */
   cursor: text;
   text-align: center;
   transition: all 0.3s ease-in-out;
@@ -120,7 +120,7 @@ label {
 }
 
 /*=========================================
-  class for handeling input radio fields
+  class for handling input radio fields
 =========================================*/
 
 input[type="radio"] {
