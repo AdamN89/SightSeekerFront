@@ -43,7 +43,7 @@ export default function FavoritesPage() {
             {/* start of content of navigation page */}
             <div className="navigation_wrapper_body_content">
               <Button
-                txt={"Create new travel plan"}
+                txt={"add favorite"}
                 func={() => navigate("/login")}
                 key="login"
               />

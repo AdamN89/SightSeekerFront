@@ -5,6 +5,7 @@ import ButtonHallow from "../../components/ButtonHallow";
 import Button from "../../components/Button";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import { DataContext } from "../../context/DataContext";
 import InviteFriendsModal from "./InviteFriendsModal";
 import { useNavigate } from "react-router-dom";
 import "./FriendsPage.css";
@@ -18,6 +19,8 @@ export default function FriendsPage() {
   const modalRef = useRef(null);
   const searchInputRef = useRef(null);
   const navigate = useNavigate();
+  const { closeMenu, closeTopMenu } = useContext(DataContext);
+  const friendsRef = useRef(null);
 
   const handelUserSearch = (e) => {
     e.preventDefault();
@@ -62,77 +65,170 @@ export default function FriendsPage() {
   //   ],
   // };
   // console.log(foundUsers);
-  return (
-    <>
-      <div className="container friends__page">
-        <div className="title_wrapper">
-          <h1 className="title">Friends</h1>
-          <Link className="close_btn">
-            <CloseIcon func={handleClose} />
-          </Link>
-        </div>
-        <form className="first_element" onSubmit={handelUserSearch}>
-          <div className="friends__search-wrapper">
-            <input
-              ref={searchInputRef}
-              type="text"
-              placeholder="search users"
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-            />
-            <button type="submit">
-              <SearchIcon />
-            </button>
-            {inviteUserModalIsOpen && (
-              <InviteFriendsModal
-                setInviteUserModalIsOpen={setInviteUserModalIsOpen}
-                foundUsers={foundUsers}
-                modalRef={modalRef}
-                token={token}
-                user={user}
-                setSearchInput={setSearchInput}
-                searchInput={searchInput}
-                setUser={setUser}
-              />
-            )}
+  // return (
+  //   <>
+  //     <div className="container friends__page">
+  //       <div className="title_wrapper">
+  //         <h1 className="title">Friends</h1>
+  //         <Link className="close_btn">
+  //           <CloseIcon func={handleClose} />
+  //         </Link>
+  //       </div>
+  //       <form className="first_element" onSubmit={handelUserSearch}>
+  //         <div className="friends__search-wrapper">
+  //           <input
+  //             ref={searchInputRef}
+  //             type="text"
+  //             placeholder="search users"
+  //             value={searchInput}
+  //             onChange={(e) => setSearchInput(e.target.value)}
+  //           />
+  //           <button type="submit">
+  //             <SearchIcon />
+  //           </button>
+  //           {inviteUserModalIsOpen && (
+  //             <InviteFriendsModal
+  //               setInviteUserModalIsOpen={setInviteUserModalIsOpen}
+  //               foundUsers={foundUsers}
+  //               modalRef={modalRef}
+  //               token={token}
+  //               user={user}
+  //               setSearchInput={setSearchInput}
+  //               searchInput={searchInput}
+  //               setUser={setUser}
+  //             />
+  //           )}
+  //         </div>
+  //         <ButtonHallow txt="Send Invitation" type="submit"></ButtonHallow>
+  //       </form>
+  //       <form className="friends__page-group-form">
+  //         <Button txt="Create Group Chat" />
+  //         <Button txt="Create Travel Plan" />
+  //         <fieldset className="friends__page-friends-wrapper">
+  //           {user &&
+  //             user.friends.length > 0 &&
+  //             user.friends.map((friend, index) =>
+  //               friend.accepted ? (
+  //                 <div
+  //                   className="friends__page-check-wrapper"
+  //                   key={friend.user.userName + index}
+  //                 >
+  //                   <div
+  //                     className={`${
+  //                       selectedUsers.includes(friend.user.userName)
+  //                         ? "btn--friends"
+  //                         : "btn_hallow--friends"
+  //                     }`}
+  //                     // htmlFor={friend.user.userName}
+  //                   >
+  //                     {friend.user.name}
+  //                   </div>
+  //                   <input
+  //                     className="friends__page-checkbox"
+  //                     type="checkbox"
+  //                     name={friend.user.userName}
+  //                     id={friend.user.userName}
+  //                     onChange={handleFriendCheckbox}
+  //                   />
+  //                 </div>
+  //               ) : null
+  //             )}
+  //         </fieldset>
+  //       </form>
+  //     </div>
+  //   </>
+  // );
+
+  return {
+    friendsRef,
+    renderFriendsPage: (
+      <>
+        <div className="navigation_wrapper">
+          <div
+            ref={friendsRef}
+            className="navigation_wrapper_body navigaton_page_not_visible"
+          >
+            <div className="navigation_wrapper_body_header">
+              <h1 className="title">Friends</h1>
+              <button
+                className="navigation_close_btn"
+                onClick={() => {
+                  closeMenu(friendsRef);
+                  closeTopMenu();
+                }}
+              >
+                <CloseIcon />
+              </button>
+            </div>
+            <form
+              className="navigation_wrapper_body_content"
+              onSubmit={handelUserSearch}
+            >
+              <div className="friends__search-wrapper">
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  placeholder="search users"
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
+                />
+                <button type="submit">
+                  <SearchIcon />
+                </button>
+                {inviteUserModalIsOpen && (
+                  <InviteFriendsModal
+                    setInviteUserModalIsOpen={setInviteUserModalIsOpen}
+                    foundUsers={foundUsers}
+                    modalRef={modalRef}
+                    token={token}
+                    user={user}
+                    setSearchInput={setSearchInput}
+                    searchInput={searchInput}
+                    setUser={setUser}
+                  />
+                )}
+              </div>
+              <ButtonHallow txt="Send Invitation" type="submit"></ButtonHallow>
+            </form>
+            {/* start of content of navigation page */}
+            <form className="navigation_wrapper_body_content">
+              <Button txt="Create Group Chat" />
+              <Button txt="Create Travel Plan" />
+              <fieldset className="friends__page-friends-wrapper">
+                {user &&
+                  user.friends.length > 0 &&
+                  user.friends.map((friend, index) =>
+                    friend.accepted ? (
+                      <div
+                        className="friends__page-check-wrapper"
+                        key={friend.user.userName + index}
+                      >
+                        <div
+                          className={`${
+                            selectedUsers.includes(friend.user.userName)
+                              ? "btn--friends"
+                              : "btn_hallow--friends"
+                          }`}
+                          // htmlFor={friend.user.userName}
+                        >
+                          {friend.user.name}
+                        </div>
+                        <input
+                          className="friends__page-checkbox"
+                          type="checkbox"
+                          name={friend.user.userName}
+                          id={friend.user.userName}
+                          onChange={handleFriendCheckbox}
+                        />
+                      </div>
+                    ) : null
+                  )}
+              </fieldset>
+            </form>
+            {/* end of content of navigation page */}
           </div>
-          <ButtonHallow txt="Send Invitation" type="submit"></ButtonHallow>
-        </form>
-        <form className="friends__page-group-form">
-          <Button txt="Create Group Chat" />
-          <Button txt="Create Travel Plan" />
-          <fieldset className="friends__page-friends-wrapper">
-            {user &&
-              user.friends.length > 0 &&
-              user.friends.map((friend, index) =>
-                friend.accepted ? (
-                  <div
-                    className="friends__page-check-wrapper"
-                    key={friend.user.userName + index}
-                  >
-                    <div
-                      className={`${
-                        selectedUsers.includes(friend.user.userName)
-                          ? "btn--friends"
-                          : "btn_hallow--friends"
-                      }`}
-                      // htmlFor={friend.user.userName}
-                    >
-                      {friend.user.name}
-                    </div>
-                    <input
-                      className="friends__page-checkbox"
-                      type="checkbox"
-                      name={friend.user.userName}
-                      id={friend.user.userName}
-                      onChange={handleFriendCheckbox}
-                    />
-                  </div>
-                ) : null
-              )}
-          </fieldset>
-        </form>
-      </div>
-    </>
-  );
+        </div>
+      </>
+    ),
+  };
 }
