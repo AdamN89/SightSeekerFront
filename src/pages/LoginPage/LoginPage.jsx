@@ -23,7 +23,7 @@ export default function LoginPage() {
 
     const sendLogin = async () => {
       // POST http://localhost:8080/user/login   -> JSON with userName/email and password
-      const res = await fetch("http://localhost:8080/user/login", {
+      const res = await fetch("http://localhost:6060/user/login", {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({ loginOne, password }),
@@ -44,7 +44,6 @@ export default function LoginPage() {
         setIsLoading(false);
         console.log("data from login fetch: ", data);
 
-        
         const invitationsReceived = data.data.friends.some(
           (friend) => friend.received
         );
