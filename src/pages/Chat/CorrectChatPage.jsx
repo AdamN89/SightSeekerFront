@@ -4,8 +4,9 @@ import { AuthContext } from "../../context/AuthContext";
 import Conversation from "./Conversation";
 import ChatBox from "./ChatBox";
 import { io } from "socket.io-client"
+import CloseIcon from "../../components/CloseIcon";
 
-export default function Chat() {
+export default function CorrectChatPage() {
 
   const { user, setUser, token } = useContext(AuthContext);
   const [ chats, setChats ] = useState([])
@@ -59,30 +60,14 @@ export default function Chat() {
   }
 
   return (
-    <div className="Chat">
-      {/* Left Side */}
-      <div className="Left-side-chat">
-        <div className="Chat-container">
-
-        <h2>My Group Chat</h2>
-        {/* <div className="Chat-list">
-          {chats.map((chat) => (
-            <div onClick={() =>  setCurrentChat(chat)}>
-              <Conversation data={chat} currentUserId={user._id} online={checkOnlineStatus(chat)} />
+    <div className="container">
+        <div className="first_element">
+            <div className="title_container">
+                <h1 className="title">My Group Chat</h1>
+                <CloseIcon />
             </div>
-          ))}
-        </div> */}
         </div>
-      </div>
-
-      {/* Right Side */}
-      <div className="Right-side-chat">
-        <div style={{width: "100%", alignSelf: "flex-end"}}>
-      {/* Chat Body */}
-      <ChatBox />
-        </div>
-      </div>
-      
+        <ChatBox />
     </div>
   )
 };

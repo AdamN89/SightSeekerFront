@@ -1,11 +1,15 @@
 import { useEffect, useState, useRef, useContext } from "react"
 import { DataContext } from "../../context/DataContext"
+import { AuthContext } from "../../context/AuthContext";
 import { format } from "timeago.js"
 import InputEmoji from "react-input-emoji"
-import "./chatbox.css"
+// import "./chatbox.css"
+import "../ChatPage/ChatPage.css"
 
 
-export default function ChatBox({ chat, currentUserId}) {
+export default function ChatBox() {
+  const { user } = useContext(AuthContext);
+  const currentUserId = user._id
   const { currentChat, setCurrentChat, sendMessage, setSendMessage, receiveMessage, setReceiveMessage } = useContext(DataContext)
   const [ userData, setUserData ] = useState(null)
   const [ messages, setMessages ] = useState([])
@@ -89,29 +93,31 @@ console.log(response)
   })
 
   return (
-    <>
+    <div className="second_element">
     <div className="ChatBox-container">
       {currentChat ? (
         <>
         <div className="chat-header">
-          <div className="follower">
-            <div>
-                  <img src={userData?.avatar} alt="recipients avatar" style={{ width: "50px", height:"50px"}} />
-                  <div className="name" style={{fontSize: "0.8rem"}}>
-                      <span>{userData?.name}</span>
-                  </div>
+          <div className="members">
+            <img src={userData?.avatar} alt="recipients avatar" style={{ width: "50px", height:"50px"}} />
+            <div className="name" style={{fontSize: "0.8rem"}}>
+                <span>{userData?.name}</span>
             </div>
+
           </div>
-          <hr style={{width: "85%", border: "0.1px solid #ececec"}} />
+          {/* <hr style={{width: "85%", border: "0.1px solid #ececec"}} /> */}
         </div>
         {/* Chat Box Messages */}
-        <div className="chat-body">
+        <div className="chat_wall-container">
           {messages.map((message) => (
             <>
-            <div ref={scroll} className= {message.senderId === currentUserId ? "message-own" : "message"}>
-              <span>{message.text}</span>
-              <span>{format(message.createdAt)}</span>
+            <div ref={scroll} className= {message.senderId === currentUserId ? "users_message" : "senders_message"}>
+              <div className="message-body">
+                <p className="message-text">{message.text}</p>
+              </div>
+              <p className={message.senderId === currentUserId ? "users_message-time_stamp" : "senders_message-time_stamp"}>{format(message.createdAt)}</p>
             </div>
+            
             </>
           ))}
         </div>
@@ -120,6 +126,7 @@ console.log(response)
         <div className="chat-sender">
           <div>+</div> {/* To add images for example later on */}
           <InputEmoji 
+            borderRadius= "20px 0px 0px 20px"
             value={newMessage}
             onChange={handleChange}
           />
@@ -133,7 +140,8 @@ console.log(response)
       )}
       
     </div>
-    </>
+    </div>
   )
 };
 
+{/* <p className="time-stamp">{format(message.createdAt)}</p> */}

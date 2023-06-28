@@ -26,7 +26,7 @@ export default function Conversation({ data, currentUserId, online, chat, setSen
                 <div className="groupchat-name">My group chat</div>
                 <div className="groupchat-members">
                     <span>{userData?.name}</span>
-                    <span>{online? "Online" : "Offline"}</span>
+                    <span>{online? " - Online" : " - Offline"}</span>
                 </div>
               </div>
               <div className="groupchat-graphic">

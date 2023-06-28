@@ -110,13 +110,8 @@ export default function Chat() {
             </button>
           </div>
           <SearchBar />
-          <ChatImage />
           <div className="chat__body_body">
-            <Link to="/chat"><Button txt={"CREATE GROUP CHAT"} /></Link>
-            {/* <div className="groupchat">
-              <div className="groupchat-content">
-                <div className="groupchat-name">My group chat</div>
-                <div className="groupchat-members"> */}
+            <Link to="/chat2"><Button txt={"CREATE GROUP CHAT"} /></Link>
                   {chats.map((chat) => (
                     <div onClick={() =>  {setCurrentChat(chat); navigate("/chat")}}>
                       <Conversation data={chat} currentUserId={user._id} online={checkOnlineStatus(chat)}
@@ -124,39 +119,6 @@ export default function Chat() {
                       />
                     </div>
                   ))}
-                {/* </div>
-              </div>
-              <div className="groupchat-graphic">
-                <ChatImage />
-              </div>
-            </div> */}
-            {/* <div className="groupchat">
-              <div className="groupchat-content">
-                <div className="groupchat-name">My group chat</div>
-                <div className="groupchat-members">Stephan, Puri, Miro</div>
-              </div>
-              <div className="groupchat-graphic">
-                <ChatImage />
-              </div>
-            </div>
-            <div className="groupchat">
-              <div className="groupchat-content">
-                <div className="groupchat-name">My group chat</div>
-                <div className="groupchat-members">Stephan, Puri, Miro</div>
-              </div>
-              <div className="groupchat-graphic">
-                <ChatImage />
-              </div>
-            </div>
-            <div className="groupchat">
-              <div className="groupchat-content">
-                <div className="groupchat-name">My group chat</div>
-                <div className="groupchat-members">Stephan, Puri, Miro</div>
-              </div>
-              <div className="groupchat-graphic">
-                <ChatImage />
-              </div>
-            </div> */}
           </div>
         </div>
       </div>
