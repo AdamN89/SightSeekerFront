@@ -8,7 +8,7 @@ import { DataContext } from "../../context/DataContext";
 import AuthorIcon from "../../components/AuthorIcon";
 
 export default function TravelPage() {
-  const { closeMenu, isOpen, closeTopMenu } = useContext(DataContext);
+  const { closeMenu, closeTopMenu } = useContext(DataContext);
   const trevelRef = useRef(null);
   const navigate = useNavigate();
 

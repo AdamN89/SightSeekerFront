@@ -11,6 +11,7 @@ import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { DataContext } from "../context/DataContext";
+import FriendsPage from "../pages/FriendsPage/FriendsPage";
 
 export default function Menu({ getUUID, viewState, userCoords }) {
   const { user } = useContext(AuthContext);
@@ -20,6 +21,7 @@ export default function Menu({ getUUID, viewState, userCoords }) {
   const { openMenu, openTopMenu, closeTopMenu } = useContext(DataContext);
   const { renderTravelPage, trevelRef } = TravelsPage();
   const { renderFavoritesPage, favoritesRef } = FavoritesPage();
+  const { renderFriendsPage, friendsRef } = FriendsPage();
   const [tablet, setTablet] = useState(
     window.matchMedia("(min-width: 768px)").matches
   );
@@ -47,7 +49,10 @@ export default function Menu({ getUUID, viewState, userCoords }) {
           </button>
         </div>
         {tablet ? (
-          <button className="main_menu_btn">
+          <button
+            className="main_menu_btn"
+            onClick={() => openMenu(friendsRef)}
+          >
             <FriendsIcon />
           </button>
         ) : null}
@@ -84,6 +89,7 @@ export default function Menu({ getUUID, viewState, userCoords }) {
       </nav>
       {renderTravelPage}
       {renderFavoritesPage}
+      {renderFriendsPage}
       <div className="main_menu_bg"></div>
     </>
   );
