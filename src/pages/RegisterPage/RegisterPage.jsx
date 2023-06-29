@@ -27,36 +27,36 @@ const initialRegisterValues = {
 };
 
 export default function RegisterPage() {
-  const {login, setUser} = useContext(AuthContext);
+  const { login, setUser, backendURL } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const register = async (values) => {
-    setIsLoading(true)
-    console.log(1)
+    setIsLoading(true);
+    console.log(1);
     try {
-      const response = await fetch("http://localhost:8080/user/signup", {
+      const response = await fetch(`${backendURL}/user/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
       });
-      console.log(2)
+      console.log(2);
       if (response.ok) {
-        console.log("3-ok")
+        console.log("3-ok");
         setIsLoading(false);
         const registeredUser = await response.json();
         localStorage.setItem("token", registeredUser.token);
         login(registeredUser.token);
         setUser(registeredUser.data);
-        navigate("/initialsetup")
+        navigate("/initialsetup");
       }
       // else {
       //   console.log("Error occurred while registering");
       // }
     } catch (error) {
-      console.log("3-not_ok")
+      console.log("3-not_ok");
       setIsLoading(false);
       console.error("Error occurred while registering", error);
     }
@@ -120,21 +120,25 @@ export default function RegisterPage() {
                 </div>
 
                 <div>
-                    <Button
-                      txt={"Register"}
-                      func={() => {
-                          handleSubmitButtonClick(submitForm)
-                        
-                          if(errors.confirmPassword)
-                          {alert(errors.confirmPassword)}
-                          if(errors.email)
-                          {alert(errors.email)}
-                          if(errors.name)
-                          {alert(errors.name)}
-                          if (errors.userName)
-                          {alert(errors.userName)}
-                        }}
-                    />
+                  <Button
+                    txt={"Register"}
+                    func={() => {
+                      handleSubmitButtonClick(submitForm);
+
+                      if (errors.confirmPassword) {
+                        alert(errors.confirmPassword);
+                      }
+                      if (errors.email) {
+                        alert(errors.email);
+                      }
+                      if (errors.name) {
+                        alert(errors.name);
+                      }
+                      if (errors.userName) {
+                        alert(errors.userName);
+                      }
+                    }}
+                  />
                   <div className="register_page_login">
                     <p>Already have an account?</p>
                     <Link to="/login">Login</Link>

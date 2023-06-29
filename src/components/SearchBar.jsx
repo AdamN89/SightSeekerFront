@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, useContext } from "react";
-import SearchIcon from "./NavigationIcons/SearchIcon";
+// import SearchIcon from "./NavigationIcons/SearchIcon";
 import { AuthContext } from "../context/AuthContext";
 
 export default function SearchBar({ getUUID, viewState, userCoords }) {
@@ -13,6 +13,8 @@ export default function SearchBar({ getUUID, viewState, userCoords }) {
   const searchInputRef = useRef(null);
   const [error, setError] = useState(null);
 
+  const [mapBoxSuggestions, setMapboxSuggestions] = useState([]);
+
   useEffect(() => {
     searchInputRef.current.focus();
     setSessionUUID(getUUID && getUUID());
@@ -22,31 +24,41 @@ export default function SearchBar({ getUUID, viewState, userCoords }) {
     setLatUser(userCoords?.latitude !== undefined ? userCoords.latitude : 0);
   }, []);
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch(
-        `https://api.mapbox.com/search/searchbox/v1/suggest?q=${searchInput}&language=en&limit=7&proximity=${lng},${lat}&origin=${lngUser},${latUser}&session_token=${sessionUUID}&access_token=${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}`
-      );
-      const data = await res.json();
-      console.log(data);
-    } catch (error) {
-      setError(error);
-    }
-  };
+  useEffect(() => {
+    const getSuggestions = async () => {
+      try {
+        const res = await fetch(
+          `https://api.mapbox.com/search/searchbox/v1/suggest?q=${searchInput}&language=en&limit=10&proximity=${lng},${lat}&origin=${lngUser},${latUser}&radius=0.5&types=poi,address,city&session_token=${sessionUUID}&access_token=${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}`
+        );
+        const data = await res.json();
+        console.log(data);
+        if (res.ok && data.suggestions.length > 0)
+          setMapboxSuggestions(data.suggestions);
+      } catch (error) {
+        setError(error);
+      }
+    };
+    if (searchInput.length) getSuggestions();
+  }, [searchInput]);
 
   return (
-    <form onSubmit={handleSearch}>
-      <input
-        ref={searchInputRef}
-        type="text"
-        placeholder="search"
-        onChange={(e) => setSearchInput(e.target.value)}
-      />
-      <button type="submit">
+    <>
+      {mapBoxSuggestions.length > 0 ? (
+        <div className="">hello from search</div>
+      ) : null}
+      <form onSubmit={(e) => e.preventDefault()}>
+        <input
+          ref={searchInputRef}
+          type="text"
+          placeholder="search"
+          onChange={(e) => setSearchInput(e.target.value)}
+          value={searchInput}
+        />
+        {/* <button type="submit">
         <SearchIcon />
-      </button>
-    </form>
+      </button> */}
+      </form>
+    </>
   );
 }
 
