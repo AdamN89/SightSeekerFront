@@ -33,7 +33,7 @@ export default function TopMenu() {
   const { renderFavoritesPage, favoritesRef } = FavoritesPage();
   const { renderFriendsPage, friendsRef } = FriendsPage();
   const { renderChatsPage, chatsRef } = Chat();
-  const { setToken, setUser } = useContext(AuthContext);
+  const { setToken, setUser, user, isLoading } = useContext(AuthContext);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -78,8 +78,20 @@ export default function TopMenu() {
         >
           <div className="topmenu__body_header">
             <div className="topmenu__body_header_user">
-              <img src="../../assets/defaultavatar/09.jpg" alt="user-img" />
-              <span>Name Lastname</span>
+              <button
+                className="topmenu_avatar_btn"
+                onClick={() => navigate("/settings")}
+              >
+                {!user || isLoading ? (
+                  <img
+                    src="https://res.cloudinary.com/dokiz6udc/image/upload/v1686943211/default_avatar_yfsudh.jpg?width=100&height=100"
+                    alt="avatar"
+                  />
+                ) : (
+                  <img src={user.avatar} alt={user.name} />
+                )}
+              </button>
+              <span>{user.name}</span>
             </div>
             <button onClick={closeTopMenu}>
               <CloseIcon />

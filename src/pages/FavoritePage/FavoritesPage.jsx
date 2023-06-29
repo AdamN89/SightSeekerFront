@@ -44,8 +44,8 @@ export default function FavoritesPage() {
             <div className="navigation_wrapper_body_content">
               <Button
                 txt={"add favorite"}
-                func={() => navigate("/login")}
-                key="login"
+                func={() => navigate("/addfavorite")}
+                key="addfavorite"
               />
               <div className="favorites_page">
                 <span>My favorite plase</span>
