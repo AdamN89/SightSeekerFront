@@ -25,7 +25,7 @@ export default function Conversation({ data, currentUserId, online, chat, setSen
           })
           const data = await response.json()
           setUserData(data.data)
-          console.log("user data", data)
+          // console.log("user data", data)
           // console.log("user data length check", data.data.length > 1)
           // console.log("mapping over data.data", data.data.length > 1 ? (data.data.map(member => {return member})) : (data.data[0]))
           if (data.data.length > 1) {

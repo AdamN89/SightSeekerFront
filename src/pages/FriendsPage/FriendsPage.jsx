@@ -19,7 +19,7 @@ export default function FriendsPage() {
   const modalRef = useRef(null);
   const searchInputRef = useRef(null);
   const navigate = useNavigate();
-  const { closeMenu, closeTopMenu } = useContext(DataContext);
+  const { closeMenu, closeTopMenu, setCurrentChat } = useContext(DataContext);
   const friendsRef = useRef(null);
 
   const handelUserSearch = (e) => {
@@ -69,10 +69,14 @@ export default function FriendsPage() {
         })
       })
       const newChat = await response.json()
+      console.log("1")
+      setCurrentChat(newChat)
+      console.log("2")
+      console.log("3")
     } catch (error) {
       console.log(error)
     }
-    
+    navigate("/chat")
   }
 
   // testdata

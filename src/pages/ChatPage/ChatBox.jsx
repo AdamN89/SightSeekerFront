@@ -20,7 +20,9 @@ export default function ChatBox() {
       setMessages([...messages, receiveMessage])
     }
   },[receiveMessage])
-
+  const userId = currentChat?.members?.find((id) => id !== currentUserId)
+  console.log("userID", userId)
+  console.log("current chat", currentChat)
 
   // fetching data for header
   useEffect(() => {
@@ -31,11 +33,12 @@ export default function ChatBox() {
           const response = await fetch(`http://localhost:8080/user/${userId}`)
           const data = await response.json()
           setUserData(data.data)
+          console.log("this is userData", data)
       } catch (error) {
           console.log(error)
       }
   }
-    if (currentChat !== null) getUserData()
+    if (currentChat !== null){getUserData()}
   },[currentChat, currentUserId])
 
   // fetching data for messages
@@ -73,7 +76,7 @@ export default function ChatBox() {
         },
         body: JSON.stringify(message),
       })
-console.log(response)
+      console.log(response)
       const data = await response.json()
       setMessages([...messages, data])
       setNewMessage("")
