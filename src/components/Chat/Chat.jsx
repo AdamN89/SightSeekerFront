@@ -19,12 +19,7 @@ export default function Chat() {
   // ----------------------------------------------------------------------------------------------------//
   const { user, setUser, token } = useContext(AuthContext);
   const { currentChat, setCurrentChat, sendMessage, setSendMessage, receiveMessage, setReceiveMessage, closeMenu, closeTopMenu, chats, setChats } = useContext(DataContext)
-
-  // const [ chats, setChats ] = useState([])
-  // const [ currentChat, setCurrentChat ] = useState(null)
   const [ onlineUsers, setOnlineUsers ] = useState([])
-  // const [ sendMessage, setSendMessage ] = useState(null)
-  // const [ receiveMessage, setReceiveMessage ] = useState(null)
   const socket = useRef()
 
   //initialize socket server

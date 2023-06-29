@@ -11,35 +11,51 @@ export default function ChatBox() {
   const currentUserId = user._id
   const { currentChat, setCurrentChat, sendMessage, setSendMessage, receiveMessage, setReceiveMessage } = useContext(DataContext)
   const [ userData, setUserData ] = useState(null)
+  const [ multipleUsers, setMultipleUsers ] = useState()
   const [ messages, setMessages ] = useState([])
   const [ newMessage, setNewMessage ] = useState(" ")
   const scroll = useRef()
+
+  // fetching chat members data for header
+  useEffect(() => {
+    const filteredMembers = currentChat.members.filter(member => member !== currentUserId)
+
+    const getUserData = async() => {
+      try {
+        const response = await fetch(`http://localhost:8080/user/chatmembers`,{
+          headers: {
+            "Content-type": "application/json"
+          },
+          body: JSON.stringify({members : Array.isArray(filteredMembers[0]) ? filteredMembers[0] : filteredMembers}),
+          method: "POST"
+          })
+          const data = await response.json()
+          if (data.data.length > 1) {
+            setMultipleUsers(data.data)
+          } else {
+            setUserData(data.data[0])
+          }
+      } 
+      catch (error) {
+        console.log(error)
+      }
+    }
+
+    if (Array.isArray(filteredMembers[0])? filteredMembers[0][0] : filteredMembers[0]){
+        getUserData()
+      }
+
+  },[])
 
   useEffect(() => {
     if(receiveMessage !== null && receiveMessage.chatId === currentChat?._id) {
       setMessages([...messages, receiveMessage])
     }
   },[receiveMessage])
+
   const userId = currentChat?.members?.find((id) => id !== currentUserId)
   console.log("userID", userId)
   console.log("current chat", currentChat)
-
-  // fetching data for header
-  useEffect(() => {
-    const userId = currentChat?.members?.find((id) => id !== currentUserId)
-
-    const getUserData = async() => {
-      try {
-          const response = await fetch(`http://localhost:8080/user/${userId}`)
-          const data = await response.json()
-          setUserData(data.data)
-          console.log("this is userData", data)
-      } catch (error) {
-          console.log(error)
-      }
-  }
-    if (currentChat !== null){getUserData()}
-  },[currentChat, currentUserId])
 
   // fetching data for messages
   useEffect(() => {
@@ -101,11 +117,20 @@ export default function ChatBox() {
         <>
         <div className="chat-header">
           <div className="members">
-            <img src={userData?.avatar} alt="recipients avatar" style={{ width: "50px", height:"50px"}} />
-            <div className="name" style={{fontSize: "0.8rem"}}>
+            {multipleUsers ? (
+              multipleUsers.map((user)=> (
+              <div className="name" style={{fontSize: "0.8rem"}}>
+                <span>{user.name}</span>
+                <img src={user.avatar} alt="recipients avatar" style={{ width: "50px", height:"50px"}} />
+              </div>
+              ))
+            ) : (
+              <div className="name" style={{fontSize: "0.8rem"}}>
                 <span>{userData?.name}</span>
-            </div>
-
+                <img src={userData?.avatar} alt="recipients avatar" style={{ width: "50px", height:"50px"}} />
+              </div>
+              )
+            }
           </div>
           {/* <hr style={{width: "85%", border: "0.1px solid #ececec"}} /> */}
         </div>
@@ -119,7 +144,6 @@ export default function ChatBox() {
               </div>
               <p className={message.senderId === currentUserId ? "users_message-time_stamp" : "senders_message-time_stamp"}>{format(message.createdAt)}</p>
             </div>
-            
             </>
           ))}
         </div>
@@ -140,7 +164,6 @@ export default function ChatBox() {
           Tap on a user to start chat!
         </span>
       )}
-      
     </div>
     </div>
   )

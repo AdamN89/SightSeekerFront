@@ -1,7 +1,6 @@
 import "./chat.css"
 import { useState, useContext, useEffect, useRef } from "react"
 import { AuthContext } from "../../context/AuthContext";
-import Conversation from "./Conversation";
 import ChatBox from "./ChatBox";
 import { io } from "socket.io-client"
 import CloseIcon from "../../components/CloseIcon";

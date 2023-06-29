@@ -51,10 +51,10 @@ export default function FriendsPage() {
       );
   };
 
-  // const handleClose = () => {
-  //   if (inviteUserModalIsOpen) setInviteUserModalIsOpen(false);
-  //   else navigate("/home");
-  // };
+  const handleClose = () => {
+    if (inviteUserModalIsOpen) setInviteUserModalIsOpen(false);
+    else navigate("/home");
+  };
 
   const createChat = async (e) => {
     e.preventDefault();
@@ -69,10 +69,7 @@ export default function FriendsPage() {
         })
       })
       const newChat = await response.json()
-      console.log("1")
       setCurrentChat(newChat)
-      console.log("2")
-      console.log("3")
     } catch (error) {
       console.log(error)
     }
