@@ -11,7 +11,7 @@ export default function AuthContextProvider({ children }) {
   const backendURL =
     process.env.NODE_ENV === "development"
       ? "http://localhost:8080"
-      : "https://sightseeker.netlify.app";
+      : "https://sightseeker-backend.onrender.com";
 
   console.log(token, user);
 
