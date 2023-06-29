@@ -1,4 +1,4 @@
-import { createContext, useRef, useState } from "react";
+import { createContext, useRef, useState, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const DataContext = createContext();
@@ -60,22 +60,21 @@ export default function DataContextProvider({ children }) {
     }, 700);
   };
 
-  return (
-    <DataContext.Provider
-      value={{
-        avatars,
-        openMenu,
-        closeMenu,
-        isOpen,
-        setIsOpen,
-        openTopMenu,
-        closeTopMenu,
-        isOpenTopMenu,
-        setIsOpenTopMenu,
-        topMenuRef,
-      }}
-    >
-      {children}
-    </DataContext.Provider>
-  );
+    return(
+        <DataContext.Provider value={{
+          avatars,
+          openMenu,
+          closeMenu,
+          isOpen,
+          setIsOpen,
+          openTopMenu,
+          closeTopMenu,
+          isOpenTopMenu,
+          setIsOpenTopMenu,
+          topMenuRef,
+          currentChat, setCurrentChat, sendMessage, setSendMessage, receiveMessage, setReceiveMessage
+        }}>
+            {children}
+        </DataContext.Provider>
+    )
 }
