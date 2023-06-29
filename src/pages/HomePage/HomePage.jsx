@@ -107,7 +107,7 @@ export default function HomePage() {
           onMove={handleMapMove}
           reuseMaps={true}
           cursor="drag"
-          onClick={handleMapClick}
+          // onClick={handleMapClick}
         >
           <NavigationControl />
           <AddFavoriteIcon />
@@ -130,7 +130,7 @@ export default function HomePage() {
             latitude={userCoords.latitude}
             onClick={(e) => {
               e.originalEvent.stopPropagation();
-              setShowPopup(true);
+              setShowPopup((prev) => !prev);
             }}
           >
             <img src="./assets/marker.png" alt="marker" />
