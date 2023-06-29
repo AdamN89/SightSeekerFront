@@ -124,7 +124,23 @@
   box-shadow: none !important;
 }
 
-.mapboxgl-ctrl-group button {
+.add_favorite_icon_btn {
+  position: absolute;
+  right: 10px;
+  top: 235px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add_favorite_icon_btn svg {
+  width: 17px;
+  fill: #cbcccc;
+}
+
+.mapboxgl-ctrl-group button,
+.add_favorite_icon_btn {
   border-radius: 50% !important;
   height: 40px;
   width: 40px;
@@ -133,7 +149,8 @@
   transition: all 0.3s ease;
 }
 
-.mapboxgl-ctrl-group button:hover {
+.mapboxgl-ctrl-group button:hover,
+.add_favorite_icon_btn:hover {
   background-color: var(--dark_purple) !important;
   border: 2px solid var(--light_purple) !important;
   transition: all 0.3s ease;

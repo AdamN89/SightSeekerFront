@@ -7,6 +7,7 @@ import "./HomePage.css";
 import TopMenu from "../../components/TopMenu/TopMenu";
 import Loader from "../../components/Loader/Loader";
 import Menu from "../../components/Menu";
+import AddFavoriteIcon from "../../components/AddFavoriteIcon";
 
 const mapStyle = "mapbox://styles/stephanullmann/clj7lajvj005t01que278452b";
 const TOKEN =
@@ -109,6 +110,7 @@ export default function HomePage() {
           onClick={handleMapClick}
         >
           <NavigationControl />
+          <AddFavoriteIcon />
           {showPopup && (
             <Popup
               latitude={userCoords.latitude}

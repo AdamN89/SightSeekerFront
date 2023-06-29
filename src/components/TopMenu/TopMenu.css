@@ -129,11 +129,26 @@
   font-size: 20px;
 }
 
-.topmenu__body_header img {
+.topmenu_avatar_btn {
+  height: 100px;
+  border: 3px solid var(--light_purple) !important;
   border-radius: 50%;
-  border: 2px solid var(--light_purple);
-  max-width: 100px;
-  height: auto;
+  overflow: hidden;
+  background-color: var(--dark_green);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.topmenu_avatar_btn:hover {
+  border: 3px solid var(--light_green) !important;
+}
+
+.topmenu_avatar_btn img {
+  transition: all 0.3s ease;
+}
+
+.topmenu_avatar_btn:hover img {
+  opacity: 0.7;
 }
 
 .topmenu__body_header svg {

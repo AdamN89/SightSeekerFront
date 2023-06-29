@@ -16,6 +16,7 @@ import Loader from "./components/Loader/Loader";
 import Chat from "./components/Chat/Chat";
 import TravelsPage from "./pages/TravelPage/TravelsPage";
 import CreateTravelPlan from "./pages/TravelPage/CreateTravelPlan";
+import AddFavorite from "./pages/FavoritePage/AddFavorite";
 
 function App() {
   const { token } = useContext(AuthContext);
@@ -63,6 +64,10 @@ function App() {
         <Route
           path="/createtravelplan"
           element={token ? <CreateTravelPlan /> : <LandingPage />}
+        />
+        <Route
+          path="/addfavorite"
+          element={token ? <AddFavorite /> : <LandingPage />}
         />
       </Routes>
     </div>

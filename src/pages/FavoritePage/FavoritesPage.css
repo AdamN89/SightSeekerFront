@@ -33,3 +33,66 @@
   display: flex;
   align-items: center;
 }
+
+/*====================================
+      classes for add favorite
+====================================*/
+
+.add_favorite {
+  padding: 30px;
+}
+
+.add_favorite .first_element {
+  width: 100%;
+  gap: 20px;
+}
+
+.add_favorite h1 {
+  margin-bottom: 30px;
+  font-size: 40px;
+  line-height: 1;
+  text-align: left;
+  width: 100%;
+}
+
+.add_favorite_close_btn {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  background: transparent;
+  outline: 0;
+  border: 0;
+  width: 64px;
+  cursor: pointer;
+}
+
+.add_favorite_close_btn svg {
+  fill: var(--dark_green);
+  transition: all 0.3s ease;
+}
+
+.add_favorite_close_btn:hover svg {
+  fill: var(--light_green);
+}
+
+.add_favorite_form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.add_favorite_form input {
+  border: none;
+  text-align: left;
+  padding-left: 25px;
+  background: var(--search_bg);
+  box-shadow: 5px 5px 8px var(--shadow_dark);
+}
+
+.add_favorite_map {
+  width: 100%;
+  height: 400px;
+  border-radius: 20px;
+  border: 2px solid var(--light_green);
+}
