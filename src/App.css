@@ -749,3 +749,58 @@ add to about page */
 .search_wrapper button:hover svg {
   fill: var(--dark_purple);
 }
+
+/* searchbar and it's suggestions */
+
+.searchbar__suggestions {
+  position: absolute;
+  padding: 5px 0;
+  background-image: var(--bg_dark_liniar);
+  bottom: 65px;
+  left: 0;
+  right: 0;
+  border-radius: 20px;
+  max-height: 45vh;
+  overflow-y: auto;
+}
+
+.searchbar__suggestions--item {
+  list-style: none;
+  margin: 0 5px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.searchbar__suggestions--item h4 {
+  text-underline-offset: 4px;
+  margin-bottom: 7px;
+}
+
+.searchbar__suggestions--item:hover h4 {
+  text-decoration: underline;
+}
+
+.searchbar__suggestions--item:not(:last-of-type) {
+  border-bottom: 1px solid var(--txt);
+}
+
+.searchbar__suggestions--details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.searchbar__suggestions--address {
+  text-align: start;
+  font-size: 15px;
+}
+.searchbar__suggestions--distance {
+  margin-left: 20px;
+  font-size: 15px;
+}
+.searchbar__suggestions--category {
+  font-size: 15px;
+}
+
+.searchbar__suggestions--category:not(:last-of-type) {
+  margin-right: 10px;
+}
