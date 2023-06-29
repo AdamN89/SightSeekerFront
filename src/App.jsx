@@ -14,7 +14,7 @@ import LandingPage from "./pages/LandingPage/LandingPage";
 import ReceivedInvitation from "./pages/FriendsPage/ReceivedInvitation";
 import Loader from "./components/Loader/Loader";
 import TravelsPage from "./pages/TravelPage/TravelsPage";
-import CorrectChatPage from "./pages/ChatPage/ChatPage";
+import ChatPage from "./pages/ChatPage/ChatPage";
 import CreateTravelPlan from "./pages/TravelPage/CreateTravelPlan";
 import AddFavorite from "./pages/FavoritePage/AddFavorite";
 
@@ -52,7 +52,7 @@ function App() {
           path="/friends"
           element={token ? <FriendsPage /> : <LandingPage />}
         />
-        <Route path="/chat" element={token ? <CorrectChatPage /> : <LandingPage />} />
+        <Route path="/chat" element={token ? <ChatPage /> : <LandingPage />} />
         <Route
           path="/invitation"
           element={token ? <ReceivedInvitation /> : <LandingPage />}

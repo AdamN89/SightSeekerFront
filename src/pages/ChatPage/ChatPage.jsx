@@ -5,7 +5,7 @@ import ChatBox from "./ChatBox";
 import { io } from "socket.io-client"
 import CloseIcon from "../../components/CloseIcon";
 
-export default function CorrectChatPage() {
+export default function ChatPage() {
 
   const { user, setUser, token } = useContext(AuthContext);
   const [ chats, setChats ] = useState([])
