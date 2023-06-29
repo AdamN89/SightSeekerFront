@@ -13,7 +13,7 @@ import "./FriendsPage.css";
 export default function FriendsPage() {
   const [searchInput, setSearchInput] = useState("");
   const [selectedUsers, setSelectedUsers] = useState([]);
-  const { user, token, setUser } = useContext(AuthContext);
+  const { user, token, setUser, backendURL } = useContext(AuthContext);
   const [foundUsers, setFoundUsers] = useState([]);
   const [inviteUserModalIsOpen, setInviteUserModalIsOpen] = useState(false);
   const modalRef = useRef(null);
@@ -26,15 +26,12 @@ export default function FriendsPage() {
     e.preventDefault();
     searchInputRef.current.blur();
     const fetchUsers = async (searchInput) => {
-      const res = await fetch(
-        `http://localhost:8080/user/find?search=${searchInput}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await fetch(`${backendURL}/user/find?search=${searchInput}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const data = await res.json();
       setFoundUsers(data.data);
       if (data.data.length > 0) setInviteUserModalIsOpen(true);

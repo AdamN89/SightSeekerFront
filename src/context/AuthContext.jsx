@@ -8,6 +8,10 @@ export default function AuthContextProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const backendURL =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:8080"
+      : "https://sightseeker.netlify.app";
 
   console.log(token, user);
 
@@ -17,7 +21,7 @@ export default function AuthContextProvider({ children }) {
     setIsLoading(true);
     const storedToken = localStorage.getItem("token");
     console.log("in retrieveUser: ", storedToken);
-    const res = await fetch("http://localhost:8080/user/retrieve", {
+    const res = await fetch(`${backendURL}/user/retrieve`, {
       headers: {
         "Content-type": "application/json",
         Authorization: `Bearer ${storedToken}`,
@@ -76,6 +80,7 @@ export default function AuthContextProvider({ children }) {
         setToken,
         isLoading,
         setIsLoading,
+        backendURL,
       }}
     >
       {children}

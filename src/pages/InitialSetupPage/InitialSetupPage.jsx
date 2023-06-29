@@ -34,7 +34,7 @@ export default function InitalSetup() {
 
   const navigate = useNavigate();
   const { avatars } = useContext(DataContext);
-  const { token } = useContext(AuthContext);
+  const { token, backendURL } = useContext(AuthContext);
 
   const handleFormSubmit = async (values) => {
     await saveInitialSettings(values);
@@ -50,7 +50,7 @@ export default function InitalSetup() {
       const formData = new FormData();
       formData.append("avatar", uploadedImgFile);
       try {
-        const response = await fetch("http://localhost:8080/user/avatar", {
+        const response = await fetch(`${backendURL}/user/avatar`, {
           method: "PUT",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -68,17 +68,14 @@ export default function InitalSetup() {
       }
     } else {
       try {
-        const response = await fetch(
-          "http://localhost:8080/user/default_avatar",
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({ avatar: theChosenOne }),
-          }
-        );
+        const response = await fetch(`${backendURL}/user/default_avatar`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ avatar: theChosenOne }),
+        });
         if (response.ok) {
           const responseData = await response.json();
           console.log(responseData);
@@ -94,17 +91,14 @@ export default function InitalSetup() {
   const saveInitialSettings = async (values) => {
     console.log(values);
     try {
-      const response = await fetch(
-        "http://localhost:8080/user/initalsettings",
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(values),
-        }
-      );
+      const response = await fetch(`${backendURL}/user/initalsettings`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(values),
+      });
 
       if (response.ok) {
         const responseData = await response.json();
@@ -119,7 +113,7 @@ export default function InitalSetup() {
 
   const handleClick = (event) => {
     event.preventDefault();
-    if (event.target.innerHTML == "choose avatar") {
+    if (event.target.innerHTML === "choose avatar") {
       if (openDrop1) {
         avatarDialog.current.close();
       } else {
@@ -129,7 +123,7 @@ export default function InitalSetup() {
       setOpenDrop2(false);
       setOpenDrop3(false);
     }
-    if (event.target.innerHTML == "point preferences") {
+    if (event.target.innerHTML === "point preferences") {
       if (openDrop1) {
         poiDialog.current.close();
       } else {
@@ -139,7 +133,7 @@ export default function InitalSetup() {
       setOpenDrop2(!openDrop2);
       setOpenDrop3(false);
     }
-    if (event.target.innerHTML == "privacy settings") {
+    if (event.target.innerHTML === "privacy settings") {
       if (openDrop1) {
         privacyDialog.current.close();
       } else {
