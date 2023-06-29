@@ -12,7 +12,7 @@ export default function ReceivedInvitation() {
   const [queuedUser, setQueuedUser] = useState(null);
   const [error, setError] = useState(null);
   const [firstRun, setFirstRun] = useState(true);
-  const { token, user, setUser } = useContext(AuthContext);
+  const { token, user, setUser, backendURL } = useContext(AuthContext);
   const navigate = useNavigate();
   // console.log(token);
 
@@ -33,7 +33,7 @@ export default function ReceivedInvitation() {
   console.log("queuedUser: ", queuedUser);
 
   const handleAccept = async () => {
-    const res = await fetch(`http://localhost:8080/user/answer-invitation`, {
+    const res = await fetch(`${backendURL}/user/answer-invitation`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -62,7 +62,7 @@ export default function ReceivedInvitation() {
     }
   };
   const handleReject = async () => {
-    const res = await fetch(`http://localhost:8080/user/answer-invitation`, {
+    const res = await fetch(`${backendURL}/user/answer-invitation`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

@@ -38,8 +38,8 @@ export default function TravelPage() {
             <div className="navigation_wrapper_body_content">
               <Button
                 txt={"Create new travel plan"}
-                func={() => navigate("/login")}
-                key="login"
+                func={() => navigate("/createtravelplan")}
+                key="createtravelplan"
               />
               <div className="travel_plans">
                 <span>Travel plan name</span>

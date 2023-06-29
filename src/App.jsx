@@ -15,6 +15,8 @@ import ReceivedInvitation from "./pages/FriendsPage/ReceivedInvitation";
 import Loader from "./components/Loader/Loader";
 import TravelsPage from "./pages/TravelPage/TravelsPage";
 import CorrectChatPage from "./pages/ChatPage/ChatPage";
+import CreateTravelPlan from "./pages/TravelPage/CreateTravelPlan";
+import AddFavorite from "./pages/FavoritePage/AddFavorite";
 
 function App() {
   const { token } = useContext(AuthContext);
@@ -56,8 +58,16 @@ function App() {
           element={token ? <ReceivedInvitation /> : <LandingPage />}
         />
         <Route
-          path="/travelplans"
+          path="/travelplan"
           element={token ? <TravelsPage /> : <LandingPage />}
+        />
+        <Route
+          path="/createtravelplan"
+          element={token ? <CreateTravelPlan /> : <LandingPage />}
+        />
+        <Route
+          path="/addfavorite"
+          element={token ? <AddFavorite /> : <LandingPage />}
         />
       </Routes>
     </div>

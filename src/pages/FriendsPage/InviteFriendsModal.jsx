@@ -1,17 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import SearchIcon from "../../components/SearchIcon";
 import "./FriendsPage.css";
-import { json } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function InviteFriendsModal({
-  token,
   foundUsers,
-  setInviteUserModalIsOpen,
-  user,
   setSearchInput,
   searchInput,
-  setUser,
 }) {
+  const { user, token, setUser, backendURL } = useContext(AuthContext);
   const [invitationsSend, setInvitationsSend] = useState([]);
   const [invitationsReceived, setInvitationsReceived] = useState([]);
   const [error, setError] = useState(null);
@@ -30,16 +27,13 @@ export default function InviteFriendsModal({
   const handleInvitation = async (e) => {
     const invitedUserID = e.target.id;
     if (e.target.checked) {
-      const res = await fetch(
-        `http://localhost:8080/user/invite/${invitedUserID}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await fetch(`${backendURL}/user/invite/${invitedUserID}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const data = await res.json();
       if (!res.ok) {
         setError(data.error);
@@ -48,7 +42,7 @@ export default function InviteFriendsModal({
       if (res.ok) setUser(data.data);
     }
     if (!e.target.checked) {
-      const res = await fetch(`http://localhost:8080/user/answer-invitation`, {
+      const res = await fetch(`${backendURL}/user/answer-invitation`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

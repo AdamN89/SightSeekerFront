@@ -59,7 +59,10 @@ export default function Menu({ getUUID, viewState, userCoords }) {
             <FriendsIcon />
           </button>
         ) : null}
-        <button className="main_menu_avatar">
+        <button
+          className="main_menu_avatar"
+          onClick={() => navigate("/settings")}
+        >
           {!user || isLoading ? (
             <img
               src="https://res.cloudinary.com/dokiz6udc/image/upload/v1686943211/default_avatar_yfsudh.jpg?width=100&height=100"
