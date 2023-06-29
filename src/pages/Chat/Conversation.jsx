@@ -3,67 +3,57 @@ import ChatImage from "../../components/Chat/ChatImage"
 
 export default function Conversation({ data, currentUserId, online, chat, setSendMessage, receiveMessage }) {
 
-    const [ userData, setUserData ] = useState(null) // This is who we send the messages to
+    const [ userData, setUserData ] = useState([]) // This is who we send the messages to
+    const [ multipleUsers, setMultipleUsers ] = useState([])
 
   useEffect(() => {
-    const userId = data.members.find((id) => id !== currentUserId)
-    console.log("this is userId", userId)
+    // const userId = data.members.find((id) => id !== currentUserId)
 
-    console.log("this is chatrooms members", data.members)
-
-    const newFunc = () => {
-    if (data.members[1] > 1) {
-      console.log("THIS IS JUST ONE ENDING 6c4e",data._id)
-    }}
-
-    const getUserData = async() => {
-      try {
-        const response = await fetch(`http://localhost:8080/user/${userId}`)
-        const data = await response.json()
-        console.log("this is fetching chat members",data.data.name)
-        setUserData(data.data)
-    } catch (error) {
-        console.log(error)
-    }
-    }
-    getUserData()
-
-    
-    // const filteredMembers = data.members.filter(member => member !== currentUserId)
+    const filteredMembers = data.members.filter(member => member !== currentUserId)
     // console.log("filtered members", filteredMembers)
-    // const chatMember = filteredMembers.map((member) => member)
-    // console.log("this is chatmember", chatMember)
 
-    // data.members[1].forEach(member => console.log(member.find((id) => id !== currentUserId)))
     
-    // chatMember.forEach((member) => {
-    //   console.log("this is id", member)
-    //     const getUserData = async() => {
-    //     try {
-    //       const response = await fetch(`http://localhost:8080/user/${member}`)
-    //       const data = await response.json()
-    //       console.log("this is fetching chat members",data.data.name)
-    //       setUserData(data.data)
-    //   } catch (error) {
-    //       console.log(error)
-    //   }
-    //   }
-    //   getUserData()
-    // }
-    //   )
-    
-        newFunc()
+    const getUserData = async() => {
+      // console.log("type check", Array.isArray(filteredMembers[0]))
+      try {
+        const response = await fetch(`http://localhost:8080/user/chatmembers`,{
+          headers: {
+            "Content-type": "application/json"
+          },
+          body: JSON.stringify({members : Array.isArray(filteredMembers[0]) ? filteredMembers[0] : filteredMembers}),
+          method: "POST"
+          })
+          const data = await response.json()
+          setUserData(data.data)
+          console.log("user data", data)
+          // console.log("user data length check", data.data.length > 1)
+          // console.log("mapping over data.data", data.data.length > 1 ? (data.data.map(member => {return member})) : (data.data[0]))
+          if (data.data.length > 1) {
+            setMultipleUsers(data.data)
+            console.log("this is going into multi users",data.data)
+          }
+      } 
+      catch (error) {
+        console.log(error)
+      }
+    }
+
+    if (Array.isArray(filteredMembers[0])? filteredMembers[0][0] : filteredMembers[0]){
+        getUserData()
+      }
+
   },[])
     
-
   return (
     <>
             <div className="groupchat">
               <div className="groupchat-content">
                 <div className="groupchat-name">My group chat</div>
                 <div className="groupchat-members">
-                    <span>{userData?.name}</span>
-                    <span>{online? " - Online" : " - Offline"}</span>
+                    {multipleUsers.length > 1 ? (multipleUsers.map((user) => (
+                      <div>{user.name}<span>{online? " - Online" : " - Offline"}</span></div>
+                    ))) : (<div>{userData[0]?.name}<span>{online? " - Online" : " - Offline"}</span></div>)}
+                    {/* <span>{online? " - Online" : " - Offline"}</span> */}
                 </div>
               </div>
               <div className="groupchat-graphic">
