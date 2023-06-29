@@ -217,7 +217,7 @@ export default function FriendsPage() {
                           className="friends__page-checkbox"
                           type="checkbox"
                           name={friend.user.userName}
-                          id={friend.user.userName}
+                          id={friend.user._id}
                           onChange={handleFriendCheckbox}
                         />
                       </div>
