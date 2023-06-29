@@ -51,10 +51,29 @@ export default function FriendsPage() {
       );
   };
 
-  const handleClose = () => {
-    if (inviteUserModalIsOpen) setInviteUserModalIsOpen(false);
-    else navigate("/home");
-  };
+  // const handleClose = () => {
+  //   if (inviteUserModalIsOpen) setInviteUserModalIsOpen(false);
+  //   else navigate("/home");
+  // };
+
+  const createChat = async (e) => {
+    e.preventDefault();
+    console.log("this is working")
+    try {
+      const response = await fetch(`http://localhost:8080/chat`, {
+        method : "POST",
+        headers : {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            senderId : user._id,
+            receiverId : selectedUsers
+        })
+      })
+      const newChat = await response.json()
+    } catch (error) {
+      console.log(error)
+    }
+    
+  }
 
   // testdata
   // const user = {
@@ -192,7 +211,10 @@ export default function FriendsPage() {
             </form>
             {/* start of content of navigation page */}
             <form className="navigation_wrapper_body_content">
-              <Button txt="Create Group Chat" />
+              <Button 
+              txt="Start chat with selected friends"
+              func={createChat}
+              />
               <Button txt="Create Travel Plan" />
               <fieldset className="friends__page-friends-wrapper">
                 {user &&

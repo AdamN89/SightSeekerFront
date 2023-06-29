@@ -13,13 +13,14 @@ import { io } from "socket.io-client"
 
 export default function Chat() {
   const chatsRef = useRef(null);
+  const friendsRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate()
   // ----------------------------------------------------------------------------------------------------//
   const { user, setUser, token } = useContext(AuthContext);
-  const { currentChat, setCurrentChat, sendMessage, setSendMessage, receiveMessage, setReceiveMessage, closeMenu, closeTopMenu } = useContext(DataContext)
+  const { currentChat, setCurrentChat, sendMessage, setSendMessage, receiveMessage, setReceiveMessage, closeMenu, closeTopMenu, chats, setChats } = useContext(DataContext)
 
-  const [ chats, setChats ] = useState([])
+  // const [ chats, setChats ] = useState([])
   // const [ currentChat, setCurrentChat ] = useState(null)
   const [ onlineUsers, setOnlineUsers ] = useState([])
   // const [ sendMessage, setSendMessage ] = useState(null)
@@ -69,25 +70,6 @@ export default function Chat() {
     return online ? true : false
   }
 
-  // ------------------------------------------------------------------------------------//
-  // const openMenu = () => {
-  //   if (isOpen === false) menuRef.current.classList.add("chatopening");
-  //   setIsOpen(!isOpen);
-  //   setTimeout(() => {
-  //     menuRef.current.classList.remove("chatopening");
-  //   }, 500);
-  //   console.log("click is working");
-  // };
-  // // -------------------------------------------------------------------------//
-  // const closeMenu = () => {
-  //   menuRef.current.classList.add("chatclosing");
-  //   setTimeout(() => {
-  //     setIsOpen(!isOpen);
-  //     menuRef.current.classList.remove("chatclosing");
-  //   }, 700);
-  // };
-
-
   return {
     chatsRef,
     renderChatsPage: (
@@ -113,23 +95,19 @@ export default function Chat() {
             {/* start of content of navigation page */}
             <div className="navigation_wrapper_body_content">
               <Button
-                txt={"Create chat group"}
-                func={() => navigate("/login")}
+                txt={"Create new chat"}
+                func={() => closeMenu(chatsRef)}
                 key="login"
               />
-              
                 {chats.map((chat) => (
                     <div onClick={() =>  {setCurrentChat(chat); navigate("/chat")}}>
                       <Conversation data={chat} currentUserId={user._id} online={checkOnlineStatus(chat)}
-                      /* chat={currentChat} setSendMessage={setSendMessage} receiveMessage={receiveMessage} */
                       />
                     </div>
                   ))}
-              
                 <div className="groupchat_icon">
                   <ChatImage />
                 </div>
-        
             </div>
             {/* end of content of navigation page */}
           </div>
@@ -137,43 +115,4 @@ export default function Chat() {
       </>
     ),
   };
-
-
-  // return (
-  //   <>
-  //     <button className="main_menu_btn" onClick={openMenu}>
-  //       <ChatIcon />
-  //     </button>
-  //     <div
-  //       className="chat__wrapper"
-  //       style={{
-  //         transform: isOpen ? `translateY(${0}px)` : `translateY(${-1000}px)`,
-  //       }}
-  //     >
-  //       <div
-  //         className="chat__body-wrapper"
-  //         ref={menuRef}
-  //         style={{ opacity: isOpen ? 2 : 0 }}
-  //       >
-  //         <div className="chat__body_header">
-  //           <h1 className="title">Chats</h1>
-  //           <button onClick={closeMenu}>
-  //             <CloseIcon />
-  //           </button>
-  //         </div>
-  //         <SearchBar />
-  //         <div className="chat__body_body">
-  //           <Link to="/chat2"><Button txt={"CREATE GROUP CHAT"} /></Link>
-  //                 {chats.map((chat) => (
-  //                   <div onClick={() =>  {setCurrentChat(chat); navigate("/chat")}}>
-  //                     <Conversation data={chat} currentUserId={user._id} online={checkOnlineStatus(chat)}
-  //                     /* chat={currentChat} setSendMessage={setSendMessage} receiveMessage={receiveMessage} */
-  //                     />
-  //                   </div>
-  //                 ))}
-  //         </div>
-  //       </div>
-  //     </div>
-  //     </>
-  // )
 }
