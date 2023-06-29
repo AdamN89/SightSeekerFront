@@ -21,9 +21,12 @@ export default function DataContextProvider({ children }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenTopMenu, setIsOpenTopMenu] = useState(false);
   const topMenuRef = useRef(null);
+  const [ currentChat, setCurrentChat ] = useState(null)
+  const [ sendMessage, setSendMessage ] = useState(null)
+  const [ receiveMessage, setReceiveMessage ] = useState(null)
 
   const openMenu = (menuRef) => {
-    console.log(menuRef.current.parentNode);
+    // console.log(menuRef.current.parentNode);
     menuRef.current.classList.remove("navigaton_page_not_visible");
     menuRef.current.parentNode.classList.add("navigation_wrapper--up");
     menuRef.current.classList.add("navigaton_page_visible");

@@ -3,7 +3,6 @@ import { DataContext } from "../../context/DataContext"
 import { AuthContext } from "../../context/AuthContext";
 import { format } from "timeago.js"
 import InputEmoji from "react-input-emoji"
-// import "./chatbox.css"
 import "../ChatPage/ChatPage.css"
 
 
@@ -143,5 +142,3 @@ console.log(response)
     </div>
   )
 };
-
-{/* <p className="time-stamp">{format(message.createdAt)}</p> */}
