@@ -19,7 +19,7 @@ export default function FriendsPage() {
   const modalRef = useRef(null);
   const searchInputRef = useRef(null);
   const navigate = useNavigate();
-  const { closeMenu, closeTopMenu } = useContext(DataContext);
+  const { closeMenu, closeTopMenu, setCurrentChat } = useContext(DataContext);
   const friendsRef = useRef(null);
 
   const handelUserSearch = (e) => {
@@ -52,6 +52,26 @@ export default function FriendsPage() {
     if (inviteUserModalIsOpen) setInviteUserModalIsOpen(false);
     else navigate("/home");
   };
+
+  const createChat = async (e) => {
+    e.preventDefault();
+    console.log("this is working")
+    try {
+      const response = await fetch(`http://localhost:8080/chat`, {
+        method : "POST",
+        headers : {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            senderId : user._id,
+            receiverId : selectedUsers
+        })
+      })
+      const newChat = await response.json()
+      setCurrentChat(newChat)
+    } catch (error) {
+      console.log(error)
+    }
+    navigate("/chat")
+  }
 
   // testdata
   // const user = {
@@ -189,7 +209,10 @@ export default function FriendsPage() {
             </form>
             {/* start of content of navigation page */}
             <form className="navigation_wrapper_body_content">
-              <Button txt="Create Group Chat" />
+              <Button 
+              txt="Start chat with selected friends"
+              func={createChat}
+              />
               <Button txt="Create Travel Plan" />
               <fieldset className="friends__page-friends-wrapper">
                 {user &&
@@ -214,7 +237,7 @@ export default function FriendsPage() {
                           className="friends__page-checkbox"
                           type="checkbox"
                           name={friend.user.userName}
-                          id={friend.user.userName}
+                          id={friend.user._id}
                           onChange={handleFriendCheckbox}
                         />
                       </div>

@@ -13,8 +13,8 @@ import FriendsPage from "./pages/FriendsPage/FriendsPage";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import ReceivedInvitation from "./pages/FriendsPage/ReceivedInvitation";
 import Loader from "./components/Loader/Loader";
-import Chat from "./components/Chat/Chat";
 import TravelsPage from "./pages/TravelPage/TravelsPage";
+import ChatPage from "./pages/ChatPage/ChatPage";
 import CreateTravelPlan from "./pages/TravelPage/CreateTravelPlan";
 import AddFavorite from "./pages/FavoritePage/AddFavorite";
 
@@ -52,7 +52,7 @@ function App() {
           path="/friends"
           element={token ? <FriendsPage /> : <LandingPage />}
         />
-        <Route path="/chat" element={token ? <Chat /> : <LandingPage />} />
+        <Route path="/chat" element={token ? <ChatPage /> : <LandingPage />} />
         <Route
           path="/invitation"
           element={token ? <ReceivedInvitation /> : <LandingPage />}

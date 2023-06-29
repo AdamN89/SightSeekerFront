@@ -21,9 +21,13 @@ export default function DataContextProvider({ children }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenTopMenu, setIsOpenTopMenu] = useState(false);
   const topMenuRef = useRef(null);
+  const [ currentChat, setCurrentChat ] = useState(null)
+  const [ sendMessage, setSendMessage ] = useState(null)
+  const [ receiveMessage, setReceiveMessage ] = useState(null)
+  const [ chats, setChats ] = useState([])
 
   const openMenu = (menuRef) => {
-    console.log(menuRef.current.parentNode);
+    // console.log(menuRef.current.parentNode);
     menuRef.current.classList.remove("navigaton_page_not_visible");
     menuRef.current.parentNode.classList.add("navigation_wrapper--up");
     menuRef.current.classList.add("navigaton_page_visible");
@@ -60,22 +64,28 @@ export default function DataContextProvider({ children }) {
     }, 700);
   };
 
-  return (
-    <DataContext.Provider
-      value={{
-        avatars,
-        openMenu,
-        closeMenu,
-        isOpen,
-        setIsOpen,
-        openTopMenu,
-        closeTopMenu,
-        isOpenTopMenu,
-        setIsOpenTopMenu,
-        topMenuRef,
-      }}
-    >
-      {children}
-    </DataContext.Provider>
-  );
+    return(
+        <DataContext.Provider value={{
+          avatars,
+          openMenu,
+          closeMenu,
+          isOpen,
+          setIsOpen,
+          openTopMenu,
+          closeTopMenu,
+          isOpenTopMenu,
+          setIsOpenTopMenu,
+          topMenuRef,
+          currentChat,
+          setCurrentChat,
+          sendMessage,
+          setSendMessage,
+          receiveMessage,
+          setReceiveMessage,
+          chats,
+          setChats
+        }}>
+            {children}
+        </DataContext.Provider>
+    )
 }
