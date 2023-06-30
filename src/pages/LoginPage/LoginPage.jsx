@@ -16,42 +16,39 @@ export default function LoginPage() {
 
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
 
-    const sendLogin = async () => {
-      // POST `${backendURL}/user/login`   -> JSON with userName/email and password
-      const res = await fetch(`${backendURL}/user/login`, {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify({ loginOne, password }),
-      });
-      const data = await res.json();
+    // POST `${backendURL}/user/login`   -> JSON with userName/email and password
+    const res = await fetch(`${backendURL}/user/login`, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({ loginOne, password }),
+    });
+    const data = await res.json();
 
-      if (!res.ok) {
-        setIsLoading(false);
-        setError(data.error);
-        console.error(data.error);
-      }
-      if (res.ok) {
-        setLoginOne("");
-        setPassword("");
-        localStorage.setItem("token", data.token);
-        login(data.token);
-        setUser(data.data);
-        setIsLoading(false);
-        console.log("data from login fetch: ", data);
+    if (!res.ok) {
+      setIsLoading(false);
+      setError(data.error);
+      console.error(data.error);
+    }
+    if (res.ok) {
+      setLoginOne("");
+      setPassword("");
+      localStorage.setItem("token", data.token);
+      login(data.token);
+      setUser(data.data);
+      setIsLoading(false);
+      console.log("data from login fetch: ", data);
 
-        const invitationsReceived = data.data.friends.some(
-          (friend) => friend.received
-        );
-        if (invitationsReceived) navigate("/invitation");
-        else navigate("/home");
-      }
-    };
-    sendLogin();
+      const invitationsReceived = data.data.friends.some(
+        (friend) => friend.received
+      );
+      if (invitationsReceived) navigate("/invitation");
+      else navigate("/home");
+    }
   };
 
   return (
@@ -83,7 +80,7 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               value={password}
             />
-            <Button txt="login" key="login-btn" func={null} />
+            <Button txt="login" key="login-btn" />
             <div className="login_page_signup">
               <p>Don't have an account?</p>
               <Link to={"/register"}>Sign Up</Link>
