@@ -1,53 +1,47 @@
 import "./settings.css";
-import { useContext, useState } from "react";
+import { useContext, useState, useRef, useEffect } from "react";
 import Button from "../../components/Button";
 import ButtonDelete from "../../components/ButtonDelete";
 import { Formik, Form, Field } from "formik";
+import {AuthContext} from "../../context/AuthContext";
+import {DataContext} from "../../context/DataContext"
+import EditIcon from "../../components/EditIcon";
+import CloseIcon from "../../components/CloseIcon"
+import { useNavigate } from "react-router-dom";
 
 export default function Settings() {
-  
-  const user = {
-    "_id": "648df661f48fb9b3213a831a",
-    "name": "Stephan Ullmann",
-    "userName": "Estephano",
-    "avatar": "https://res.cloudinary.com/dokiz6udc/image/upload/v1687026490/SightSeeker/yzlqcvwsmukuv31pblio.webp",
-    "email": "testmail@mailtest.test",
-    "favorites": [],
-    "friends": [
-        {
-            "user": {
-                "avatar": "https://images-ext-1.discordapp.net/external/GyUam2pAgNjbvCzp42knkwvqumYzrPF86Rur6U88mbU/https/res.cloudinary.com/dokiz6udc/image/upload/v1686943211/default_avatar_yfsudh.jpg?width=583&height=583",
-                "_id": "648dfbe07249a74782069d09",
-                "userName": "friendlyTester"
-              },
-              "accepted": true,
-              "received": false,
-            "_id": "64900e5af86301db654f43dc"
-        }
-    ],
-    "settings": {
-        "darkMode": false,
-        "preferences": [],
-        "foundBy": "all",
-        "locationServices": true,
-        "showEmail": true,
-        "showName": true
-    },
-    "chats": [],
-    "travelPlans": []
-  }
-  
+  const {token, user, setUser} = useContext(AuthContext)
+  const {avatars} = useContext(DataContext)
+
+  const [openDrop1, setOpenDrop1] = useState(false);
+  const [openDrop2, setOpenDrop2] = useState(false);
+  const [openDrop3, setOpenDrop3] = useState(false);
+  const [typedName, setTypedName] = useState("");
+  const [typedPassword1, setTypedPassword1] = useState("");
+  const [typedPassword2, setTypedPassword2] = useState("");
+
+  const avatarDialog = useRef(null);
+  const nameDialog = useRef(null);
+  const passwordDialog = useRef(null);
+
+  const [modalHeight, setModalHeight] = useState(0);
+  const [uploadedImgFile, setUploadedImgFile] = useState(undefined);
+  const [uploadedImgURL, setUploadedImgURL] = useState("");
+  const [theChosenOne, setTheChosenOne] = useState(
+    "https://res.cloudinary.com/dokiz6udc/image/upload/v1687449571/02_v1rulc.jpg"
+  );
+  const navigate = useNavigate()
+
+  console.log(user)
   const initialSetupValues = {
-    password: "",
-    darkMode: user.settings.darkMode,
-    foundBy: user.settings.foundBy,
-    locationServices: user.settings.locationServices,
-    showEmail: user.settings.showEmail,
-    showName: user.settings.showName,
+    darkMode: user?.settings.darkMode,
+    foundBy: user?.settings.foundBy,
+    locationServices: user?.settings.locationServices,
+    showEmail: user?.settings.showEmail,
+    showName: user?.settings.showName,
   };
 
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDhkZjY2MWY0OGZiOWIzMjEzYTgzMWEiLCJpYXQiOjE2ODc0NDAyMTcsImV4cCI6MTY4NzUyNjYxN30.nk4EeXtUtRxGGrSPzHevmcuVqNGjXMYry95-ou7iP00"
-  
+
   const handleFormSubmit = async (values) => {
     await saveChangedSettings(values)
   }
@@ -56,6 +50,107 @@ export default function Settings() {
     await submitForm();
   };
 
+  const backToMain = ()=> {
+    navigate("/home")
+  }
+
+  const submitNewAvatar = async (theChosenOne) => {
+    if (uploadedImgURL === theChosenOne) {
+      const formData = new FormData();
+      formData.append("avatar", uploadedImgFile);
+      try {
+        const response = await fetch("http://localhost:8080/user/avatar", {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        });
+        if (response.ok) {
+          const responseData = await response.json();
+          setUser(responseData.data)
+          console.log(responseData);
+        } else {
+          console.log("Error");
+        }
+      } catch (error) {
+        console.error("Error", error);
+      }
+    } else {
+      try {
+        const response = await fetch(
+          "http://localhost:8080/user/default_avatar",
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ avatar: theChosenOne }),
+          }
+        );
+        if (response.ok) {
+          const responseData = await response.json();
+          setUser(responseData.data)
+          console.log(responseData);
+        } else {
+          console.log("Error");
+        }
+      } catch (error) {
+        console.error("Error", error);
+      }
+    }
+  };
+
+  const submitNewName = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:8080/user/changeName",
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ name: typedName }),
+          }
+        );
+        if (response.ok) {
+          const responseData = await response.json();
+          setUser(responseData.data)
+          console.log(responseData);
+        } else {
+          console.log("Error");
+        }
+      } catch (error) {
+        console.error("Error", error);
+      }
+  }
+
+  const submitNewPassword = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8080/user/changePassword",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ password: typedPassword1 }),
+        }
+      );
+      if (response.ok) {
+        const responseData = await response.json();
+        setUser(responseData.data)
+        console.log(responseData);
+      } else {
+        console.log("Error");
+      }
+    } catch (error) {
+      console.error("Error", error);
+    }
+  }
   
   const saveChangedSettings = async (values) => {
     console.log(values)
@@ -70,6 +165,130 @@ export default function Settings() {
       });
 
       if (response.ok) {
+        const responseData = await response.json();
+        setUser(responseData.data)
+      } else {
+        console.log("Error");
+      }
+    } catch (error) {
+      console.error("Error", error);
+    }
+  };
+
+  const handleClick = (event) => {
+    console.log("handleclick triggered")
+    event.preventDefault();
+    console.log(event.target.name)
+    if (event.target.name == "changeAvatar") {
+      if (openDrop1) {
+        avatarDialog.current.close();
+      } else {
+        avatarDialog.current.show();
+      }
+      setOpenDrop1(!openDrop1);
+      setOpenDrop2(false);
+      setOpenDrop3(false);
+    }
+    if (event.target.name == "changeName") {
+
+      if (openDrop1) {
+        nameDialog.current.close();
+      } else {
+        nameDialog.current.show();
+      }
+      setOpenDrop1(false);
+      setOpenDrop2(!openDrop2);
+      setOpenDrop3(false);
+    }
+    if (event.target.name == "changePassword") {
+      if (openDrop1) {
+        passwordDialog.current.close();
+      } else {
+        passwordDialog.current.show();
+      }
+      setOpenDrop1(false);
+      setOpenDrop2(false);
+      setOpenDrop3(!openDrop3);
+    }
+  };
+
+  const handleCloseModel = () => {
+    avatarDialog.current.close();
+    nameDialog.current.close();
+    passwordDialog.current.close();
+    setOpenDrop1(false);
+    setOpenDrop2(false);
+    setOpenDrop3(false);
+  };
+
+  const fullHeight = "100%";
+
+  useEffect(() => {
+    // openDrop1 ? setModalHeight(avatarDialog.current.offsetHeight) : null;
+    if (openDrop1) {
+      setModalHeight(avatarDialog.current.offsetHeight);
+    }
+  }, [openDrop1]);
+
+  const calcHeight = `max(${modalHeight + 40}px, 100%)`;
+  // console.log(calcHeight);
+
+  const handleChosenOne = (event) => {
+    setTheChosenOne(event.target.src);
+  };
+
+  const handleSaveSelectedAvatar = (event) => {
+    handleCloseModel()
+    if(theChosenOne){
+      submitNewAvatar(theChosenOne)
+    }
+  }
+
+  const handleSaveName = (event) => {
+    event.preventDefault()
+    //if success
+    if(typedName.length > 0){
+      submitNewName()
+      handleCloseModel()
+    } else{
+      alert("nothing to submit")
+    }
+  }
+
+  const handleSavePassword = (event) => {
+    event.preventDefault()
+    //validate?
+    if(typedPassword1.length > 0){
+      if(typedPassword1 === typedPassword2){
+        submitNewPassword()
+        handleCloseModel()
+      }else{
+        alert("both field do not match")
+      }
+    } else{
+      alert("nothing to submit")
+    }
+  }
+
+  const addAvatar= (event)=>{
+    if(event.target.files[0]){
+      setUploadedImgFile(event.target.files[0])
+      setUploadedImgURL(URL.createObjectURL(event.target.files[0]))
+    }
+  }
+
+  const deleteAccont = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/user/deleteUser", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify(),
+      });
+
+      if (response.ok) {
         const user = await response.json();
       } else {
         console.log("Error");
@@ -78,11 +297,81 @@ export default function Settings() {
       console.error("Error", error);
     }
   };
-  console.log(user.settings.locationServices)
+
   return (
     <>
       <div className="container">
         <h1 className="title">Settings</h1>
+            <div className="first_element">
+              <span className="small-dark">name</span>
+              <span>{user?.name}</span>
+              <button className="svgButton" onClick={handleClick} name="changeName">
+              <EditIcon />
+              </button>
+              <dialog ref={nameDialog}
+              className={
+                openDrop2 ? "modal colorGray" : null
+              }
+              >
+                <h2 className="title">Change Name</h2>
+                <CloseIcon func={handleCloseModel} />
+                <div className="modal_container">
+                  <form onSubmit={handleSaveName}>
+                    <input type="text" value={typedName} onChange={(e)=>{setTypedName(e.target.value)
+                      }}/>
+                    <Button txt="Save"/>
+                  </form>
+                </div>
+              </dialog>
+              <span className="small-dark">user name</span>
+              <span>{user.userName}</span>
+              <span className="small-dark">email</span>
+              <span>{user.email}</span>
+              <span className="small-dark">password</span>
+              <span>{user.password}</span>
+              <button className="svgButton"  onClick={handleClick} name="changePassword">
+                <EditIcon/>
+              </button>
+              <dialog ref={passwordDialog}
+              className={
+                openDrop3 ? "modal colorGray" : null
+              }
+              >
+                <h2 className="title">Change Password</h2>
+                <CloseIcon func={handleCloseModel} />
+                <div className="modal_container">
+                  <form onSubmit={handleSavePassword}>
+                    <input value={typedPassword1} onChange={(e)=>setTypedPassword1(e.target.value)}/>
+                    <input value={typedPassword2} onChange={(e)=>setTypedPassword2(e.target.value)}/>
+                    <Button txt="Save"/>
+                  </form>
+                </div>
+              </dialog>
+            </div>
+            <div className="second_element">
+              <div className="avatar">
+                <img src={user.avatar} onClick={handleClick} name="changeAvatar"/>
+              </div>
+              <dialog ref={avatarDialog}
+              className={
+                openDrop1 ? "modal" : null
+              }
+            >
+              <h2 className="title">Choose Avatar</h2>
+              <CloseIcon func={handleCloseModel} />
+              <div className="modal_container avatars">
+                <div className="avatars">
+                {avatars?.map((avatar, index) => {
+                return <img className={theChosenOne === avatar? "selectedAvatar": "" } src={avatar} onClick={handleChosenOne}/>
+                })}
+                {uploadedImgURL?.length > 0? <img src={uploadedImgURL} className={theChosenOne === uploadedImgURL? "selectedAvatar": "" } onClick={handleChosenOne}/>: ""}
+                </div>
+                <label for="uploadButton" className="btn inital_setup_upload">
+                  + Upload Image
+                </label>
+                <Button txt="Save" func={handleSaveSelectedAvatar} />
+              </div>
+            </dialog>
         <Formik
                 initialValues={initialSetupValues}
                 onSubmit={handleFormSubmit}
@@ -99,24 +388,10 @@ export default function Settings() {
                 /* and other goodies */
               }) => (
           <Form onSubmit={handleSubmit}>
-            <div className="first_element">
-              <span className="small-dark">name</span>
-              <span>{user.name}</span>
-              <span className="small-dark">user name</span>
-              <span>{user.userName}</span>
-              <span className="small-dark">email</span>
-              <span>{user.email}</span>
-              <span className="small-dark">password</span>
-              <span>{user.password}</span>
-            </div>
-            <div className="second_element">
-              <div className="avatar">
-                <img src={user.avatar} />
-              </div>
             <h2>Customise</h2>
               <h3>Darkmode</h3>
               <label class="toggle">
-                  <Field type="checkbox" className="toggle_checkbox" name="darkMode"/>
+                <Field type="checkbox" className="toggle_checkbox" name="darkMode"/>
                   <div class="toggle_switch"></div>
                 </label>
             <h2>Privacy</h2>
@@ -160,13 +435,15 @@ export default function Settings() {
               <Button
                   txt="done"
                   onClick={handleSubmitButtonClick}
+                  func={backToMain}
                 >
               </Button>
-              <ButtonDelete txt={"delete account"} func={null} />
-            </div>
           </Form>
               )}
         </Formik>
+              <ButtonDelete txt={"delete account"} func={deleteAccont} />
+        <input onChange={addAvatar} type="file" id="uploadButton"/>
+        </div>
       </div>
     </>
   );
