@@ -19,55 +19,55 @@ import CreateTravelPlan from "./pages/TravelPage/CreateTravelPlan";
 import AddFavorite from "./pages/FavoritePage/AddFavorite";
 
 function App() {
-  const { token } = useContext(AuthContext);
+  const token = localStorage.getItem("token")
 
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={token ? <HomePage /> : <LandingPage />} />
-        <Route path="/login" element={token ? <HomePage /> : <LoginPage />} />
+        <Route path="/login" element={token ? <Navigate to="/" /> : <LoginPage />} />
         <Route
           path="/register"
-          element={token ? <HomePage /> : <RegisterPage />}
+          element={token ? <Navigate to="/" /> : <RegisterPage />}
         />
         <Route
           path="/settings"
-          element={token ? <SettingsPage /> : <LandingPage />}
+          element={token ? <SettingsPage /> : <Navigate to="/" />}
         />
         <Route
           path="/features"
-          element={token ? <FeaturesPage /> : <LandingPage />}
+          element={token ? <FeaturesPage /> : <Navigate to="/" />}
         />
         <Route
           path="/about"
-          element={token ? <AboutPage /> : <LandingPage />}
+          element={token ? <AboutPage /> : <Navigate to="/" />}
         />
         <Route
           path="/initialsetup"
-          element={token ? <InitialSetupPage /> : <LandingPage />}
+          element={token ? <InitialSetupPage /> : <Navigate to="/" />}
         />
-        <Route path="/home" element={token ? <HomePage /> : <LandingPage />} />
+        <Route path="/home" element={token ? <HomePage /> : <Navigate to="/" />} />
         <Route path="/spiner" element={<Loader />} />
         <Route
           path="/friends"
-          element={token ? <FriendsPage /> : <LandingPage />}
+          element={token ? <FriendsPage /> : <Navigate to="/" />}
         />
-        <Route path="/chat" element={token ? <ChatPage /> : <LandingPage />} />
+        <Route path="/chat" element={token ? <ChatPage /> : <Navigate to="/" />} />
         <Route
           path="/invitation"
-          element={token ? <ReceivedInvitation /> : <LandingPage />}
+          element={token ? <ReceivedInvitation /> : <Navigate to="/" />}
         />
         <Route
           path="/travelplan"
-          element={token ? <TravelsPage /> : <LandingPage />}
+          element={token ? <TravelsPage /> : <Navigate to="/" />}
         />
         <Route
           path="/createtravelplan"
-          element={token ? <CreateTravelPlan /> : <LandingPage />}
+          element={token ? <CreateTravelPlan /> : <Navigate to="/" />}
         />
         <Route
           path="/addfavorite"
-          element={token ? <AddFavorite /> : <LandingPage />}
+          element={token ? <AddFavorite /> : <Navigate to="/" />}
         />
       </Routes>
     </div>

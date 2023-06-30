@@ -32,3 +32,11 @@ h2{
     font-size: smaller;
     color: grey;
 }
+
+.svgButton svg{
+    pointer-events: none;
+}
+
+.colorGray{
+    background-color: grey;
+}
