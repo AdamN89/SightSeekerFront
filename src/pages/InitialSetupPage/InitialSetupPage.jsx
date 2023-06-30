@@ -21,7 +21,6 @@ export default function InitalSetup() {
   const avatarDialog = useRef(null);
   const poiDialog = useRef(null);
   const privacyDialog = useRef(null);
-  const modalRef = useRef(null);
   const [modalHeight, setModalHeight] = useState(0);
   const [openDrop1, setOpenDrop1] = useState(false);
   const [openDrop2, setOpenDrop2] = useState(false);
