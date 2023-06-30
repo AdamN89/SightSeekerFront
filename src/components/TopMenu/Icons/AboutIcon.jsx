@@ -21,8 +21,8 @@ export default function AboutIcon() {
             y2="53"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#662D91" />
-            <stop offset="1" stop-color="#92278F" />
+            <stop stopColor="#662D91" />
+            <stop offset="1" stopColor="#92278F" />
           </linearGradient>
         </defs>
       </svg>

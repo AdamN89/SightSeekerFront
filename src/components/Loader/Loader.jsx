@@ -6,7 +6,7 @@ export default function Loader() {
   return (
     <div className="loader">
       <LogoIcon />
-      <div class="spinner"></div>
+      <div className="spinner"></div>
       <h1 className="loader_txt">
         <Typewriter
           options={{

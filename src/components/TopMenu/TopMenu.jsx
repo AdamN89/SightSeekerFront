@@ -91,7 +91,7 @@ export default function TopMenu() {
                   <img src={user.avatar} alt={user.name} />
                 )}
               </button>
-              <span>{user.name}</span>
+              <span>{user?.name}</span>
             </div>
             <button onClick={closeTopMenu}>
               <CloseIcon />

@@ -1,5 +1,5 @@
-import { useState, useContext, useEffect, useRef } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useState, useContext, useEffect, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./Chat.css";
 import CloseIcon from "../TopMenu/Icons/CloseIcon";
 import SearchBar from "../SearchBar";
@@ -7,63 +7,74 @@ import Button from "../Button";
 import ChatImage from "./ChatImage";
 import ChatIcon from "../NavigationIcons/ChatIcon";
 import { AuthContext } from "../../context/AuthContext";
-import { DataContext } from "../../context/DataContext"
-import Conversation from "../../pages/ChatPage/Conversation"
-import { io } from "socket.io-client"
+import { DataContext } from "../../context/DataContext";
+import Conversation from "../../pages/ChatPage/Conversation";
+import { io } from "socket.io-client";
 
 export default function Chat() {
   const chatsRef = useRef(null);
   const friendsRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   // ----------------------------------------------------------------------------------------------------//
   const { user, setUser, token } = useContext(AuthContext);
-  const { currentChat, setCurrentChat, sendMessage, setSendMessage, receiveMessage, setReceiveMessage, closeMenu, closeTopMenu, chats, setChats } = useContext(DataContext)
-  const [ onlineUsers, setOnlineUsers ] = useState([])
-  const socket = useRef()
+  const {
+    currentChat,
+    setCurrentChat,
+    sendMessage,
+    setSendMessage,
+    receiveMessage,
+    setReceiveMessage,
+    closeMenu,
+    closeTopMenu,
+    chats,
+    setChats,
+  } = useContext(DataContext);
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  const socket = useRef();
 
   //initialize socket server
   useEffect(() => {
-    socket.current = io("http://localhost:8081")
-    socket.current.emit("new-user-add", user?._id)
+    socket.current = io("http://localhost:8081");
+    socket.current.emit("new-user-add", user?._id);
     socket.current.on("get-users", (users) => {
-      setOnlineUsers(users)
-    })
-  },[user])
-  
+      setOnlineUsers(users);
+    });
+  }, [user]);
+
   // send message to socket server
   useEffect(() => {
-    if(sendMessage !== null) {
-      socket.current.emit("send-message", sendMessage)
+    if (sendMessage !== null) {
+      socket.current.emit("send-message", sendMessage);
     }
-  },[sendMessage])
+  }, [sendMessage]);
 
   // receive message from socket server
   useEffect(() => {
     socket.current.on("receive-message", (data) => {
-      setReceiveMessage(data)
-    })
-  },[])
+      setReceiveMessage(data);
+    });
+  }, []);
 
   useEffect(() => {
-    const getChats = async() => {
+    const getChats = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/chat/${user._id}`)
-        const data = await response.json()
-        setChats(data)
-        console.log("this is chat",data)
+        const response = await fetch(`http://localhost:8080/chat/${user._id}`);
+        const data = await response.json();
+        setChats(data);
+        console.log("this is chat", data);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    }
-    getChats()
-  },[user])
+    };
+    if (user) getChats();
+  }, [user]);
 
   const checkOnlineStatus = (chat) => {
-    const chatMember = chat.members.find((member) => member !== user._id)
-    const online = onlineUsers.find((user) => user.userId === chatMember)
-    return online ? true : false
-  }
+    const chatMember = chat.members.find((member) => member !== user._id);
+    const online = onlineUsers.find((user) => user.userId === chatMember);
+    return online ? true : false;
+  };
 
   return {
     chatsRef,
@@ -94,15 +105,23 @@ export default function Chat() {
                 func={() => closeMenu(chatsRef)}
                 key="login"
               />
-                {chats.map((chat) => (
-                    <div onClick={() =>  {setCurrentChat(chat); navigate("/chat")}}>
-                      <Conversation data={chat} currentUserId={user._id} online={checkOnlineStatus(chat)}
-                      />
-                    </div>
-                  ))}
-                <div className="groupchat_icon">
-                  <ChatImage />
+              {chats.map((chat) => (
+                <div
+                  onClick={() => {
+                    setCurrentChat(chat);
+                    navigate("/chat");
+                  }}
+                >
+                  <Conversation
+                    data={chat}
+                    currentUserId={user._id}
+                    online={checkOnlineStatus(chat)}
+                  />
                 </div>
+              ))}
+              <div className="groupchat_icon">
+                <ChatImage />
+              </div>
             </div>
             {/* end of content of navigation page */}
           </div>
