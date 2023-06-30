@@ -9,6 +9,7 @@
   --bg_dark_liniar: linear-gradient(258.25deg, #272727 0.81%, #121212 98.9%);
   --search_bg: linear-gradient(200deg, #272727 0, #121212 100%);
   --btn_bg: linear-gradient(180deg, #00a299 0%, #0b4e4a 100%);
+  --scroll_thumb: linear-gradient(180deg, #662d91 0%, #92278f 100%);
   --btn_delete_bg: linear-gradient(180deg, #a20000 0%, #4e0b0b 100%);
   --btn_delete_hover: #ff0000;
   --modal_bg: rgba(13, 13, 13, 0.9);
@@ -93,7 +94,7 @@ input {
   font-weight: 500;
   font-size: 16px;
   letter-spacing: 1.25px;
-  text-transform: lowercase;
+  /* text-transform: lowercase; */
   cursor: text;
   text-align: center;
   transition: all 0.3s ease-in-out;
@@ -120,7 +121,7 @@ label {
 }
 
 /*=========================================
-  class for handeling input radio fields
+  class for handling input radio fields
 =========================================*/
 
 input[type="radio"] {
@@ -226,6 +227,27 @@ input[type="radio"]:checked::before {
   top: 2px;
 }
 
+/*=============================================
+        class for handeling scrollbar
+=============================================*/
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scroll_thumb);
+  border-radius: 5px;
+}
+
+/*=============================================
+      class for handeling button component
+=============================================*/
+
 .btn {
   position: relative;
   display: flex;
@@ -249,6 +271,19 @@ input[type="radio"]:checked::before {
 .btn span {
   z-index: 5;
   position: absolute;
+}
+
+.btn label {
+  z-index: 5;
+  position: absolute;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn::after {
@@ -348,11 +383,10 @@ input[type="radio"]:checked::before {
 }
 
 /*===================================
-      class for handeling map
+      class for handling map
 ===================================*/
 
-.main_menu_smartphone,
-.main_menu_tablet {
+.main_menu {
   position: absolute;
   display: flex;
   width: 100%;
@@ -364,7 +398,7 @@ input[type="radio"]:checked::before {
   z-index: 1;
 }
 
-.main_menu_tablet {
+/* .main_menu_tablet {
   display: none;
 }
 
@@ -376,7 +410,7 @@ input[type="radio"]:checked::before {
   .main_menu_tablet {
     display: flex;
   }
-}
+} */
 
 .main_menu_bg {
   position: absolute;
@@ -408,7 +442,17 @@ input[type="radio"]:checked::before {
   cursor: pointer;
   overflow: hidden;
   box-shadow: 5px 5px 8px var(--shadow_dark);
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease;
+}
+
+.main_menu_avatar {
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+}
+
+.main_menu_avatar img {
+  transition: all 0.3s ease;
 }
 
 .main_menu_btn::after {
@@ -422,15 +466,16 @@ input[type="radio"]:checked::before {
   overflow: hidden;
   background-color: var(--dark_purple);
   filter: blur(10px);
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease;
   opacity: 0;
+  pointer-events: none;
 }
 
 .main_menu_btn svg {
   position: absolute;
   width: 30px;
   fill: var(--light_green);
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease;
   z-index: 5;
 }
 
@@ -448,10 +493,42 @@ input[type="radio"]:checked::before {
   fill: var(--txt);
 }
 
-.main_menu_avatar {
-  width: 80px;
-  height: 80px;
-  overflow: hidden;
+.main_menu_avatar:hover img {
+  opacity: 0.7;
+}
+
+.main_menu_searchbar-wrapper {
+  position: absolute;
+  top: -70px;
+  width: clamp(340px, 360px, 500px);
+}
+
+.main_menu_searchbar-wrapper form input {
+  border: none;
+  background-image: var(--bg_dark_liniar);
+  text-align: left;
+  padding-left: 25px;
+}
+
+.main_menu_searchbar-wrapper form > button {
+  position: absolute;
+  background-color: transparent;
+  border: none;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 70px;
+  cursor: pointer;
+}
+.main_menu_searchbar-wrapper form > button > svg {
+  height: 30px;
+  width: 30px;
+  fill: var(--light_green);
+  transition: fill 200ms ease;
+}
+
+.main_menu_searchbar-wrapper form > button:hover > svg {
+  fill: #09b8b0;
 }
 
 .mapboxgl-popup-content h3 {
@@ -525,6 +602,11 @@ add to about page */
   top: 70px;
   left: 0;
   z-index: 20;
+  transform: translateY(-110%);
+}
+
+.navigation_wrapper--up {
+  transform: translateY(0) !important;
 }
 
 .navigation_wrapper_body {
@@ -546,31 +628,39 @@ add to about page */
   padding-bottom: 10px;
 }
 
-.navigation_wrapper_body h1 {
+/* .navigation_wrapper_body h1 {
   margin-top: -20px;
+} */
+
+.navigaton_page_not_visible {
+  display: none;
+  /* transform: translateY(-110%); */
 }
 
-.navigaton_page_opening {
+.navigaton_page_visible {
   height: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   backdrop-filter: blur(15px);
-  opacity: 0;
   z-index: 2;
+  /* transform: translateY(0);
+  transition: all ; */
+}
+
+.navigaton_page_opening {
   animation: navigation_slide_top 0.5s both;
 }
 
 .navigaton_page_closing {
-  height: 100%;
+  /* height: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   backdrop-filter: blur(15px);
   opacity: 0;
-  z-index: 2;
+  z-index: 2; */
   animation: navigation_slide_bottom 0.5s both;
 }
 
@@ -658,4 +748,59 @@ add to about page */
 
 .search_wrapper button:hover svg {
   fill: var(--dark_purple);
+}
+
+/* searchbar and it's suggestions */
+
+.searchbar__suggestions {
+  position: absolute;
+  padding: 5px 0;
+  background-image: var(--bg_dark_liniar);
+  bottom: 65px;
+  left: 0;
+  right: 0;
+  border-radius: 20px;
+  max-height: 45vh;
+  overflow-y: auto;
+}
+
+.searchbar__suggestions--item {
+  list-style: none;
+  margin: 0 5px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.searchbar__suggestions--item h4 {
+  text-underline-offset: 4px;
+  margin-bottom: 7px;
+}
+
+.searchbar__suggestions--item:hover h4 {
+  text-decoration: underline;
+}
+
+.searchbar__suggestions--item:not(:last-of-type) {
+  border-bottom: 1px solid var(--txt);
+}
+
+.searchbar__suggestions--details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.searchbar__suggestions--address {
+  text-align: start;
+  font-size: 15px;
+}
+.searchbar__suggestions--distance {
+  margin-left: 20px;
+  font-size: 15px;
+}
+.searchbar__suggestions--category {
+  font-size: 15px;
+}
+
+.searchbar__suggestions--category:not(:last-of-type) {
+  margin-right: 10px;
 }

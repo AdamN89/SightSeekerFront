@@ -5,6 +5,8 @@ import { BrowserRouter } from "react-router-dom";
 import AuthContextProvider from "./context/AuthContext";
 import DataContextProvider from "./context/DataContext";
 
+
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>

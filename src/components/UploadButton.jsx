@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export default function Button({ txt, func }) {
+export default function UploadButton({ txt }) {
   const buttonRef = useRef(null);
   // throw your mousemove callback up here to "add" and "remove" later
   // might be worth a useCallback based on the containerRef as well!
@@ -21,8 +21,8 @@ export default function Button({ txt, func }) {
   }, [buttonRef]);
 
   return (
-    <button onClick={func} className="btn" ref={buttonRef} for>
-      <span>{txt}</span>
+    <button className="btn" ref={buttonRef}>
+      <label for="uploadButton">{txt}</label>
     </button>
   );
 }

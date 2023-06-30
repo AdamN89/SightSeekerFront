@@ -43,8 +43,8 @@ export default function Settings() {
 
 
   const handleFormSubmit = async (values) => {
-    await saveChangedSettings(values)
-  }
+    await saveChangedSettings(values);
+  };
 
   const handleSubmitButtonClick = async (submitForm) => {
     await submitForm();
@@ -153,13 +153,13 @@ export default function Settings() {
   }
   
   const saveChangedSettings = async (values) => {
-    console.log(values)
+    console.log(values);
     try {
-      const response = await fetch("http://localhost:8080/user/settings", {
+      const response = await fetch(`${backendURL}/user/settings`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(values),
       });

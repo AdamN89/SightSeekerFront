@@ -1,17 +1,20 @@
 import Map, { Marker, Popup, NavigationControl } from "react-map-gl";
-// import { SearchBoxCore, SearchSession } from "mapbox-gl";
 import { v4 as uuidv4 } from "uuid";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "./HomePage.css";
 import TopMenu from "../../components/TopMenu/TopMenu";
+import Loader from "../../components/Loader/Loader";
 import Menu from "../../components/Menu";
+import AddFavoriteIcon from "../../components/AddFavoriteIcon";
 
 const mapStyle = "mapbox://styles/stephanullmann/clj7lajvj005t01que278452b";
 const TOKEN =
   "pk.eyJ1Ijoic3RlcGhhbnVsbG1hbm4iLCJhIjoiY2xqNWVyZjV4MDF2cTNkcG0weTE4cjB6ZSJ9.FeahDy79a69Y5JxlkBkfIA";
 
 export default function HomePage() {
+  const { isLoading } = useContext(AuthContext);
   const [userCoords, setUserCoords] = useState({});
   const [viewState, setViewState] = useState({
     longitude: 13.540028,
@@ -104,9 +107,10 @@ export default function HomePage() {
           onMove={handleMapMove}
           reuseMaps={true}
           cursor="drag"
-          onClick={handleMapClick}
+          // onClick={handleMapClick}
         >
           <NavigationControl />
+          <AddFavoriteIcon />
           {showPopup && (
             <Popup
               latitude={userCoords.latitude}
@@ -126,14 +130,14 @@ export default function HomePage() {
             latitude={userCoords.latitude}
             onClick={(e) => {
               e.originalEvent.stopPropagation();
-              setShowPopup(true);
+              setShowPopup((prev) => !prev);
             }}
           >
             <img src="./assets/marker.png" alt="marker" />
           </Marker>
         </Map>
       )}
-      <Menu />
+      <Menu getUUID={getUUID} viewState={viewState} userCoords={userCoords} />
     </div>
   );
 }
