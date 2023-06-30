@@ -10,7 +10,7 @@ import CloseIcon from "../../components/CloseIcon"
 import { useNavigate } from "react-router-dom";
 
 export default function Settings() {
-  const {token, user, setUser} = useContext(AuthContext)
+  const {token, user, setUser, backendURL} = useContext(AuthContext)
   const {avatars} = useContext(DataContext)
 
   const [openDrop1, setOpenDrop1] = useState(false);
