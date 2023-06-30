@@ -17,7 +17,17 @@ export default function ChatPage() {
 
   //initialize socket server
   useEffect(() => {
-    socket.current = io("https://sightseeker-backend.onrender.com")
+    socket.current = io("https://sightseeker-backend.onrender.com", {
+      cors: {
+        origin: [
+          "http://localhost:3000",
+          "https://localhost:3000",
+          "https://sightseeker.netlify.app",
+        ],
+        methods: ["GET", "POST"],
+        allowedHeaders: ["Access-Control-Allow-Origin"]
+      }
+    })
     socket.current.emit("new-user-add", user._id)
     socket.current.on("get-users", (users) => {
       setOnlineUsers(users)
