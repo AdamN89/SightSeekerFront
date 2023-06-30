@@ -35,7 +35,7 @@ export default function RegisterPage() {
     setIsLoading(true);
     console.log(1);
     try {
-      const response = await fetch(`${backendURL}/user/signup`, {
+      const response = await fetch('https://sightseeker-backend.onrender.com/user/signup', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

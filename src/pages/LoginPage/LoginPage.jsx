@@ -47,8 +47,8 @@ export default function LoginPage() {
         const invitationsReceived = data.data.friends.some(
           (friend) => friend.received
         );
-        if (invitationsReceived) navigate("/invitation");
-        else navigate("/home");
+        // if (invitationsReceived) navigate("/invitation");
+        // else navigate("/home");
       }
     };
     sendLogin();

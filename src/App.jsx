@@ -19,7 +19,8 @@ import CreateTravelPlan from "./pages/TravelPage/CreateTravelPlan";
 import AddFavorite from "./pages/FavoritePage/AddFavorite";
 
 function App() {
-  const token = localStorage.getItem("token")
+  // const token = localStorage.getItem("token")
+  const { token } = useContext(AuthContext)
 
   return (
     <div className="App">
