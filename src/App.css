@@ -769,11 +769,13 @@ add to about page */
   margin: 0 5px;
   padding: 8px 10px;
   cursor: pointer;
+  pointer-events: all;
 }
 
 .searchbar__suggestions--item h4 {
   text-underline-offset: 4px;
   margin-bottom: 7px;
+  pointer-events: none;
 }
 
 .searchbar__suggestions--item:hover h4 {
@@ -787,20 +789,28 @@ add to about page */
 .searchbar__suggestions--details {
   display: flex;
   justify-content: space-between;
+  pointer-events: none;
 }
 
 .searchbar__suggestions--address {
   text-align: start;
   font-size: 15px;
+  pointer-events: none;
 }
 .searchbar__suggestions--distance {
   margin-left: 20px;
   font-size: 15px;
+  pointer-events: none;
 }
 .searchbar__suggestions--category {
   font-size: 15px;
+  pointer-events: none;
 }
 
 .searchbar__suggestions--category:not(:last-of-type) {
   margin-right: 10px;
+}
+
+::selection {
+  background-color: #662d91;
 }
