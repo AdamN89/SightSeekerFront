@@ -17,7 +17,7 @@ export default function Chat() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   // ----------------------------------------------------------------------------------------------------//
-  const { user, setUser, token } = useContext(AuthContext);
+  const { user, setUser, token, backendURL } = useContext(AuthContext);
   const {
     currentChat,
     setCurrentChat,
@@ -35,21 +35,22 @@ export default function Chat() {
 
   //initialize socket server
   useEffect(() => {
-    socket.current = io("https://sightseeker-backend.onrender.com",{
-      cors: {
-        origin: [
-          "http://localhost:3000",
-          "https://localhost:3000",
-          "https://sightseeker.netlify.app",
-        ],
-        methods: ["GET", "POST"],
-        allowedHeaders: ["Access-Control-Allow-Origin"]
-      }
-    })
-    socket.current.emit("new-user-add", user._id)
+
+    socket.current = io(backendURL, {
+      transports: ["websocket"],
+      extraHeaders: {
+        "Access-Control-Allow-Private-Network": true,
+      },
+    });
+    socket.current.emit("new-user-add", user?._id);
     socket.current.on("get-users", (users) => {
       setOnlineUsers(users)
     });
+    return () => {
+      socket.current.off("get-users", (users) => {
+        setOnlineUsers(users);
+      });
+    };
   }, [user]);
 
   // send message to socket server
@@ -64,12 +65,17 @@ export default function Chat() {
     socket.current.on("receive-message", (data) => {
       setReceiveMessage(data);
     });
+    return () => {
+      socket.current.off("receive-message", (data) => {
+        setReceiveMessage(data);
+      });
+    };
   }, []);
 
   useEffect(() => {
     const getChats = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/chat/${user._id}`);
+        const response = await fetch(`${backendURL}/chat/${user._id}`);
         const data = await response.json();
         setChats(data);
         console.log("this is chat", data);
