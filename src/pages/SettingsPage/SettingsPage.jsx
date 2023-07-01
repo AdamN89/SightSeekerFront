@@ -3,15 +3,17 @@ import { useContext, useState, useRef, useEffect } from "react";
 import Button from "../../components/Button";
 import ButtonDelete from "../../components/ButtonDelete";
 import { Formik, Form, Field } from "formik";
-import {AuthContext} from "../../context/AuthContext";
-import {DataContext} from "../../context/DataContext"
+import { AuthContext } from "../../context/AuthContext";
+import { DataContext } from "../../context/DataContext";
 import EditIcon from "../../components/EditIcon";
-import CloseIcon from "../../components/CloseIcon"
+import CloseIcon from "../../components/CloseIcon";
 import { useNavigate } from "react-router-dom";
+import UploadButton from "../../components/UploadButton";
+import ButtonInstall from "../../components/ButtonInstall";
 
 export default function Settings() {
-  const {token, user, setUser, backendURL} = useContext(AuthContext)
-  const {avatars} = useContext(DataContext)
+  const { token, user, setUser, backendURL } = useContext(AuthContext);
+  const { avatars } = useContext(DataContext);
 
   const [openDrop1, setOpenDrop1] = useState(false);
   const [openDrop2, setOpenDrop2] = useState(false);
@@ -30,9 +32,9 @@ export default function Settings() {
   const [theChosenOne, setTheChosenOne] = useState(
     "https://res.cloudinary.com/dokiz6udc/image/upload/v1687449571/02_v1rulc.jpg"
   );
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  console.log(user)
+  console.log(user);
   const initialSetupValues = {
     darkMode: user?.settings.darkMode,
     foundBy: user?.settings.foundBy,
@@ -40,7 +42,6 @@ export default function Settings() {
     showEmail: user?.settings.showEmail,
     showName: user?.settings.showName,
   };
-
 
   const handleFormSubmit = async (values) => {
     await saveChangedSettings(values);
@@ -50,9 +51,9 @@ export default function Settings() {
     await submitForm();
   };
 
-  const backToMain = ()=> {
-    navigate("/home")
-  }
+  const backToMain = () => {
+    navigate("/home");
+  };
 
   const submitNewAvatar = async (theChosenOne) => {
     if (uploadedImgURL === theChosenOne) {
@@ -68,7 +69,7 @@ export default function Settings() {
         });
         if (response.ok) {
           const responseData = await response.json();
-          setUser(responseData.data)
+          setUser(responseData.data);
           console.log(responseData);
         } else {
           console.log("Error");
@@ -91,7 +92,7 @@ export default function Settings() {
         );
         if (response.ok) {
           const responseData = await response.json();
-          setUser(responseData.data)
+          setUser(responseData.data);
           console.log(responseData);
         } else {
           console.log("Error");
@@ -103,29 +104,26 @@ export default function Settings() {
   };
 
   const submitNewName = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:8080/user/changeName",
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({ name: typedName }),
-          }
-        );
-        if (response.ok) {
-          const responseData = await response.json();
-          setUser(responseData.data)
-          console.log(responseData);
-        } else {
-          console.log("Error");
-        }
-      } catch (error) {
-        console.error("Error", error);
+    try {
+      const response = await fetch("http://localhost:8080/user/changeName", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ name: typedName }),
+      });
+      if (response.ok) {
+        const responseData = await response.json();
+        setUser(responseData.data);
+        console.log(responseData);
+      } else {
+        console.log("Error");
       }
-  }
+    } catch (error) {
+      console.error("Error", error);
+    }
+  };
 
   const submitNewPassword = async () => {
     try {
@@ -142,7 +140,7 @@ export default function Settings() {
       );
       if (response.ok) {
         const responseData = await response.json();
-        setUser(responseData.data)
+        setUser(responseData.data);
         console.log(responseData);
       } else {
         console.log("Error");
@@ -150,8 +148,8 @@ export default function Settings() {
     } catch (error) {
       console.error("Error", error);
     }
-  }
-  
+  };
+
   const saveChangedSettings = async (values) => {
     console.log(values);
     try {
@@ -166,7 +164,7 @@ export default function Settings() {
 
       if (response.ok) {
         const responseData = await response.json();
-        setUser(responseData.data)
+        setUser(responseData.data);
       } else {
         console.log("Error");
       }
@@ -176,9 +174,9 @@ export default function Settings() {
   };
 
   const handleClick = (event) => {
-    console.log("handleclick triggered")
+    console.log("handleclick triggered");
     event.preventDefault();
-    console.log(event.target.name)
+    console.log(event.target.name);
     if (event.target.name == "changeAvatar") {
       if (openDrop1) {
         avatarDialog.current.close();
@@ -190,7 +188,6 @@ export default function Settings() {
       setOpenDrop3(false);
     }
     if (event.target.name == "changeName") {
-
       if (openDrop1) {
         nameDialog.current.close();
       } else {
@@ -238,44 +235,44 @@ export default function Settings() {
   };
 
   const handleSaveSelectedAvatar = (event) => {
-    handleCloseModel()
-    if(theChosenOne){
-      submitNewAvatar(theChosenOne)
+    handleCloseModel();
+    if (theChosenOne) {
+      submitNewAvatar(theChosenOne);
     }
-  }
+  };
 
   const handleSaveName = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     //if success
-    if(typedName.length > 0){
-      submitNewName()
-      handleCloseModel()
-    } else{
-      alert("nothing to submit")
+    if (typedName.length > 0) {
+      submitNewName();
+      handleCloseModel();
+    } else {
+      alert("nothing to submit");
     }
-  }
+  };
 
   const handleSavePassword = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     //validate?
-    if(typedPassword1.length > 0){
-      if(typedPassword1 === typedPassword2){
-        submitNewPassword()
-        handleCloseModel()
-      }else{
-        alert("both field do not match")
+    if (typedPassword1.length > 0) {
+      if (typedPassword1 === typedPassword2) {
+        submitNewPassword();
+        handleCloseModel();
+      } else {
+        alert("both field do not match");
       }
-    } else{
-      alert("nothing to submit")
+    } else {
+      alert("nothing to submit");
     }
-  }
+  };
 
-  const addAvatar= (event)=>{
-    if(event.target.files[0]){
-      setUploadedImgFile(event.target.files[0])
-      setUploadedImgURL(URL.createObjectURL(event.target.files[0]))
+  const addAvatar = (event) => {
+    if (event.target.files[0]) {
+      setUploadedImgFile(event.target.files[0]);
+      setUploadedImgURL(URL.createObjectURL(event.target.files[0]));
     }
-  }
+  };
 
   const deleteAccont = async () => {
     try {
@@ -283,7 +280,7 @@ export default function Settings() {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(),
       });
@@ -300,149 +297,227 @@ export default function Settings() {
 
   return (
     <>
-      <div className="container">
-        <h1 className="title">Settings</h1>
-            <div className="first_element">
-              <span className="small-dark">name</span>
-              <span>{user?.name}</span>
-              <button className="svgButton" onClick={handleClick} name="changeName">
-              <EditIcon />
-              </button>
-              <dialog ref={nameDialog}
-              className={
-                openDrop2 ? "modal colorGray" : null
-              }
-              >
-                <h2 className="title">Change Name</h2>
-                <CloseIcon func={handleCloseModel} />
-                <div className="modal_container">
-                  <form onSubmit={handleSaveName}>
-                    <input type="text" value={typedName} onChange={(e)=>{setTypedName(e.target.value)
-                      }}/>
-                    <Button txt="Save"/>
-                  </form>
-                </div>
-              </dialog>
-              <span className="small-dark">user name</span>
-              <span>{user.userName}</span>
-              <span className="small-dark">email</span>
-              <span>{user.email}</span>
-              <span className="small-dark">password</span>
-              <span>{user.password}</span>
-              <button className="svgButton"  onClick={handleClick} name="changePassword">
-                <EditIcon/>
-              </button>
-              <dialog ref={passwordDialog}
-              className={
-                openDrop3 ? "modal colorGray" : null
-              }
-              >
-                <h2 className="title">Change Password</h2>
-                <CloseIcon func={handleCloseModel} />
-                <div className="modal_container">
-                  <form onSubmit={handleSavePassword}>
-                    <input value={typedPassword1} onChange={(e)=>setTypedPassword1(e.target.value)}/>
-                    <input value={typedPassword2} onChange={(e)=>setTypedPassword2(e.target.value)}/>
-                    <Button txt="Save"/>
-                  </form>
-                </div>
-              </dialog>
-            </div>
-            <div className="second_element">
-              <div className="avatar">
-                <img src={user.avatar} onClick={handleClick} name="changeAvatar"/>
-              </div>
-              <dialog ref={avatarDialog}
-              className={
-                openDrop1 ? "modal" : null
-              }
-            >
-              <h2 className="title">Choose Avatar</h2>
-              <CloseIcon func={handleCloseModel} />
-              <div className="modal_container avatars">
-                <div className="avatars">
-                {avatars?.map((avatar, index) => {
-                return <img className={theChosenOne === avatar? "selectedAvatar": "" } src={avatar} onClick={handleChosenOne}/>
-                })}
-                {uploadedImgURL?.length > 0? <img src={uploadedImgURL} className={theChosenOne === uploadedImgURL? "selectedAvatar": "" } onClick={handleChosenOne}/>: ""}
-                </div>
-                <label for="uploadButton" className="btn inital_setup_upload">
-                  + Upload Image
-                </label>
-                <Button txt="Save" func={handleSaveSelectedAvatar} />
-              </div>
-            </dialog>
-        <Formik
-                initialValues={initialSetupValues}
-                onSubmit={handleFormSubmit}
+      <div
+        className={
+          openDrop1 || openDrop2 || openDrop3 ? "showClickAway" : "hide"
+        }
+        onClick={handleCloseModel}
+      ></div>
+      <div className="container settings_page">
+        <button
+          className="settings_page_close_btn"
+          onClick={() => navigate("/home")}
         >
-                        {({
-                values,
-                errors,
-                touched,
-                handleChange,
-                handleBlur,
-                handleSubmit,
-                isSubmitting,
-                submitForm,
-                /* and other goodies */
-              }) => (
-          <Form onSubmit={handleSubmit}>
-            <h2>Customise</h2>
-              <h3>Darkmode</h3>
-              <label class="toggle">
-                <Field type="checkbox" className="toggle_checkbox" name="darkMode"/>
-                  <div class="toggle_switch"></div>
-                </label>
-            <h2>Privacy</h2>
-            <div>
-              <div>
-                <h3>Can be found by</h3>
-                <div className="initial_setup_radio">
-                  <label >
-                    <Field type="radio" name="foundBy" value="all"/>All
-                  </label>
-                  <label>
-                    <Field type="radio" name="foundBy" value="friends"/>Friends
-                  </label>
-                  <label >
-                    <Field type="radio" name="foundBy" value="none"/>None
-                  </label>
+          <CloseIcon />
+        </button>
+        <h1 className="title">Settings</h1>
+        <div className="settings_page_first_element">
+          <div className="settings_page_data">
+            <div className="settings_page_data_row">
+              <span>name</span>
+              <h3>{user?.name}</h3>
+              <button
+                className="svgButton"
+                onClick={handleClick}
+                name="changeName"
+              >
+                <EditIcon />
+              </button>
+            </div>
+            <dialog ref={nameDialog} className={openDrop2 ? "modal" : null}>
+              <h2 className="title">Change Name</h2>
+              <CloseIcon func={handleCloseModel} />
+              <form className="modal_container" onSubmit={handleSaveName}>
+                <input
+                  type="text"
+                  value={typedName}
+                  onChange={(e) => {
+                    setTypedName(e.target.value);
+                  }}
+                />
+                <Button txt="Save" />
+              </form>
+            </dialog>
+            <div className="settings_page_data_row">
+              <span>user name</span>
+              <h3>{user.userName}</h3>
+            </div>
+            <div className="settings_page_data_row">
+              <span>email</span>
+              <h3>{user.email}</h3>
+            </div>
+            <div className="settings_page_data_row">
+              <span>change</span>
+              <h3>password</h3>
+              <button
+                className="svgButton"
+                onClick={handleClick}
+                name="changePassword"
+              >
+                <EditIcon />
+              </button>
+            </div>
+            <dialog ref={passwordDialog} className={openDrop3 ? "modal" : null}>
+              <h2 className="title">Change Password</h2>
+              <CloseIcon func={handleCloseModel} />
+
+              <form className="modal_container" onSubmit={handleSavePassword}>
+                <input
+                  value={typedPassword1}
+                  onChange={(e) => setTypedPassword1(e.target.value)}
+                />
+                <input
+                  value={typedPassword2}
+                  onChange={(e) => setTypedPassword2(e.target.value)}
+                />
+                <Button txt="Save" />
+              </form>
+            </dialog>
+          </div>
+          <div className="avatar">
+            <img src={user.avatar} onClick={handleClick} name="changeAvatar" />
+          </div>
+          <dialog ref={avatarDialog} className={openDrop1 ? "modal" : null}>
+            <h2 className="title">Choose Avatar</h2>
+            <CloseIcon func={handleCloseModel} />
+            <div className="modal_container avatars">
+              <div className="avatars">
+                {avatars?.map((avatar, index) => {
+                  return (
+                    <img
+                      className={
+                        theChosenOne === avatar ? "selectedAvatar" : ""
+                      }
+                      src={avatar}
+                      onClick={handleChosenOne}
+                    />
+                  );
+                })}
+              </div>
+              <div className="avatars_upload">
+                <div className="avatars_upload_btn">
+                  {/* <label
+                      for="uploadButton"
+                      className="btn inital_setup_upload"
+                    >
+                      + Upload Image
+                    </label> */}
+                  <UploadButton txt="+ upload image" />
+                  <Button txt="Save" func={handleSaveSelectedAvatar} />
                 </div>
-              </div>
-              <div className="initial_setup_toggle">
-                <h3>Location Services</h3>
-                <label class="toggle">
-                  <Field type="checkbox" className="toggle_checkbox" name="locationServices"/>
-                  <div class="toggle_switch"></div>
-                </label>
-              </div>
-              <div className="initial_setup_toggle">
-                <h3>Show email</h3>
-                <label class="toggle">
-                  <Field type="checkbox" className="toggle_checkbox" name="showEmail"/>
-                  <div class="toggle_switch"></div>
-                </label>
-              </div>
-              <div className="initial_setup_toggle">
-                <h3>Show name</h3>
-                <label class="toggle">
-                  <Field type="checkbox" className="toggle_checkbox" name="showName"/>
-                  <div class="toggle_switch"></div>
-                </label>
+                {uploadedImgURL?.length > 0 ? (
+                  <img
+                    src={uploadedImgURL}
+                    className={
+                      theChosenOne === uploadedImgURL ? "selectedAvatar" : ""
+                    }
+                    onClick={handleChosenOne}
+                  />
+                ) : (
+                  ""
+                )}
               </div>
             </div>
-              <Button
+          </dialog>
+        </div>
+        <ButtonInstall txt={"install sightseeker"} func={null} />
+        <div className="second_element">
+          <Formik
+            initialValues={initialSetupValues}
+            onSubmit={handleFormSubmit}
+          >
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              isSubmitting,
+              submitForm,
+              /* and other goodies */
+            }) => (
+              <Form
+                className="settings_page_preference"
+                onSubmit={handleSubmit}
+              >
+                <div className="settings_page_customise">
+                  <h2 className="title">Customise</h2>
+                  <div className="settings_page_toggle">
+                    <h3>Darkmode</h3>
+                    <label class="toggle">
+                      <Field
+                        type="checkbox"
+                        className="toggle_checkbox"
+                        name="darkMode"
+                      />
+                      <div class="toggle_switch"></div>
+                    </label>
+                  </div>
+                </div>
+                <div>
+                  <div className="settings_page_privacy">
+                    <h2 className="title">Privacy</h2>
+                    <h3>Can be found by</h3>
+                    <div className="settings_page_radio">
+                      <label>
+                        <Field type="radio" name="foundBy" value="all" />
+                        All
+                      </label>
+                      <label>
+                        <Field type="radio" name="foundBy" value="friends" />
+                        Friends
+                      </label>
+                      <label>
+                        <Field type="radio" name="foundBy" value="none" />
+                        None
+                      </label>
+                    </div>
+                  </div>
+                  <div className="settings_page_toggle">
+                    <h3>Location Services</h3>
+                    <label class="toggle">
+                      <Field
+                        type="checkbox"
+                        className="toggle_checkbox"
+                        name="locationServices"
+                      />
+                      <div class="toggle_switch"></div>
+                    </label>
+                  </div>
+                  <div className="settings_page_toggle">
+                    <h3>Show email</h3>
+                    <label class="toggle">
+                      <Field
+                        type="checkbox"
+                        className="toggle_checkbox"
+                        name="showEmail"
+                      />
+                      <div class="toggle_switch"></div>
+                    </label>
+                  </div>
+                  <div className="settings_page_toggle">
+                    <h3>Show name</h3>
+                    <label class="toggle">
+                      <Field
+                        type="checkbox"
+                        className="toggle_checkbox"
+                        name="showName"
+                      />
+                      <div class="toggle_switch"></div>
+                    </label>
+                  </div>
+                </div>
+                <Button
                   txt="done"
                   onClick={handleSubmitButtonClick}
                   func={backToMain}
-                >
-              </Button>
-          </Form>
-              )}
-        </Formik>
-              <ButtonDelete txt={"delete account"} func={deleteAccont} />
-        <input onChange={addAvatar} type="file" id="uploadButton"/>
+                ></Button>
+              </Form>
+            )}
+          </Formik>
+          <ButtonDelete txt={"delete account"} func={deleteAccont} />
+          <input onChange={addAvatar} type="file" id="uploadButton" />
         </div>
       </div>
     </>

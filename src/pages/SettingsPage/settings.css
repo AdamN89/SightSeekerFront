@@ -1,42 +1,223 @@
+.settings_page {
+  padding: 30px;
+  gap: 25px;
+}
+
+.settings_page .first_element,
+.settings_page .second_element {
+  width: 100%;
+  gap: 20px;
+}
+
+.settings_page_close_btn {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  background: transparent;
+  outline: 0;
+  border: 0;
+  width: 64px;
+  cursor: pointer;
+}
+
+.settings_page_close_btn svg {
+  fill: var(--dark_green);
+  transition: all 0.3s ease;
+}
+
+.settings_page_close_btn:hover svg {
+  fill: var(--light_green);
+}
+
+.settings_page h1 {
+  font-size: 40px;
+  line-height: 1.1;
+  text-align: left;
+  width: 100%;
+}
+
+.settings_page h2 {
+  font-size: 40px;
+  line-height: 1;
+  text-align: left;
+  width: 100%;
+}
+
+.settings_page .toggle_checkbox {
+  width: 50px !important;
+}
+
+.settings_page .modal svg {
+  width: 32px;
+  fill: var(--dark_green);
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.settings_page .modal svg:hover {
+  fill: var(--light_green);
+}
+
+.settings_page .modal .modal_container {
+  margin-top: 30px;
+}
+
+.settings_page_first_element {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+}
+
+.settings_page_first_element img {
+  width: 128px;
+  border: 3px solid var(--dark_purple);
+  border-radius: 50%;
+}
+
+.settings_page_data {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.settings_page_data_row {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.settings_page_data_row span {
+  font-size: 14px;
+  font-weight: 200;
+  opacity: 0.5;
+}
+
+.settings_page_data_row h3 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.settings_page_data_row button {
+  position: absolute;
+  width: 24px;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  left: 90%;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.settings_page_data_row button svg {
+  fill: var(--light_green);
+  transition: all 0.3s ease;
+}
+
+.settings_page_data_row button:hover svg {
+  fill: var(--light_purple);
+}
+
+.settings_page_preference {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.settings_page_privacy h2 {
+  padding-bottom: 15px;
+}
+
+.settings_page_toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.settings_page_radio {
+  display: flex;
+  margin: 5px 0 10px 0;
+}
+
+.install_btn {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  position: relative;
+  background: var(--install_bg);
+  border: 0;
+  border-radius: 20px;
+  color: var(--txt);
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  text-transform: uppercase;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.install_btn span {
+  z-index: 5;
+  position: absolute;
+}
+
+.install_btn::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--y, 0) * 1px - 50px);
+  left: calc(var(--x, 0) * 1px - 100px);
+  width: 200px;
+  height: 100px;
+  background-color: #c361e0;
+  filter: blur(30px);
+  transition: opacity 0.4s;
+  opacity: 0;
+}
+
+.install_btn:hover::after {
+  opacity: 0.6;
+}
+
 .settings_page_flex {
-    width: 80%;
-    display: flex;
-    justify-content: space-between;
-    gap: 7px;
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  gap: 7px;
 }
 
 .settings_page_flex_collumn {
-    display: flex;
-    flex-direction: column;
-    gap: 7px
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
 }
 
-.avatar{
-    align-self: center;
+.avatar {
+  align-self: center;
 }
 
-h1{
-    margin-bottom: 10px
+.warning-btn {
+  background: darkred !important;
 }
 
-h2{
-    margin-top: 30px;
-    margin-bottom: 12px;
+.small-dark {
+  font-size: smaller;
+  color: grey;
 }
 
-.warning-btn{
-    background: darkred !important;
+.svgButton svg {
+  pointer-events: none;
 }
 
-.small-dark{
-    font-size: smaller;
-    color: grey;
-}
-
-.svgButton svg{
-    pointer-events: none;
-}
-
-.colorGray{
-    background-color: grey;
+.colorGray {
+  background-color: grey;
 }
