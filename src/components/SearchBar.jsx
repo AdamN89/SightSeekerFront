@@ -1,9 +1,11 @@
 import { useEffect, useState, useRef, useContext } from "react";
 // import SearchIcon from "./NavigationIcons/SearchIcon";
 import { AuthContext } from "../context/AuthContext";
+import { MapContext } from "../context/MapContext";
 
 export default function SearchBar({ getUUID, viewState, userCoords }) {
   const { user } = useContext(AuthContext);
+  const { retrieveByAddress } = useContext(MapContext);
   const [sessionUUID, setSessionUUID] = useState("");
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);
@@ -25,11 +27,11 @@ export default function SearchBar({ getUUID, viewState, userCoords }) {
   }, []);
 
   useEffect(() => {
-    console.log("Session: ", sessionUUID);
+    // console.log("Session: ", sessionUUID);
     const getSuggestions = async () => {
       try {
         const res = await fetch(
-          `https://api.mapbox.com/search/searchbox/v1/suggest?q=${searchInput}&language=en&limit=10&proximity=${lng},${lat}&origin=${lngUser},${latUser}&radius=0.5&types=poi,address,city&session_token=${sessionUUID}&access_token=${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}`
+          `https://api.mapbox.com/search/searchbox/v1/suggest?q=${searchInput}&language=en&limit=10&origin=${lngUser},${latUser}&session_token=${sessionUUID}&access_token=${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}`
         );
         const data = await res.json();
         // console.log(data);
@@ -42,39 +44,27 @@ export default function SearchBar({ getUUID, viewState, userCoords }) {
     if (searchInput.length) getSuggestions();
   }, [searchInput]);
 
+  const retrievePointBySearchbox = async (id) => {
+    try {
+      const res = await fetch(
+        `https://api.mapbox.com/search/searchbox/v1/retrieve/${id}?session_token=${sessionUUID}&access_token=${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}`
+      );
+      const data = await res.json();
+      console.log(data);
+    } catch (error) {
+      setError(error);
+    }
+  };
+
   const handleMapboxRetrieve = (e) => {
     // console.log("clicked the list! ", e.target.id);
     // console.log("Session: ", sessionUUID);
     // console.log(e.target.dataset);
 
-    const retrievePointBySearchbox = async (id) => {
-      try {
-        const res = await fetch(
-          `https://api.mapbox.com/search/searchbox/v1/retrieve/${id}?session_token=${sessionUUID}&access_token=${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}`
-        );
-        const data = await res.json();
-        console.log(data);
-      } catch (error) {
-        setError(error);
-      }
-    };
-    const retrieveByAddress = async (address) => {
-      console.log("by address:");
-      try {
-        const res = await fetch(
-          `https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}`
-        );
-        const data = await res.json();
-        console.log(data);
-      } catch (error) {
-        setError(error);
-      }
-    };
-
     if (e.target.id && !e.target.dataset.address)
       retrievePointBySearchbox(e.target.id);
     else if (e.target.dataset.address)
-      retrieveByAddress(e.target.dataset.address);
+      retrieveByAddress(e.target.dataset.address, e.target.dataset.name);
   };
 
   return (
@@ -91,6 +81,7 @@ export default function SearchBar({ getUUID, viewState, userCoords }) {
                 data-address={
                   suggestion?.full_address ? suggestion?.full_address : null
                 }
+                data-name={suggestion?.name}
                 onClick={handleMapboxRetrieve}
               >
                 <h4>{suggestion.name}</h4>
@@ -99,13 +90,15 @@ export default function SearchBar({ getUUID, viewState, userCoords }) {
                     {suggestion.full_address}
                   </p>
                   <p className="searchbar__suggestions--distance">
-                    {suggestion.distance > 1000
-                      ? `${
-                          suggestion.distance % 10 === 0
-                            ? suggestion.distance / 1000
-                            : (suggestion.distance / 1000).toFixed(1)
-                        }km`
-                      : `${suggestion.distance}m`}
+                    {suggestion.distance
+                      ? suggestion.distance > 1000
+                        ? `${
+                            suggestion.distance % 10 === 0
+                              ? suggestion.distance / 1000
+                              : (suggestion.distance / 1000).toFixed(1)
+                          }km`
+                        : `${suggestion.distance}m`
+                      : null}
                   </p>
                 </div>
                 {suggestion?.poi_category && suggestion?.poi_category.length > 0
@@ -143,3 +136,7 @@ export default function SearchBar({ getUUID, viewState, userCoords }) {
 }
 
 // &navigation_profile=cycling
+
+// &radius=0.5
+// &proximity=${lng},${lat}
+// &types=poi,address,city
