@@ -86,7 +86,7 @@ export default function Chat() {
     };
     if (user) getChats();
   }, [user]);
-  console.log("this is user", user)
+  // console.log("this is user", user)
   const checkOnlineStatus = (chat) => {
     // console.log("this is chat?", chat)
     // const chatMember = chat.members.length > 1 ? (console.log("lol")) : chat.members.find((member) => member !== user._id)

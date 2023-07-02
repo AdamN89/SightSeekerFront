@@ -21,7 +21,7 @@ export default function Conversation({ data, currentUserId, online, chat, setSen
     )
 
   useEffect(() => {
-    const filteredMembers = data.members.filter(member => member !== currentUserId)
+    const filteredMembers = data.members[1]
     console.log("this is chat as data", data)
     console.log("this is chat members", data.members[1])
 
@@ -31,26 +31,26 @@ export default function Conversation({ data, currentUserId, online, chat, setSen
           headers: {
             "Content-type": "application/json"
           },
-          body: JSON.stringify({members : Array.isArray(filteredMembers[0]) ? filteredMembers[0] : filteredMembers}),
+          body: JSON.stringify({members : filteredMembers}),
           method: "POST"
           })
           const data = await response.json()
           // setUserData(data.data)
-          console.log("incoming data", data.data.slice(1))
+          console.log("incoming data", data.data)
           if (data.data.length > 2) {
-            setMultipleUsers(data.data.slice(1))
+            setMultipleUsers(data.data)
           } else {
-            setUserData(data.data.slice(1))
+            setUserData(data.data)
           }
       } 
       catch (error) {
         console.log(error)
       }
     }
-    if (Array.isArray(filteredMembers[0])? filteredMembers[0][0] : filteredMembers[0]){
-        getUserData()
-      }
-  },[])
+    getUserData()
+    // if (Array.isArray(filteredMembers[0])? filteredMembers[0][0] : filteredMembers[0]){
+    //   }
+  },[data])
     
   return (
     <>
