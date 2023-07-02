@@ -13,13 +13,13 @@ export default function AuthContextProvider({ children }) {
       ? "http://localhost:8080"
       : "https://sightseeker-backend.onrender.com";
 
-  console.log("####################HELLOOOO##################",token, user);
+  // console.log("####################HELLOOOO##################",token, user);
 
   //  first useEffect checks localStorage for token already being there
 
   const retrieveUser = async () => {
     const storedToken = localStorage.getItem("token");
-    console.log("in retrieveUser: ", storedToken);
+    // console.log("in retrieveUser: ", storedToken);
     const res = await fetch(`${backendURL}/user/retrieve`, {
       headers: {
         "Content-type": "application/json",
@@ -27,7 +27,7 @@ export default function AuthContextProvider({ children }) {
       },
     });
     const data = await res.json();
-    console.log(res, data);
+    // console.log(res, data);
     if (!res.ok) {
       setIsLoading(false);
       logout();

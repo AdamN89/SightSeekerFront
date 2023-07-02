@@ -45,6 +45,7 @@ export default function Chat() {
     socket.current.emit("new-user-add", user?._id);
     socket.current.on("get-users", (users) => {
       setOnlineUsers(users)
+      // console.log("this is going into online users", users)
     });
     return () => {
       socket.current.off("get-users", (users) => {
@@ -78,18 +79,24 @@ export default function Chat() {
         const response = await fetch(`${backendURL}/chat/${user._id}`);
         const data = await response.json();
         setChats(data);
-        console.log("this is chat", data);
+        console.log("this is available chats", data);
       } catch (error) {
         console.log(error);
       }
     };
     if (user) getChats();
   }, [user]);
-
+  console.log("this is user", user)
   const checkOnlineStatus = (chat) => {
+    // console.log("this is chat?", chat)
+    // const chatMember = chat.members.length > 1 ? (console.log("lol")) : chat.members.find((member) => member !== user._id)
     const chatMember = chat.members.find((member) => member !== user._id);
+    // const chatMember = chat.members.find((member) => console.log("this is chatMember", member))
+    // console.log("this is chatmember", chatMember)
+    // const online = chatMember.length > 1 ? (onlineUsers.map((users) => users.find((user) => user.userId === chatMember) : (onlineUsers.find((user) => user.userId === chatMember))
     const online = onlineUsers.find((user) => user.userId === chatMember);
-    return online ? true : false;
+    // console.log("this is online", online)
+    return online 
   };
 
   return {
@@ -132,6 +139,7 @@ export default function Chat() {
                     data={chat}
                     currentUserId={user._id}
                     online={checkOnlineStatus(chat)}
+                    onlineUsers={onlineUsers}
                   />
                 </div>
               ))}

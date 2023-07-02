@@ -55,7 +55,6 @@ export default function FriendsPage() {
 
   const createChat = async (e) => {
     e.preventDefault();
-    console.log("this is working")
     try {
       const response = await fetch(`http://localhost:8080/chat`, {
         method : "POST",
@@ -67,6 +66,7 @@ export default function FriendsPage() {
       })
       const newChat = await response.json()
       setCurrentChat(newChat)
+      console.log("chat created", newChat)
     } catch (error) {
       console.log(error)
     }

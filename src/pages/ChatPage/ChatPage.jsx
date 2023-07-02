@@ -15,43 +15,43 @@ export default function ChatPage() {
   const socket = useRef();
 
   //initialize socket server
-  useEffect(() => {
-    socket.current = io(backendURL, {
-      transports: ["websocket"],
-      extraHeaders: {
-        "Access-Control-Allow-Private-Network": true,
-      },
-    });
-    socket.current.emit("new-user-add", user?._id);
+  // useEffect(() => {
+  //   socket.current = io(backendURL, {
+  //     transports: ["websocket"],
+  //     extraHeaders: {
+  //       "Access-Control-Allow-Private-Network": true,
+  //     },
+  //   });
+  //   socket.current.emit("new-user-add", user?._id);
 
-    socket.current.on("get-users", (users) => {
-      setOnlineUsers(users);
-    });
-    return () => {
-      socket.current.off("get-users", (users) => {
-        setOnlineUsers(users);
-      });
-    };
-  }, [user]);
+  //   socket.current.on("get-users", (users) => {
+  //     setOnlineUsers(users);
+  //   });
+  //   return () => {
+  //     socket.current.off("get-users", (users) => {
+  //       setOnlineUsers(users);
+  //     });
+  //   };
+  // }, [user]);
 
   // send message to socket server
-  useEffect(() => {
-    if (sendMessage !== null) {
-      socket.current.emit("send-message", sendMessage);
-    }
-  }, [sendMessage]);
+  // useEffect(() => {
+  //   if (sendMessage !== null) {
+  //     socket.current.emit("send-message", sendMessage);
+  //   }
+  // }, [sendMessage]);
 
   // receive message from socket server
-  useEffect(() => {
-    socket.current.on("receive-message", (data) => {
-      setReceiveMessage(data);
-    });
-    return () => {
-      socket.current.off("receive-message", (data) => {
-        setReceiveMessage(data);
-      });
-    };
-  }, []);
+  // useEffect(() => {
+  //   socket.current.on("receive-message", (data) => {
+  //     setReceiveMessage(data);
+  //   });
+  //   return () => {
+  //     socket.current.off("receive-message", (data) => {
+  //       setReceiveMessage(data);
+  //     });
+  //   };
+  // }, []);
 
   useEffect(() => {
     const getChats = async () => {

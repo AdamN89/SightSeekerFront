@@ -1,13 +1,29 @@
 import { useState, useEffect } from "react"
 import ChatImage from "../../components/Chat/ChatImage"
 
-export default function Conversation({ data, currentUserId, online, chat, setSendMessage, receiveMessage }) {
+export default function Conversation({ data, currentUserId, online, chat, setSendMessage, receiveMessage, onlineUsers }) {
 
     const [ userData, setUserData ] = useState([]) // This is who we send the messages to
     const [ multipleUsers, setMultipleUsers ] = useState([])
+ 
+    const displayOnline = multipleUsers.length > 1 ? (
+      multipleUsers.map((user) => (
+        <div className="multiple-users" key={user._id}>
+          {user.name}
+          <span>{onlineUsers.find((onlineUser) => onlineUser.userId === user._id)?.online ? " - Online" : " - Offline"}</span>
+        </div>
+      ))
+    ) : (
+      <div className="single-user">
+        {userData[0]?.name}
+        <span>{onlineUsers.find((onlineUser) => onlineUser.userId === userData[0]?._id)?.online ? " - Online" : " - Offline"}</span>
+      </div>
+    )
 
   useEffect(() => {
     const filteredMembers = data.members.filter(member => member !== currentUserId)
+    console.log("this is chat as data", data)
+    console.log("this is chat members", data.members[1])
 
     const getUserData = async() => {
       try {
@@ -19,9 +35,12 @@ export default function Conversation({ data, currentUserId, online, chat, setSen
           method: "POST"
           })
           const data = await response.json()
-          setUserData(data.data)
-          if (data.data.length > 1) {
-            setMultipleUsers(data.data)
+          // setUserData(data.data)
+          console.log("incoming data", data.data.slice(1))
+          if (data.data.length > 2) {
+            setMultipleUsers(data.data.slice(1))
+          } else {
+            setUserData(data.data.slice(1))
           }
       } 
       catch (error) {
@@ -39,9 +58,10 @@ export default function Conversation({ data, currentUserId, online, chat, setSen
         <div className="groupchat-content">
           <div className="groupchat-name">My group chat</div>
           <div className="groupchat-members">
-              {multipleUsers.length > 1 ? (multipleUsers.map((user) => (
-                <div>{user.name}<span>{online? " - Online" : " - Offline"}</span></div>
-              ))) : (<div>{userData[0]?.name}<span>{online? " - Online" : " - Offline"}</span></div>)}
+              {/* {multipleUsers.length > 1 ? (multipleUsers.map((user) => (
+                <div>{user._id}<span>{user._id === online?.userId ?  " - Online" : " - Offline"}</span></div>
+              ))) : (<div>{userData[0]?._id}<span>{online?.online ? " - Online" : " - Offline"}</span></div>)} */}
+              {displayOnline}
           </div>
         </div>
         <div className="groupchat-graphic">
