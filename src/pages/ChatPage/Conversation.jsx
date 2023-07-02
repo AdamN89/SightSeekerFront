@@ -21,9 +21,10 @@ export default function Conversation({ data, currentUserId, online, chat, setSen
     )
 
   useEffect(() => {
-    const filteredMembers = data.members[1]
+    // const filteredMembers = data.members[1]
+    const filteredMembers = data.members.filter(member => member !== currentUserId)
     console.log("this is chat as data", data)
-    console.log("this is chat members", data.members[1])
+    console.log("this is filtered members", filteredMembers)
 
     const getUserData = async() => {
       try {
@@ -35,12 +36,14 @@ export default function Conversation({ data, currentUserId, online, chat, setSen
           method: "POST"
           })
           const data = await response.json()
-          // setUserData(data.data)
           console.log("incoming data", data.data)
-          if (data.data.length > 2) {
-            setMultipleUsers(data.data)
+          const chatMembers = data.data.filter((user) => user._id !== currentUserId  )
+          console.log("chatMembers", chatMembers)
+
+          if (chatMembers.length > 1) {
+            setMultipleUsers(chatMembers)
           } else {
-            setUserData(data.data)
+            setUserData(chatMembers)
           }
       } 
       catch (error) {
