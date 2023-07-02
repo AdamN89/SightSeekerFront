@@ -29,49 +29,51 @@ export default function Chat() {
     closeTopMenu,
     chats,
     setChats,
+    onlineUsers,
+    setOnlineUsers
   } = useContext(DataContext);
-  const [onlineUsers, setOnlineUsers] = useState([]);
-  const socket = useRef();
+  // const [onlineUsers, setOnlineUsers] = useState([]);
+  // const socket = useRef();
 
   //initialize socket server
-  useEffect(() => {
+  // useEffect(() => {
 
-    socket.current = io(backendURL, {
-      transports: ["websocket"],
-      extraHeaders: {
-        "Access-Control-Allow-Private-Network": true,
-      },
-    });
-    socket.current.emit("new-user-add", user?._id);
-    socket.current.on("get-users", (users) => {
-      setOnlineUsers(users)
-      // console.log("this is going into online users", users)
-    });
-    return () => {
-      socket.current.off("get-users", (users) => {
-        setOnlineUsers(users);
-      });
-    };
-  }, [user]);
+  //   socket.current = io(backendURL, {
+  //     transports: ["websocket"],
+  //     extraHeaders: {
+  //       "Access-Control-Allow-Private-Network": true,
+  //     },
+  //   });
+  //   socket.current.emit("new-user-add", user?._id);
+  //   socket.current.on("get-users", (users) => {
+  //     setOnlineUsers(users)
+  //     console.log("this is going into online users", users)
+  //   });
+  //   return () => {
+  //     socket.current.off("get-users", (users) => {
+  //       setOnlineUsers(users);
+  //     });
+  //   };
+  // }, [user]);
 
   // send message to socket server
-  useEffect(() => {
-    if (sendMessage !== null) {
-      socket.current.emit("send-message", sendMessage);
-    }
-  }, [sendMessage]);
+  // useEffect(() => {
+  //   if (sendMessage !== null) {
+  //     socket.current.emit("send-message", sendMessage);
+  //   }
+  // }, [sendMessage]);
 
   // receive message from socket server
-  useEffect(() => {
-    socket.current.on("receive-message", (data) => {
-      setReceiveMessage(data);
-    });
-    return () => {
-      socket.current.off("receive-message", (data) => {
-        setReceiveMessage(data);
-      });
-    };
-  }, []);
+  // useEffect(() => {
+  //   socket.current.on("receive-message", (data) => {
+  //     setReceiveMessage(data);
+  //   });
+  //   return () => {
+  //     socket.current.off("receive-message", (data) => {
+  //       setReceiveMessage(data);
+  //     });
+  //   };
+  // }, []);
 
   useEffect(() => {
     const getChats = async () => {
@@ -86,7 +88,7 @@ export default function Chat() {
     };
     if (user) getChats();
   }, [user]);
-  // console.log("this is user", user)
+  console.log("this is user", user)
   const checkOnlineStatus = (chat) => {
     // console.log("this is chat?", chat)
     // const chatMember = chat.members.length > 1 ? (console.log("lol")) : chat.members.find((member) => member !== user._id)

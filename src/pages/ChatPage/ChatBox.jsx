@@ -4,48 +4,92 @@ import { AuthContext } from "../../context/AuthContext";
 import { format } from "timeago.js"
 import InputEmoji from "react-input-emoji"
 import "../ChatPage/ChatPage.css"
+import { io } from "socket.io-client";
 
 
 export default function ChatBox() {
-  const { user } = useContext(AuthContext);
+  const { user, backendURL } = useContext(AuthContext);
   const currentUserId = user._id
-  const { currentChat, setCurrentChat, sendMessage, setSendMessage, receiveMessage, setReceiveMessage } = useContext(DataContext)
+  const { currentChat, setCurrentChat, sendMessage, setSendMessage, receiveMessage, setReceiveMessage, onlineUsers, setOnlineUsers } = useContext(DataContext)
   const [ userData, setUserData ] = useState(null)
   const [ multipleUsers, setMultipleUsers ] = useState()
   const [ messages, setMessages ] = useState([])
   const [ newMessage, setNewMessage ] = useState(" ")
   const scroll = useRef()
+  const socket = useRef();
+
+
+  //initialize socket server
+  useEffect(() => {
+
+    socket.current = io(backendURL, {
+      transports: ["websocket"],
+      extraHeaders: {
+        "Access-Control-Allow-Private-Network": true,
+      },
+    });
+    socket.current.emit("new-user-add", user?._id);
+    socket.current.on("get-users", (users) => {
+      setOnlineUsers(users)
+    });
+    return () => {
+      socket.current.off("get-users", (users) => {
+        setOnlineUsers(users);
+      });
+    };
+  }, [user]);
+
+  // send message to socket server
+  useEffect(() => {
+    if (sendMessage !== null) {
+      socket.current.emit("send-message", sendMessage);
+    }
+  }, [sendMessage]);
+
+  // receive message from socket server
+  useEffect(() => {
+    socket.current.on("receive-message", (data) => {
+      setReceiveMessage(data);
+    });
+    return () => {
+      socket.current.off("receive-message", (data) => {
+        setReceiveMessage(data);
+      });
+    };
+  }, []);
+
+  const filteredMembers = currentChat.members.flat().filter((member) => member !== currentUserId);
 
   // fetching chat members data for header
   useEffect(() => {
-    const filteredMembers = currentChat.members.filter(member => member !== currentUserId)
-
     const getUserData = async() => {
       try {
         const response = await fetch(`http://localhost:8080/user/chatmembers`,{
           headers: {
             "Content-type": "application/json"
           },
-          body: JSON.stringify({members : Array.isArray(filteredMembers[0]) ? filteredMembers[0] : filteredMembers}),
+          body: JSON.stringify({members : filteredMembers}),
           method: "POST"
           })
           const data = await response.json()
-          if (data.data.length > 1) {
-            setMultipleUsers(data.data)
+          console.log("incoming data", data.data)
+          const chatMembers = data.data.filter((user) => user._id !== currentUserId  )
+          console.log("chatMembers", chatMembers)
+
+          if (chatMembers.length > 1) {
+            setMultipleUsers(chatMembers)
+            console.log("multiple members", chatMembers)
           } else {
-            setUserData(data.data[0])
+            setUserData(chatMembers)
+            console.log("single member USER DATA", chatMembers)
           }
       } 
       catch (error) {
         console.log(error)
       }
     }
-
-    if (Array.isArray(filteredMembers[0])? filteredMembers[0][0] : filteredMembers[0]){
-        getUserData()
-      }
-
-  },[])
+    getUserData()
+  },[currentChat])
 
   useEffect(() => {
     if(receiveMessage !== null && receiveMessage.chatId === currentChat?._id) {
@@ -53,16 +97,13 @@ export default function ChatBox() {
     }
   },[receiveMessage])
 
-  const userId = currentChat?.members?.find((id) => id !== currentUserId)
-  console.log("userID", userId)
-  console.log("current chat", currentChat)
-
   // fetching data for messages
   useEffect(() => {
     const fetchMessages = async() => {
       try {
         const response = await fetch(`http://localhost:8080/message/${currentChat._id}`)
         const data = await response.json()
+        console.log("fetched messages", data)
         setMessages(data)
       } catch (error) {
         console.log(error)
@@ -101,8 +142,9 @@ export default function ChatBox() {
     }
 
     // send messages to socket server
-    const receiverId =  currentChat.members.find((id) => id !== currentUserId)
-    setSendMessage({...message, receiverId})
+    const receiverId = filteredMembers
+    console.log("receiverId", receiverId);
+    setSendMessage({ ...message, receiverId });
   }
 
   // always scroll to the last message
