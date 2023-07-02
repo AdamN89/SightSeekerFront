@@ -27,14 +27,15 @@ const markerColors = [
   "#743478",
   "#841cb5",
 ];
-
+// 52.45685631705479, 13.540060456464587
 export default function HomePage() {
   const { user, setUser, backendURL, token } = useContext(AuthContext);
   const { markers, retrieveByCoords } = useContext(MapContext);
   const [userCoords, setUserCoords] = useState({});
+  const [userPointObject, setuserPointObject] = useState(null);
   const [viewState, setViewState] = useState({
-    longitude: 13.540028,
-    latitude: 52.457056,
+    longitude: 13.540060456464587,
+    latitude: 52.45685631705479,
     zoom: 15,
   });
   const [showPopup, setShowPopup] = useState(true);
@@ -156,10 +157,6 @@ export default function HomePage() {
     }
   };
 
-  useEffect(() => {
-    if (userCoords && user) fetchRecommendations();
-  }, [userCoords]);
-
   const handleMapMove = (e) => {
     setViewState(e.viewState);
   };
@@ -275,21 +272,26 @@ export default function HomePage() {
     }
   };
 
-  const bookmarkCurrentLocation = async () => {
+  const getUserPointObject = async () => {
     const coordString = [userCoords.longitude, userCoords.latitude].join(",");
     const pointObj = await retrieveByCoords(coordString);
-    
-    bookmarkPoint(pointObj);
+    setuserPointObject(pointObj);
   };
 
-  useEffect(()=> {
-    if (userCoords) {
+  useEffect(() => {
+    if (userCoords && user) {
+      fetchRecommendations();
+      getUserPointObject();
     }
-  }, [userCoords])
+  }, [userCoords]);
 
+  const bookmarkCurrentLocation = async () => {
+    bookmarkPoint(userPointObject);
+  };
   // console.log("Markers: ", selectedMarkers);
   // console.log(recommendations);
   // console.log(userFavoritesMarkers);
+  // console.log(userPointObject);
   return (
     <div className="container map-container">
       <TopMenu />
@@ -322,14 +324,15 @@ export default function HomePage() {
               // offsetTop={-30}
             >
               <h3>Current location</h3>
-              <p>Lat: {userCoords.latitude}</p>
-              <p>Lng: {userCoords.longitude}</p>
+              {userPointObject ? <p>{userPointObject.name}</p> : null}
+              {userPointObject ? <p>{userPointObject.address}</p> : null}
               <button onClick={bookmarkCurrentLocation}>Bookmark Point</button>
             </Popup>
           )}
           <Marker
             longitude={userCoords.longitude}
             latitude={userCoords.latitude}
+            offset={[-12, -32]}
             onClick={(e) => {
               e.originalEvent.stopPropagation();
               setShowPopup((prev) => !prev);

@@ -37,7 +37,7 @@ export default function MapContextProvider({ children }) {
   };
 
   const retrieveByCoords = async (coords) => {
-    console.log("by coords: ", coords);
+    // console.log("by coords: ", coords);
     try {
       const res = await fetch(
         `https://api.mapbox.com/geocoding/v5/mapbox.places/${coords}.json?access_token=${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}`
