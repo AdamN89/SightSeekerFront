@@ -75,7 +75,7 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 0.5rem;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 .chat_wall-date {
