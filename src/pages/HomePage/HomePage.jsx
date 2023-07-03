@@ -32,7 +32,7 @@ export default function HomePage() {
   const { user, setUser, backendURL, token } = useContext(AuthContext);
   const { markers, retrieveByCoords } = useContext(MapContext);
   const [userCoords, setUserCoords] = useState({});
-  const [userPointObject, setuserPointObject] = useState(null);
+  const [userPointObject, setUserPointObject] = useState(null);
   const [viewState, setViewState] = useState({
     longitude: 13.540060456464587,
     latitude: 52.45685631705479,
@@ -44,6 +44,9 @@ export default function HomePage() {
   const [recommendations, setRecommendations] = useState([]);
   const [recommendationPopup, setRecommendationPopup] = useState(null);
   const [markerColorsState, setMarkerColorsState] = useState({});
+  const [clickedMapPoint, setClickedMapPoint] = useState(null);
+  const [directionsPoints, setDirectionsPoints] = useState([]);
+
   const [error, setError] = useState(null);
 
   const getUUID = () => {
@@ -161,26 +164,11 @@ export default function HomePage() {
     setViewState(e.viewState);
   };
 
-  // const handleMapClick = async (e) => {
-  //   console.log(e);
-  //   const resGeocoding = await fetch(
-  //     `https://api.mapbox.com/geocoding/v5/mapbox.places/${e.lngLat.lng},${e.lngLat.lat}.json?limit=1&types=poi%2Caddress&access_token=${TOKEN}`
-  //   );
-  //   const dataGeocoding = await resGeocoding.json();
-  //   // SearchBox
-  //   const resSearchBox = await fetch(
-  //     `https://api.mapbox.com/search/searchbox/v1/suggest?q=${
-  //       dataGeocoding.features[0].id
-  //     }&language=en&proximity=${e.lngLat.lng},${
-  //       e.lngLat.lat
-  //     }&navigation_profile=driving&origin=${userCoords.longitude},${
-  //       userCoords.latitude
-  //     }&session_token=${getUUID()}&access_token=${TOKEN}`
-  //   );
-  //   const dataSearchBox = await resSearchBox.json();
-  //   console.log(dataGeocoding);
-  //   console.log(dataSearchBox);
-  // };
+  // &types=poi%2Caddress
+  const handleMapClick = async (e) => {
+    const poiObj = await retrieveByCoords([e.lngLat.lng, e.lngLat.lat]);
+    setClickedMapPoint(poiObj);
+  };
 
   const selectedMarkers = useMemo(
     () =>
@@ -244,7 +232,7 @@ export default function HomePage() {
               offset={[-5, -15]}
               onClick={(e) => {
                 e.originalEvent.stopPropagation();
-                setRecommendationPopup(marker);
+                setRecommendationPopup({ ...marker, bookmark: true });
               }}
             >
               <MapMarker fill={"#13c397"} />
@@ -255,7 +243,7 @@ export default function HomePage() {
   );
 
   const bookmarkPoint = async (pointObj) => {
-    console.log(pointObj);
+    // console.log(pointObj);
     try {
       const res = await fetch(`${backendURL}/user/add-favorite`, {
         method: "PUT",
@@ -275,7 +263,8 @@ export default function HomePage() {
   const getUserPointObject = async () => {
     const coordString = [userCoords.longitude, userCoords.latitude].join(",");
     const pointObj = await retrieveByCoords(coordString);
-    setuserPointObject(pointObj);
+    setUserPointObject(pointObj);
+    setDirectionsPoints([pointObj.coords]);
   };
 
   useEffect(() => {
@@ -310,7 +299,7 @@ export default function HomePage() {
           onMove={handleMapMove}
           reuseMaps={true}
           cursor="drag"
-          // onClick={handleMapClick}
+          onClick={handleMapClick}
         >
           <NavigationControl />
           <AddFavoriteIcon />
@@ -345,6 +334,19 @@ export default function HomePage() {
           >
             <img src="./assets/marker.png" alt="marker" />
           </Marker>
+          {clickedMapPoint && (
+            <Marker
+              longitude={clickedMapPoint.coords[0]}
+              latitude={clickedMapPoint.coords[1]}
+              offset={[-12, -32]}
+              onClick={(e) => {
+                e.originalEvent.stopPropagation();
+                setRecommendationPopup(clickedMapPoint);
+              }}
+            >
+              <img src="./assets/marker.png" alt="marker" />
+            </Marker>
+          )}
           {selectedMarkers}
           {userFavoritesMarkers}
           {popupInfo && (
@@ -377,9 +379,11 @@ export default function HomePage() {
               <h3>{recommendationPopup.name}</h3>
               <p>{recommendationPopup.address}</p>
               <p>{recommendationPopup.preference}</p>
-              <button onClick={() => bookmarkPoint(recommendationPopup)}>
-                Bookmark Point
-              </button>
+              {!recommendationPopup.bookmark && (
+                <button onClick={() => bookmarkPoint(recommendationPopup)}>
+                  Bookmark Point
+                </button>
+              )}
             </Popup>
           )}
         </Map>
