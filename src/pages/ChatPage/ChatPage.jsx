@@ -1,5 +1,6 @@
 import "./chat.css";
 import { useState, useContext, useEffect, useRef } from "react";
+import { navigate, useNavigate } from "react-router-dom"
 import { AuthContext } from "../../context/AuthContext";
 import ChatBox from "./ChatBox";
 import { io } from "socket.io-client";
@@ -13,6 +14,8 @@ export default function ChatPage() {
   const [sendMessage, setSendMessage] = useState(null);
   const [receiveMessage, setReceiveMessage] = useState(null);
   const socket = useRef();
+  const navigate = useNavigate()
+
 
   //initialize socket server
   // useEffect(() => {
@@ -78,7 +81,9 @@ export default function ChatPage() {
       <div className="first_element">
         <div className="title_container">
           <h1 className="title">My Group Chat</h1>
-          <CloseIcon />
+          <CloseIcon
+            func={() => navigate("/home")}
+          />
         </div>
       </div>
       <ChatBox />
