@@ -155,7 +155,7 @@ export default function FriendsPage() {
   //     </div>
   //   </>
   // );
-  console.log("friends: ", user);
+  // console.log("friends: ", user);
   return {
     friendsRef,
     renderFriendsPage: (

@@ -192,9 +192,9 @@
 }
 
 .popup_inside button {
-  position: absolute;
+  /* position: absolute;
   bottom: -20px;
-  right: -25px;
+  right: -25px; */
   width: fit-content;
   border: 0;
   outline: 0;
@@ -204,6 +204,13 @@
   border-radius: 20px;
   cursor: pointer;
   transition: all 0.3s ease;
+}
+
+.button-wrapper {
+  position: absolute;
+  bottom: -20px;
+  right: -25px;
+  display: flex;
 }
 
 .popup_inside button:hover {

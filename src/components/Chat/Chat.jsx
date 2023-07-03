@@ -30,7 +30,7 @@ export default function Chat() {
     chats,
     setChats,
     onlineUsers,
-    setOnlineUsers
+    setOnlineUsers,
   } = useContext(DataContext);
   // const [onlineUsers, setOnlineUsers] = useState([]);
   // const socket = useRef();
@@ -98,7 +98,7 @@ export default function Chat() {
     // const online = chatMember.length > 1 ? (onlineUsers.map((users) => users.find((user) => user.userId === chatMember) : (onlineUsers.find((user) => user.userId === chatMember))
     const online = onlineUsers.find((user) => user.userId === chatMember);
     // console.log("this is online", online)
-    return online 
+    return online;
   };
 
   return {
