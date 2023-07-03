@@ -828,6 +828,14 @@ add to about page */
   background-color: #662d91;
 }
 
+.mapboxgl-marker {
+  height: fit-content;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .mapboxgl-marker > svg {
   width: 24px;
   height: 32px;
