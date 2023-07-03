@@ -18,7 +18,6 @@ export default function ChatBox() {
   const scroll = useRef()
   const socket = useRef();
 
-
   //initialize socket server
   useEffect(() => {
 
@@ -89,13 +88,13 @@ export default function ChatBox() {
       }
     };
 
-    if (
-      Array.isArray(filteredMembers[0])
-        ? filteredMembers[0][0]
-        : filteredMembers[0]
-    ) {
-      getUserData();
-    }
+    // if (
+    //   Array.isArray(filteredMembers[0])
+    //     ? filteredMembers[0][0]
+    //     : filteredMembers[0]
+    // ) {
+    //   getUserData();
+    // }
     getUserData()
   },[currentChat])
 
@@ -175,18 +174,16 @@ export default function ChatBox() {
                         src={user.avatar}
                         alt="recipients avatar"
                         style={{ width: "50px", height: "50px" }}
-                        loading="lazy"
                       />
                     </div>
                   ))
                 ) : (
                   <div className="name" style={{ fontSize: "0.8rem" }}>
-                    <span>{userData? userData[0].name : userData.name}</span>
+                    <span>{userData?.name}</span>
                     <img
-                      src={userData? userData[0].avatar : userData.name}
+                      src={userData?.avatar}
                       alt="recipients avatar"
                       style={{ width: "50px", height: "50px" }}
-                      loading="lazy"
                     />
                   </div>
                 )}
