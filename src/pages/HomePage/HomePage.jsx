@@ -260,11 +260,18 @@ export default function HomePage() {
     }
   };
 
+  const addToRoute = (pointObj, isUserPoint = false) => {
+    console.log("adding to route", pointObj);
+    if (isUserPoint)
+      setDirectionsPoints((prev) => [...pointObj.coords, ...prev]);
+    else setDirectionsPoints((prev) => [...prev, pointObj.coords]);
+  };
+
   const getUserPointObject = async () => {
     const coordString = [userCoords.longitude, userCoords.latitude].join(",");
     const pointObj = await retrieveByCoords(coordString);
     setUserPointObject(pointObj);
-    setDirectionsPoints([pointObj.coords]);
+    addToRoute(pointObj, true);
   };
 
   useEffect(() => {
@@ -277,6 +284,23 @@ export default function HomePage() {
   const bookmarkCurrentLocation = async () => {
     bookmarkPoint(userPointObject);
   };
+
+  // fetch navigation
+
+  const fetchDirections = async (directionsPoints) => {
+    const coordsStr = directionsPoints.flat().join(",");
+    console.log(coordsStr);
+    try {
+    } catch (error) {
+      setError(error);
+    }
+  };
+
+  useEffect(() => {
+    if (directionsPoints.length > 1 && directionsPoints.length < 26)
+      fetchDirections(directionsPoints);
+  }, [directionsPoints]);
+
   // console.log("Markers: ", selectedMarkers);
   // console.log(recommendations);
   // console.log(userFavoritesMarkers);
@@ -317,9 +341,11 @@ export default function HomePage() {
                 <h3>Current location</h3>
                 {userPointObject ? <p>{userPointObject.name}</p> : null}
                 {userPointObject ? <p>{userPointObject.address}</p> : null}
-                <button onClick={bookmarkCurrentLocation}>
-                  Add to Favorite
-                </button>
+                <div className="button-wrapper">
+                  <button onClick={bookmarkCurrentLocation}>
+                    Add to Favorite
+                  </button>
+                </div>
               </div>
             </Popup>
           )}
@@ -358,15 +384,21 @@ export default function HomePage() {
               closeOnClick={true}
               // offsetTop={-30}
             >
-              <h3>{popupInfo.name}</h3>
-              <p>{popupInfo.address}</p>
-              <button onClick={() => bookmarkPoint(popupInfo)}>
-                Bookmark Point
-              </button>
+              <div className="popup_inside">
+                <h3>{popupInfo.name}</h3>
+                <p>{popupInfo.address}</p>
+                <div className="button-wrapper">
+                  <button onClick={() => bookmarkPoint(popupInfo)}>
+                    Bookmark Point
+                  </button>
+                  <button onClick={() => addToRoute(popupInfo)}>
+                    Add to route
+                  </button>
+                </div>
+              </div>
             </Popup>
           )}
           {recommendationMarkers}
-          {/* {userFavoritesMarkers} */}
           {recommendationPopup && (
             <Popup
               longitude={recommendationPopup.coords[0]}
@@ -376,14 +408,21 @@ export default function HomePage() {
               closeOnClick={true}
               // offsetTop={-30}
             >
-              <h3>{recommendationPopup.name}</h3>
-              <p>{recommendationPopup.address}</p>
-              <p>{recommendationPopup.preference}</p>
-              {!recommendationPopup.bookmark && (
-                <button onClick={() => bookmarkPoint(recommendationPopup)}>
-                  Bookmark Point
-                </button>
-              )}
+              <div className="popup_inside">
+                <h3>{recommendationPopup.name}</h3>
+                <p>{recommendationPopup.address}</p>
+                <p>{recommendationPopup.preference}</p>
+                <div className="button-wrapper">
+                  {!recommendationPopup.bookmark && (
+                    <button onClick={() => bookmarkPoint(recommendationPopup)}>
+                      Bookmark Point
+                    </button>
+                  )}
+                  <button onClick={() => addToRoute(popupInfo)}>
+                    Add to route
+                  </button>
+                </div>
+              </div>
             </Popup>
           )}
         </Map>
