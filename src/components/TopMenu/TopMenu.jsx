@@ -18,6 +18,7 @@ import { AuthContext } from "../../context/AuthContext";
 import FavoritesPage from "../../pages/FavoritePage/FavoritesPage";
 import FriendsPage from "../../pages/FriendsPage/FriendsPage";
 import Chat from "../Chat/Chat";
+import ButtonInstall from "../ButtonInstall";
 
 export default function TopMenu() {
   const {
@@ -145,7 +146,7 @@ export default function TopMenu() {
             </Link>
           </div>
           <div className="topmenu__body_footer">
-            <LogoHorizontal />
+            <ButtonInstall />
           </div>
         </div>
       </div>

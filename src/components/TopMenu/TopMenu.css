@@ -226,6 +226,7 @@
 
 .topmenu__body_footer {
   height: 10%;
+  width: 320px;
   display: flex;
   justify-content: center;
 }

@@ -1,57 +1,16 @@
 import "./chat.css";
 import { useState, useContext, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import ChatBox from "./ChatBox";
-import { io } from "socket.io-client";
 import CloseIcon from "../../components/CloseIcon";
 
 export default function ChatPage() {
-  const { user, setUser, token, backendURL } = useContext(AuthContext);
+  const { user, backendURL } = useContext(AuthContext);
   const [chats, setChats] = useState([]);
-  const [currentChat, setCurrentChat] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
-  const [sendMessage, setSendMessage] = useState(null);
-  const [receiveMessage, setReceiveMessage] = useState(null);
   const socket = useRef();
-
-  //initialize socket server
-  useEffect(() => {
-    socket.current = io(backendURL, {
-      transports: ["websocket"],
-      extraHeaders: {
-        "Access-Control-Allow-Private-Network": true,
-      },
-    });
-    socket.current.emit("new-user-add", user?._id);
-
-    socket.current.on("get-users", (users) => {
-      setOnlineUsers(users);
-    });
-    return () => {
-      socket.current.off("get-users", (users) => {
-        setOnlineUsers(users);
-      });
-    };
-  }, [user]);
-
-  // send message to socket server
-  useEffect(() => {
-    if (sendMessage !== null) {
-      socket.current.emit("send-message", sendMessage);
-    }
-  }, [sendMessage]);
-
-  // receive message from socket server
-  useEffect(() => {
-    socket.current.on("receive-message", (data) => {
-      setReceiveMessage(data);
-    });
-    return () => {
-      socket.current.off("receive-message", (data) => {
-        setReceiveMessage(data);
-      });
-    };
-  }, []);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getChats = async () => {
@@ -59,7 +18,6 @@ export default function ChatPage() {
         const response = await fetch(`${backendURL}/chat/${user._id}`);
         const data = await response.json();
         setChats(data);
-        console.log("this is chat", data);
       } catch (error) {
         console.log(error);
       }
@@ -74,12 +32,12 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="container">
+    <div className="container chat_page">
       <div className="first_element">
-        <div className="title_container">
-          <h1 className="title">My Group Chat</h1>
+        <h1 className="title">My Group Chat</h1>
+        <button onClick={() => navigate("/")}>
           <CloseIcon />
-        </div>
+        </button>
       </div>
       <ChatBox />
     </div>

@@ -25,6 +25,7 @@ export default function DataContextProvider({ children }) {
   const [ sendMessage, setSendMessage ] = useState(null)
   const [ receiveMessage, setReceiveMessage ] = useState(null)
   const [ chats, setChats ] = useState([])
+  const [ onlineUsers, setOnlineUsers ] = useState([]);
 
   const openMenu = (menuRef) => {
     // console.log(menuRef.current.parentNode);
@@ -39,7 +40,7 @@ export default function DataContextProvider({ children }) {
 
   const closeMenu = (menuRef) => {
     menuRef.current.classList.add("navigaton_page_closing");
-    console.log(menuRef.current.classList);
+    // console.log(menuRef.current.classList);
     setTimeout(() => {
       menuRef.current.parentNode.classList.remove("navigation_wrapper--up");
       menuRef.current.classList.remove("navigaton_page_closing");
@@ -83,7 +84,9 @@ export default function DataContextProvider({ children }) {
           receiveMessage,
           setReceiveMessage,
           chats,
-          setChats
+          setChats,
+          onlineUsers,
+          setOnlineUsers
         }}>
             {children}
         </DataContext.Provider>

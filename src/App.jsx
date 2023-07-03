@@ -17,6 +17,8 @@ import TravelsPage from "./pages/TravelPage/TravelsPage";
 import ChatPage from "./pages/ChatPage/ChatPage";
 import CreateTravelPlan from "./pages/TravelPage/CreateTravelPlan";
 import AddFavorite from "./pages/FavoritePage/AddFavorite";
+import Snake from "./components/SnakeGame/SnakeGame";
+import ErrorPage from "./components/Error/ErrorPage";
 
 function App() {
   // const token = localStorage.getItem("token")
@@ -79,6 +81,8 @@ function App() {
           path="/addfavorite"
           element={token ? <AddFavorite /> : <Navigate to="/" />}
         />
+        <Route path="/snake" element={<Snake />} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </div>
   );
