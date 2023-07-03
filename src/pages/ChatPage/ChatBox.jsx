@@ -175,16 +175,18 @@ export default function ChatBox() {
                         src={user.avatar}
                         alt="recipients avatar"
                         style={{ width: "50px", height: "50px" }}
+                        loading="lazy"
                       />
                     </div>
                   ))
                 ) : (
                   <div className="name" style={{ fontSize: "0.8rem" }}>
-                    <span>{userData[0]?.name}</span>
+                    <span>{userData? userData[0].name : userData.name}</span>
                     <img
-                      src={userData[0]?.avatar}
+                      src={userData? userData[0].avatar : userData.name}
                       alt="recipients avatar"
                       style={{ width: "50px", height: "50px" }}
+                      loading="lazy"
                     />
                   </div>
                 )}
