@@ -11,7 +11,7 @@ export default function ChatBox() {
   const { user, backendURL } = useContext(AuthContext);
   const currentUserId = user._id
   const { currentChat, setCurrentChat, sendMessage, setSendMessage, receiveMessage, setReceiveMessage, onlineUsers, setOnlineUsers } = useContext(DataContext)
-  const [ userData, setUserData ] = useState(null)
+  const [ userData, setUserData ] = useState()
   const [ multipleUsers, setMultipleUsers ] = useState()
   const [ messages, setMessages ] = useState([])
   const [ newMessage, setNewMessage ] = useState(" ")
@@ -79,7 +79,7 @@ export default function ChatBox() {
             setMultipleUsers(chatMembers)
             console.log("multiple members", chatMembers)
           } else {
-            setUserData(chatMembers)
+            setUserData(chatMembers[0])
             console.log("single member USER DATA", chatMembers)
           }
       } 
@@ -168,7 +168,7 @@ export default function ChatBox() {
               <div className="members">
                 {multipleUsers ? (
                   multipleUsers.map((user) => (
-                    <div className="name" style={{ fontSize: "0.8rem" }}>
+                    <div className="multi-members" style={{ fontSize: "0.8rem" }}>
                       <span>{user.name}</span>
                       <img
                         src={user.avatar}
@@ -178,7 +178,7 @@ export default function ChatBox() {
                     </div>
                   ))
                 ) : (
-                  <div className="name" style={{ fontSize: "0.8rem" }}>
+                  <div className="single-member" style={{ fontSize: "0.8rem" }}>
                     <span>{userData?.name}</span>
                     <img
                       src={userData?.avatar}
