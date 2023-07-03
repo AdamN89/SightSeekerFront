@@ -4,77 +4,38 @@ import LogoHorizontal from "./LogoHorizontal";
 
 export default function ButtonInstall() {
   const buttonRef = useRef(null);
-  // const [deferredPrompt, setDeferredPrompt] = useState(null);
-  const { promptToInstall, isAppInstalled } = useAddToHomescreenPrompt();
-  // throw your mousemove callback up here to "add" and "remove" later
-  // might be worth a useCallback based on the containerRef as well!
+  const [prompt, promptToInstall, isAppInstalled] = useAddToHomescreenPrompt();
+
+  console.log("isAppInstalled:", isAppInstalled);
+
   function mouseMoveEvent(e) {
     const { x, y } = buttonRef.current.getBoundingClientRect();
     buttonRef.current.style.setProperty("--x", e.clientX - x);
     buttonRef.current.style.setProperty("--y", e.clientY - y);
   }
 
-  // useEffect(() => {
-  //   if (buttonRef) {
-  //     buttonRef.current.addEventListener("mousemove", mouseMoveEvent);
-  //   }
-  //   // don't forget to *remove* the eventListener
-  //   // when your component unmounts!
-  //   // return () =>
-  //   //   buttonRef.current.removeEventListener("mousemove", mouseMoveEvent);
-  // }, [buttonRef]);
-
-  // // useeffect and function for install button
-  // useEffect(() => {
-  //   console.log("event handler running");
-  //   const handleBeforeInstallPrompt = (event) => {
-  //     // if app can be installed, assign the event to deferred prompt variable
-  //     event.preventDefault();
-  //     console.log(`inside of useeffect mount ${event}`);
-  //     setDeferredPrompt(event);
-  //   };
-  //   // Add event listener for before install prompt event
-  //   window.addEventListener("beforeinstallprompt", (event) => {
-  //     handleBeforeInstallPrompt(event);
-  //     console.log(`inside add listner: ${event}`);
-  //   });
-
-  //   //Clean up the event listener when the component is unmounted
-  //   return () => {
-  //     window.removeEventListener(
-  //       "beforeinstallprompt",
-  //       handleBeforeInstallPrompt
-  //     );
-  //   };
-  // }, []);
-
-  // // function for handeling of install button
-  // const handleInstallBtn = async () => {
-  //   if (deferredPrompt !== null) {
-  //     deferredPrompt.prompt();
-  //     const { outcome } = await deferredPrompt.userChoice;
-  //     if (outcome === "accepted") {
-  //       setDeferredPrompt(null);
-  //     }
-  //   } else {
-  //     console.log(
-  //       "Deferred prompt is null. SightSeeker App could not be installed."
-  //     );
-  //   }
-  // };
+  const handleInstallClick = () => {
+    promptToInstall()
+      .then(() => {
+        // Installation prompt shown
+      })
+      .catch((error) => {
+        console.error("Failed to prompt installation:", error);
+      });
+  };
 
   return (
     <>
       {isAppInstalled ? (
+        <LogoHorizontal />
+      ) : (
         <button
-          onClick={promptToInstall}
+          onClick={handleInstallClick}
           className="install_btn"
           ref={buttonRef}
         >
           <span>Install SightSeeker</span>
         </button>
-      ) : (
-        <LogoHorizontal />
       )}
     </>
   );
