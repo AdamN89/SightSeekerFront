@@ -17,6 +17,9 @@ export default function ChatBox() {
   const [ newMessage, setNewMessage ] = useState(" ")
   const scroll = useRef()
   const socket = useRef();
+  // console.log(currentUserId)
+
+  // const senderName = multipleUsers? (multipleUsers.find((user) => user._id === messages?.senderId ? user.name : "error 1")) : (userData?._id === messages?.senderId ? userData?.name : "error 2");
 
   //initialize socket server
   useEffect(() => {
@@ -71,16 +74,16 @@ export default function ChatBox() {
           method: "POST"
           })
           const data = await response.json()
-          console.log("incoming data", data.data)
+          // console.log("incoming data", data.data)
           const chatMembers = data.data.filter((user) => user._id !== currentUserId  )
-          console.log("chatMembers", chatMembers)
+          // console.log("chatMembers", chatMembers)
 
           if (chatMembers.length > 1) {
             setMultipleUsers(chatMembers)
-            console.log("multiple members", chatMembers)
+            // console.log("multiple members", chatMembers)
           } else {
             setUserData(chatMembers[0])
-            console.log("single member USER DATA", chatMembers)
+            // console.log("single member USER DATA", chatMembers)
           }
       } 
       catch (error) {
@@ -110,7 +113,7 @@ export default function ChatBox() {
       try {
         const response = await fetch(`http://localhost:8080/message/${currentChat._id}`)
         const data = await response.json()
-        console.log("fetched messages", data)
+        // console.log("fetched messages", data)
         setMessages(data)
       } catch (error) {
         console.log(error);
@@ -203,7 +206,12 @@ export default function ChatBox() {
                   }
                 >
                   <div className="message-body">
-                    <p className="message-text">{message.text}</p>
+                    <p className="message-text">{message.text}{multipleUsers ? 
+                                                                (
+                                                                multipleUsers.map((user) => user._id === message.senderId ? " - "+user.userName : null)
+                                                                )
+                                                                : (userData?._id === message.senderId ? " - " + userData.userName : null)
+                                                              }</p>
                   </div>
                   <p
                     className={

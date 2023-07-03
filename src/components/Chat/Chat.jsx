@@ -81,7 +81,7 @@ export default function Chat() {
         const response = await fetch(`${backendURL}/chat/${user._id}`);
         const data = await response.json();
         setChats(data);
-        console.log("this is available chats", data);
+        // console.log("this is available chats", data);
       } catch (error) {
         console.log(error);
       }
