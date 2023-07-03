@@ -57,21 +57,21 @@ export default function FriendsPage() {
     e.preventDefault();
     try {
       const response = await fetch(`http://localhost:8080/chat`, {
-        method : "POST",
-        headers : {"Content-Type": "application/json"},
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            senderId : user._id,
-            receiverId : selectedUsers
-        })
-      })
-      const newChat = await response.json()
-      setCurrentChat(newChat)
-      console.log("chat created", newChat)
+          senderId: user._id,
+          receiverId: selectedUsers,
+        }),
+      });
+      const newChat = await response.json();
+      setCurrentChat(newChat);
+      console.log("chat created", newChat);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-    navigate("/chat")
-  }
+    navigate("/chat");
+  };
 
   // testdata
   // const user = {
@@ -155,7 +155,7 @@ export default function FriendsPage() {
   //     </div>
   //   </>
   // );
-
+  console.log("friends: ", user);
   return {
     friendsRef,
     renderFriendsPage: (
@@ -209,35 +209,36 @@ export default function FriendsPage() {
             </form>
             {/* start of content of navigation page */}
             <form className="navigation_wrapper_body_content">
-              <Button 
-              txt="Start chat with selected friends"
-              func={createChat}
+              <Button
+                txt="Start chat with selected friends"
+                func={createChat}
               />
               <Button txt="Create Travel Plan" />
               <fieldset className="friends__page-friends-wrapper">
                 {user &&
-                  user.friends.length > 0 &&
-                  user.friends.map((friend, index) =>
-                    friend.accepted ? (
+                  user?.friends.map((friend, index) =>
+                    user?.friends.length > 0 &&
+                    friend.accepted &&
+                    friend.user ? (
                       <div
                         className="friends__page-check-wrapper"
-                        key={friend.user.userName + index}
+                        key={friend?.user?.userName + index}
                       >
                         <div
                           className={`${
-                            selectedUsers.includes(friend.user.userName)
+                            selectedUsers.includes(friend?.user?.userName)
                               ? "btn--friends"
                               : "btn_hallow--friends"
                           }`}
                           // htmlFor={friend.user.userName}
                         >
-                          {friend.user.name}
+                          {friend.user?.name}
                         </div>
                         <input
                           className="friends__page-checkbox"
                           type="checkbox"
-                          name={friend.user.userName}
-                          id={friend.user._id}
+                          name={friend.user?.userName}
+                          id={friend.user?._id}
                           onChange={handleFriendCheckbox}
                         />
                       </div>
