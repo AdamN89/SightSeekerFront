@@ -1,19 +1,34 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "SightSeeker",
+  "name": "SightSeeker",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "src": "sightseeker_512.ico",
+      "sizes": "512 x512 256x265 128x128 64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "sightseeker_64.png",
+      "type": "image/png",
+      "sizes": "64x64"
+    },
+    {
+      "src": "sightseeker_128.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "sightseeker_192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "sightseeker_256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "sightseeker_512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
