@@ -81,14 +81,14 @@ export default function Chat() {
         const response = await fetch(`${backendURL}/chat/${user._id}`);
         const data = await response.json();
         setChats(data);
-        console.log("this is available chats", data);
+        // console.log("this is available chats", data);
       } catch (error) {
         console.log(error);
       }
     };
     if (user) getChats();
   }, [user]);
-  console.log("this is user", user)
+  // console.log("this is user", user)
   const checkOnlineStatus = (chat) => {
     // console.log("this is chat?", chat)
     // const chatMember = chat.members.length > 1 ? (console.log("lol")) : chat.members.find((member) => member !== user._id)
