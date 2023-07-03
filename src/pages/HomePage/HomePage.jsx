@@ -1,4 +1,10 @@
-import Map, { Marker, Popup, NavigationControl } from "react-map-gl";
+import Map, {
+  Marker,
+  Popup,
+  NavigationControl,
+  Layer,
+  Source,
+} from "react-map-gl";
 import { v4 as uuidv4 } from "uuid";
 import { useEffect, useState, useRef, useContext, useMemo } from "react";
 import { AuthContext } from "../../context/AuthContext";
@@ -12,7 +18,7 @@ import AddFavoriteIcon from "../../components/AddFavoriteIcon";
 import MapMarker from "../../components/MapMarker";
 
 const mapStyle = "mapbox://styles/stephanullmann/clj7lajvj005t01que278452b";
-
+const navigationPreference = "driving";
 const markerColors = [
   "#895392",
   "#02b3b4",
@@ -46,6 +52,7 @@ export default function HomePage() {
   const [markerColorsState, setMarkerColorsState] = useState({});
   const [clickedMapPoint, setClickedMapPoint] = useState(null);
   const [directionsPoints, setDirectionsPoints] = useState([]);
+  const [directionsData, setDirectionsData] = useState(null);
 
   const [error, setError] = useState(null);
 
@@ -55,6 +62,7 @@ export default function HomePage() {
   };
 
   useEffect(() => {
+    setDirectionsPoints([]);
     if (!user) return;
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -245,8 +253,8 @@ export default function HomePage() {
   const bookmarkPoint = async (pointObj) => {
     // console.log(pointObj);
     try {
-      const res = await fetch(`${backendURL}/user/add-favorite`, {
-        method: "PUT",
+      const res = await fetch(`${backendURL}/point`, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -261,10 +269,16 @@ export default function HomePage() {
   };
 
   const addToRoute = (pointObj, isUserPoint = false) => {
-    console.log("adding to route", pointObj);
-    if (isUserPoint)
-      setDirectionsPoints((prev) => [...pointObj.coords, ...prev]);
-    else setDirectionsPoints((prev) => [...prev, pointObj.coords]);
+    console.log("adding to route", pointObj, isUserPoint);
+    if (!pointObj) return;
+    if (isUserPoint) setDirectionsPoints((prev) => [pointObj, ...prev]);
+    else setDirectionsPoints((prev) => [...prev, pointObj]);
+  };
+
+  const removeFromRoute = (pointObj) => {
+    setDirectionsPoints((prev) =>
+      prev.filter((point) => point.address !== pointObj.address)
+    );
   };
 
   const getUserPointObject = async () => {
@@ -288,15 +302,29 @@ export default function HomePage() {
   // fetch navigation
 
   const fetchDirections = async (directionsPoints) => {
-    const coordsStr = directionsPoints.flat().join(",");
-    console.log(coordsStr);
+    console.log("directions fetch run: ");
+    const coordsStr = directionsPoints
+      .map((point) => point.coords.join(","))
+      .join(";");
+    // console.log(coordsStr);
     try {
+      const res = await fetch(
+        `https://api.mapbox.com/directions/v5/mapbox/${navigationPreference}/${coordsStr}?alternatives=true&annotations=distance%2Cduration%2Cspeed&banner_instructions=true&geometries=geojson&language=en&overview=full&roundabout_exits=true&steps=true&access_token=${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}`
+      );
+      const data = await res.json();
+      setDirectionsData(data);
+      console.log(data);
     } catch (error) {
       setError(error);
     }
   };
 
   useEffect(() => {
+    console.log(
+      "directionsPoints.length: ",
+      directionsPoints.length,
+      directionsPoints
+    );
     if (directionsPoints.length > 1 && directionsPoints.length < 26)
       fetchDirections(directionsPoints);
   }, [directionsPoints]);
@@ -373,6 +401,8 @@ export default function HomePage() {
               <img src="./assets/marker.png" alt="marker" />
             </Marker>
           )}
+
+          {/* Markers and Popups for selections from searchbar and user favorites */}
           {selectedMarkers}
           {userFavoritesMarkers}
           {popupInfo && (
@@ -391,13 +421,22 @@ export default function HomePage() {
                   <button onClick={() => bookmarkPoint(popupInfo)}>
                     Bookmark Point
                   </button>
-                  <button onClick={() => addToRoute(popupInfo)}>
-                    Add to route
-                  </button>
+                  {directionsPoints.findIndex(
+                    (point) => point.address === popupInfo.address
+                  ) !== -1 ? (
+                    <button onClick={() => removeFromRoute(popupInfo)}>
+                      - route
+                    </button>
+                  ) : (
+                    <button onClick={() => addToRoute(popupInfo)}>
+                      + route
+                    </button>
+                  )}
                 </div>
               </div>
             </Popup>
           )}
+          {/* Marker and Popup for recommended points  and map clicked points*/}
           {recommendationMarkers}
           {recommendationPopup && (
             <Popup
@@ -418,12 +457,28 @@ export default function HomePage() {
                       Bookmark Point
                     </button>
                   )}
-                  <button onClick={() => addToRoute(popupInfo)}>
-                    Add to route
-                  </button>
+                  {directionsPoints.findIndex(
+                    (point) => point.address === recommendationPopup.address
+                  ) !== -1 ? (
+                    <button
+                      onClick={() => removeFromRoute(recommendationPopup)}
+                    >
+                      -- route
+                    </button>
+                  ) : (
+                    <button onClick={() => addToRoute(recommendationPopup)}>
+                      ++ route
+                    </button>
+                  )}
                 </div>
               </div>
             </Popup>
+          )}
+          {directionsData && false && (
+            <>
+              <Source type="geojson" />
+              <Layer source="directions" type="line" />
+            </>
           )}
         </Map>
       )}
