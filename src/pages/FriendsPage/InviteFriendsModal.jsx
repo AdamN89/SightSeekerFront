@@ -15,7 +15,7 @@ export default function InviteFriendsModal({
 
   useEffect(() => {
     const invitedFriends = user.friends.map(
-      (user) => !user.received && user.user.userName
+      (user) => user.user && !user.received && user.user.userName
     );
     const beingInvitedBy = user.friends.map(
       (user) => user.received && !user.accepted && user.user.userName
