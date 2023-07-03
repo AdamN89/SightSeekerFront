@@ -3,14 +3,15 @@
   "name": "SightSeeker",
   "icons": [
     {
-      "src": "sightseeker_512.ico",
-      "sizes": "512 x512 256x265 128x128 64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
-    {
       "src": "sightseeker_64.png",
       "type": "image/png",
       "sizes": "64x64"
+    },
+    {
+      "src": "sightseeker_64_maskable.png",
+      "type": "image/png",
+      "sizes": "64x64",
+      "purpose": "maskable"
     },
     {
       "src": "sightseeker_128.png",
@@ -18,18 +19,36 @@
       "sizes": "128x128"
     },
     {
+      "src": "sightseeker_128_maskable.png",
+      "type": "image/png",
+      "sizes": "128x128",
+      "purpose": "maskable"
+    },
+    {
       "src": "sightseeker_192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "sightseeker_256.png",
+      "src": "sightseeker_192.png",
       "type": "image/png",
-      "sizes": "256x256"
+      "sizes": "192x192"
+    },
+    {
+      "src": "sightseeker_256_maskable.png",
+      "type": "image/png",
+      "sizes": "256x256",
+      "purpose": "maskable"
     },
     {
       "src": "sightseeker_512.png",
       "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "sightseeker_512_maskable.png",
+      "type": "image/png",
+      "purpose": "maskable",
       "sizes": "512x512"
     }
   ],

@@ -1,11 +1,10 @@
 import * as React from "react";
 
-// Taken from: https://gist.github.com/rikukissa/cb291a4a82caa670d2e0547c520eae53
 export function useAddToHomescreenPrompt() {
-  const [prompt, setState] = React.useState(null);
+  const [prompt, setPrompt] = React.useState(null);
+  const [isAppInstalled, setIsAppInstalled] = React.useState(false);
 
   const promptToInstall = () => {
-    console.log(prompt);
     if (prompt) {
       return prompt.prompt();
     }
@@ -17,17 +16,27 @@ export function useAddToHomescreenPrompt() {
   };
 
   React.useEffect(() => {
-    const ready = (e) => {
-      e.preventDefault();
-      setState(e);
+    const ready = (event) => {
+      event.preventDefault();
+      setPrompt(event);
+    };
+
+    const checkInstallationStatus = () => {
+      if (
+        window.matchMedia("(display-mode: standalone)").matches ||
+        window.navigator.standalone === true
+      ) {
+        setIsAppInstalled(true);
+      }
     };
 
     window.addEventListener("beforeinstallprompt", ready);
+    checkInstallationStatus();
 
     return () => {
       window.removeEventListener("beforeinstallprompt", ready);
     };
   }, []);
 
-  return [prompt, promptToInstall];
+  return [prompt, promptToInstall, isAppInstalled];
 }
