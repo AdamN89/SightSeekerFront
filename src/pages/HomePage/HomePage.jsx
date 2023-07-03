@@ -172,6 +172,7 @@ export default function HomePage() {
     setViewState(e.viewState);
   };
 
+  console.log(user)
   // &types=poi%2Caddress
   const handleMapClick = async (e) => {
     const poiObj = await retrieveByCoords([e.lngLat.lng, e.lngLat.lat]);
@@ -233,9 +234,9 @@ export default function HomePage() {
         ? user.favorites.map((marker) => (
             <Marker
               className="recommendation-marker"
-              key={marker.address + "-favorites"}
-              longitude={marker.coords[0]}
-              latitude={marker.coords[1]}
+              key={marker?.address + "-favorites"}
+              longitude={marker?.coords[0]}
+              latitude={marker?.coords[1]}
               // anchor="top"
               offset={[-5, -15]}
               onClick={(e) => {
