@@ -354,7 +354,6 @@ export default function HomePage() {
           onClick={handleMapClick}
         >
           <NavigationControl />
-          <AddFavoriteIcon />
           {showPopup && (
             <Popup
               latitude={userCoords.latitude}
