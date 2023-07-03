@@ -180,9 +180,9 @@ export default function ChatBox() {
                   ))
                 ) : (
                   <div className="name" style={{ fontSize: "0.8rem" }}>
-                    <span>{userData?.name}</span>
+                    <span>{userData[0]?.name}</span>
                     <img
-                      src={userData?.avatar}
+                      src={userData[0]?.avatar}
                       alt="recipients avatar"
                       style={{ width: "50px", height: "50px" }}
                     />
