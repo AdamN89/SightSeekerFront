@@ -40,14 +40,14 @@ export default function About() {
           <h2>mapbox</h2>
           <h2>open street map</h2>
         </div>
-      </div>
-      <div className="about_page_end">
-        <h3>THE END</h3>
-        <ButtonHallow
-          txt={"go back"}
-          func={() => navigate("/home")}
-          key="signup"
-        />
+        <div>
+          <h3>THE END</h3>
+          <ButtonHallow
+            txt={"go back"}
+            func={() => navigate("/home")}
+            key="signup"
+          />
+        </div>
       </div>
     </div>
   );
