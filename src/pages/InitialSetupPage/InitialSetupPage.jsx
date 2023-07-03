@@ -286,18 +286,18 @@ export default function InitalSetup() {
                       <h3>Can be found by</h3>
                       <div className="initial_setup_radio">
                         <label>
-                          <Field type="radio" name="foundBy" value="all" />
                           All
+                          <Field type="radio" name="foundBy" value="all" />
                         </label>
 
                         <label>
-                          <Field type="radio" name="foundBy" value="friends" />
                           Friends
+                          <Field type="radio" name="foundBy" value="friends" />
                         </label>
 
                         <label>
-                          <Field type="radio" name="foundBy" value="none" />
                           None
+                          <Field type="radio" name="foundBy" value="none" />
                         </label>
                       </div>
                     </div>
