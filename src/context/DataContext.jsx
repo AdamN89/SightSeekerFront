@@ -21,10 +21,11 @@ export default function DataContextProvider({ children }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenTopMenu, setIsOpenTopMenu] = useState(false);
   const topMenuRef = useRef(null);
-  const [currentChat, setCurrentChat] = useState(null);
-  const [sendMessage, setSendMessage] = useState(null);
-  const [receiveMessage, setReceiveMessage] = useState(null);
-  const [chats, setChats] = useState([]);
+  const [ currentChat, setCurrentChat ] = useState(null)
+  const [ sendMessage, setSendMessage ] = useState(null)
+  const [ receiveMessage, setReceiveMessage ] = useState(null)
+  const [ chats, setChats ] = useState([])
+  const [ onlineUsers, setOnlineUsers ] = useState([]);
 
   const openMenu = (menuRef) => {
     // console.log(menuRef.current.parentNode);
@@ -64,30 +65,30 @@ export default function DataContextProvider({ children }) {
     }, 700);
   };
 
-  return (
-    <DataContext.Provider
-      value={{
-        avatars,
-        openMenu,
-        closeMenu,
-        isOpen,
-        setIsOpen,
-        openTopMenu,
-        closeTopMenu,
-        isOpenTopMenu,
-        setIsOpenTopMenu,
-        topMenuRef,
-        currentChat,
-        setCurrentChat,
-        sendMessage,
-        setSendMessage,
-        receiveMessage,
-        setReceiveMessage,
-        chats,
-        setChats,
-      }}
-    >
-      {children}
-    </DataContext.Provider>
-  );
+    return(
+        <DataContext.Provider value={{
+          avatars,
+          openMenu,
+          closeMenu,
+          isOpen,
+          setIsOpen,
+          openTopMenu,
+          closeTopMenu,
+          isOpenTopMenu,
+          setIsOpenTopMenu,
+          topMenuRef,
+          currentChat,
+          setCurrentChat,
+          sendMessage,
+          setSendMessage,
+          receiveMessage,
+          setReceiveMessage,
+          chats,
+          setChats,
+          onlineUsers,
+          setOnlineUsers
+        }}>
+            {children}
+        </DataContext.Provider>
+    )
 }
