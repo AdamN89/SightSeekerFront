@@ -9,6 +9,7 @@
   --bg_dark_liniar: linear-gradient(258.25deg, #272727 0.81%, #121212 98.9%);
   --search_bg: linear-gradient(200deg, #272727 0, #121212 100%);
   --btn_bg: linear-gradient(180deg, #00a299 0%, #0b4e4a 100%);
+  --install_bg: linear-gradient(180deg, #92278f 0%, #662d91 100%);
   --scroll_thumb: linear-gradient(180deg, #662d91 0%, #92278f 100%);
   --btn_delete_bg: linear-gradient(180deg, #a20000 0%, #4e0b0b 100%);
   --btn_delete_hover: #ff0000;
@@ -555,6 +556,18 @@ add to about page */
   padding: 20px;
 }
 
+.modal {
+  /* background: var(--bg_dark_liniar); */
+  background: transparent;
+  z-index: 15;
+  width: 90%;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 0;
+  padding: 20px;
+}
+
 .showClickAway {
   display: block;
   position: absolute;
@@ -813,4 +826,14 @@ add to about page */
 
 ::selection {
   background-color: #662d91;
+}
+
+.mapboxgl-marker > svg {
+  width: 24px;
+  height: 32px;
+  color: #895392;
+}
+.mapboxgl-marker > svg > * {
+  width: 24px;
+  height: 32px;
 }

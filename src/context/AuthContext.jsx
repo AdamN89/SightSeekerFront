@@ -47,7 +47,7 @@ export default function AuthContextProvider({ children }) {
     if (storedToken) setToken(storedToken);
     if (storedToken && !user) retrieveUser();
     // console.log("there is a token: ", storedToken, "but no user: ", user);
-    setIsLoading(false)
+    setIsLoading(false);
   }, []);
 
   // sec useEffect either saves token to localStorage or removes it
@@ -70,7 +70,7 @@ export default function AuthContextProvider({ children }) {
   // }, [user]);
 
   if (isLoading) {
-    return null
+    return null;
   }
 
   return (
@@ -91,7 +91,6 @@ export default function AuthContextProvider({ children }) {
     </AuthContext.Provider>
   );
 }
-
 
 // The reason you are facing an issue when using const token = localStorage.getItem("token") instead of the token from the AuthContext is due to the asynchronous nature of retrieving the token.
 

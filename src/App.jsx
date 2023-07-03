@@ -20,13 +20,16 @@ import AddFavorite from "./pages/FavoritePage/AddFavorite";
 
 function App() {
   // const token = localStorage.getItem("token")
-  const { token } = useContext(AuthContext)
+  const { token } = useContext(AuthContext);
 
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={token ? <HomePage /> : <LandingPage />} />
-        <Route path="/login" element={token ? <Navigate to="/" /> : <LoginPage />} />
+        <Route
+          path="/login"
+          element={token ? <Navigate to="/" /> : <LoginPage />}
+        />
         <Route
           path="/register"
           element={token ? <Navigate to="/" /> : <RegisterPage />}
@@ -47,13 +50,19 @@ function App() {
           path="/initialsetup"
           element={token ? <InitialSetupPage /> : <Navigate to="/" />}
         />
-        <Route path="/home" element={token ? <HomePage /> : <Navigate to="/" />} />
+        <Route
+          path="/home"
+          element={token ? <HomePage /> : <Navigate to="/" />}
+        />
         <Route path="/spiner" element={<Loader />} />
         <Route
           path="/friends"
           element={token ? <FriendsPage /> : <Navigate to="/" />}
         />
-        <Route path="/chat" element={token ? <ChatPage /> : <Navigate to="/" />} />
+        <Route
+          path="/chat"
+          element={token ? <ChatPage /> : <Navigate to="/" />}
+        />
         <Route
           path="/invitation"
           element={token ? <ReceivedInvitation /> : <Navigate to="/" />}
