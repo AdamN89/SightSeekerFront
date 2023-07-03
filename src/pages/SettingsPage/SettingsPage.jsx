@@ -9,8 +9,6 @@ import EditIcon from "../../components/EditIcon";
 import CloseIcon from "../../components/CloseIcon";
 import { useNavigate } from "react-router-dom";
 import UploadButton from "../../components/UploadButton";
-import ButtonInstall from "../../components/ButtonInstall";
-import InstallButton from "../../components/AddToHomeScreenButton";
 
 export default function Settings() {
   const { token, user, setUser, backendURL } = useContext(AuthContext);
@@ -421,8 +419,6 @@ export default function Settings() {
             </div>
           </dialog>
         </div>
-        <InstallButton />
-        <ButtonInstall />
         <div className="second_element">
           <Formik
             initialValues={initialSetupValues}
