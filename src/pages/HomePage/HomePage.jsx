@@ -321,12 +321,17 @@ export default function HomePage() {
               onClose={() => setShowPopup(false)}
               // closeButton={true}
               closeOnClick={true}
-              // offsetTop={-30}
+              // offsetBottom={100}
+              offset={35}
             >
-              <h3>Current location</h3>
-              {userPointObject ? <p>{userPointObject.name}</p> : null}
-              {userPointObject ? <p>{userPointObject.address}</p> : null}
-              <button onClick={bookmarkCurrentLocation}>Bookmark Point</button>
+              <div className="popup_inside">
+                <h3>Current location</h3>
+                {userPointObject ? <p>{userPointObject.name}</p> : null}
+                {userPointObject ? <p>{userPointObject.address}</p> : null}
+                <button onClick={bookmarkCurrentLocation}>
+                  Add to Favorite
+                </button>
+              </div>
             </Popup>
           )}
           <Marker
