@@ -230,28 +230,28 @@ export default function HomePage() {
     [recommendations]
   );
 
-  const userFavoritesMarkers = useMemo(
-    () =>
-      user?.favorites?.length
-        ? user.favorites.map((marker) => (
-            <Marker
-              className="recommendation-marker"
-              key={marker.address + "-favorites"}
-              longitude={marker.coords[0]}
-              latitude={marker.coords[1]}
-              anchor="bottom"
-              // offset={[-5, -15]}
-              onClick={(e) => {
-                e.originalEvent.stopPropagation();
-                setRecommendationPopup({ ...marker, bookmark: true });
-              }}
-            >
-              <MapMarker fill={"#13c397"} />
-            </Marker>
-          ))
-        : null,
-    [user]
-  );
+  // const userFavoritesMarkers = useMemo(
+  //   () =>
+  //     user?.favorites?.length
+  //       ? user.favorites.map((marker) => (
+  //           <Marker
+  //             className="recommendation-marker"
+  //             key={marker.address + "-favorites"}
+  //             longitude={marker.coords[0]}
+  //             latitude={marker.coords[1]}
+  //             anchor="bottom"
+  //             // offset={[-5, -15]}
+  //             onClick={(e) => {
+  //               e.originalEvent.stopPropagation();
+  //               setRecommendationPopup({ ...marker, bookmark: true });
+  //             }}
+  //           >
+  //             <MapMarker fill={"#13c397"} />
+  //           </Marker>
+  //         ))
+  //       : null,
+  //   [user]
+  // );
   // console.log(recommendationPopup);
   const directionsPointMarkers = useMemo(
     () =>
