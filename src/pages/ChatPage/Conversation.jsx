@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import DeleteIcon from "../../components/DeleteIcon";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -11,6 +12,7 @@ export default function Conversation({
   receiveMessage,
   onlineUsers,
 }) {
+  const navigate = useNavigate()
   const { backendURL } = useContext(AuthContext);
   const [userData, setUserData] = useState([]); // This is who we send the messages to
   const [multipleUsers, setMultipleUsers] = useState([]);
@@ -46,7 +48,7 @@ export default function Conversation({
     const filteredMembers = data.members.filter(
       (member) => member !== currentUserId
     );
-    // console.log("this is chat as data", data)
+    // console.log("this is current chat passed down from chat component", data._id)
     // console.log("this is filtered members", filteredMembers)
 
     const getUserData = async () => {
@@ -79,6 +81,25 @@ export default function Conversation({
     //   }
   }, [data]);
 
+  const deleteChat = async (e) => {
+    try {
+      const response = await fetch(`http://localhost:8080/`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          _id: data._id
+        }),
+      });
+      console.log("response", response)
+      const deletedChat = await response.json();
+      console.log("this is the chat being deleted",deletedChat)
+      console.log("this is the chatId I'm sending back", data._id)
+    } catch (error) {
+      console.log(error);
+    }
+    navigate("/")
+  };
+
   return (
     <>
       <div className="groupchat">
@@ -91,7 +112,7 @@ export default function Conversation({
             {displayOnline}
           </div>
         </div>
-        <button className="groupchat-graphic">
+        <button className="groupchat-graphic" onClick={deleteChat}>
           <DeleteIcon />
         </button>
       </div>

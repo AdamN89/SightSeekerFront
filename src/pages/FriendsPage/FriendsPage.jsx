@@ -19,7 +19,7 @@ export default function FriendsPage() {
   const modalRef = useRef(null);
   const searchInputRef = useRef(null);
   const navigate = useNavigate();
-  const { closeMenu, closeTopMenu, setCurrentChat } = useContext(DataContext);
+  const { closeMenu, closeTopMenu, setCurrentChat, chatFlag, setChatFlag } = useContext(DataContext);
   const friendsRef = useRef(null);
 
   const handelUserSearch = (e) => {

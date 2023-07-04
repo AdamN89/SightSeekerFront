@@ -153,7 +153,7 @@ export default function ChatBox() {
         },
         body: JSON.stringify(message),
       });
-      console.log(response);
+      // console.log(response);
       const data = await response.json();
       setMessages([...messages, data]);
       setNewMessage("");
@@ -163,7 +163,7 @@ export default function ChatBox() {
 
     // send messages to socket server
     const receiverId = filteredMembers;
-    console.log("receiverId", receiverId);
+    // console.log("receiverId", receiverId);
     setSendMessage({ ...message, receiverId });
   };
 

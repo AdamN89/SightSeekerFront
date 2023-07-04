@@ -18,7 +18,7 @@ export default function Chat() {
     chats,
     setChats,
     onlineUsers,
-    setOnlineUsers,
+    setOnlineUsers
   } = useContext(DataContext);
 
   useEffect(() => {
@@ -32,6 +32,7 @@ export default function Chat() {
       }
     };
     if (user) getChats();
+
   }, [user]);
 
   const checkOnlineStatus = (chat) => {
