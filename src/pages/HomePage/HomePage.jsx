@@ -14,6 +14,7 @@ import "./HomePage.css";
 import TopMenu from "../../components/TopMenu/TopMenu";
 import Menu from "../../components/Menu";
 import MapMarker from "../../components/MapMarker";
+import PlanTravel from "../TravelPage/PlanTravel";
 import MapContent from "../../components/Map/MapContent";
 
 const mapStyle = "mapbox://styles/stephanullmann/clj7lajvj005t01que278452b";
@@ -327,7 +328,7 @@ export default function HomePage() {
   // console.log(userPointObject);
   // console.log(user);
   return (
-    <div className="container map-container">
+    <div className="map-container">
       <TopMenu />
       <MapContent
         viewState={viewState}
