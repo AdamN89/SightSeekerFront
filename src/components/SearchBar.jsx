@@ -3,9 +3,9 @@ import { useEffect, useState, useRef, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { MapContext } from "../context/MapContext";
 
-export default function SearchBar({ getUUID, viewState, userCoords }) {
+export default function SearchBar({ viewState, userCoords }) {
   const { user } = useContext(AuthContext);
-  const { retrieveByAddress } = useContext(MapContext);
+  const { retrieveByAddress, getUUID } = useContext(MapContext);
   const [sessionUUID, setSessionUUID] = useState("");
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);

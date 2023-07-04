@@ -6,7 +6,7 @@ export default function ButtonInstall() {
   const buttonRef = useRef(null);
   const [prompt, promptToInstall, isAppInstalled] = useAddToHomescreenPrompt();
 
-  console.log("isAppInstalled:", isAppInstalled);
+  // console.log("isAppInstalled:", isAppInstalled);
 
   function mouseMoveEvent(e) {
     const { x, y } = buttonRef.current.getBoundingClientRect();

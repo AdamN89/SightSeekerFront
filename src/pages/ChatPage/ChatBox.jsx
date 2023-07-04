@@ -75,7 +75,7 @@ export default function ChatBox() {
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/user/chatmembers`, {
+        const response = await fetch(`${backendURL}/user/chatmembers`, {
           headers: {
             "Content-type": "application/json",
           },
@@ -121,10 +121,8 @@ export default function ChatBox() {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:8080/message/${currentChat._id}`
-        );
-        const data = await response.json();
+        const response = await fetch(`${backendURL}/message/${currentChat._id}`)
+        const data = await response.json()
         // console.log("fetched messages", data)
         setMessages(data);
       } catch (error) {
@@ -139,7 +137,7 @@ export default function ChatBox() {
   };
 
   const handleSend = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     const message = {
       chatId: currentChat._id,
       senderId: currentUserId,
@@ -148,14 +146,14 @@ export default function ChatBox() {
 
     // sending to DB
     try {
-      const response = await fetch(`http://localhost:8080/message/`, {
+      const response = await fetch(`${backendURL}/message/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(message),
       });
-      console.log(response);
+      // console.log(response);
       const data = await response.json();
       setMessages([...messages, data]);
       setNewMessage("");
@@ -165,7 +163,7 @@ export default function ChatBox() {
 
     // send messages to socket server
     const receiverId = filteredMembers;
-    console.log("receiverId", receiverId);
+    // console.log("receiverId", receiverId);
     setSendMessage({ ...message, receiverId });
   };
 
@@ -252,6 +250,7 @@ export default function ChatBox() {
                 borderRadius="20px 0px 0px 20px"
                 value={newMessage}
                 onChange={handleChange}
+                onEnter={handleSend}
               />
               <div className="send-button button" onClick={handleSend}>
                 Send
