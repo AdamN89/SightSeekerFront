@@ -17,7 +17,7 @@ import TravelsPage from "./pages/TravelPage/TravelsPage";
 import ChatPage from "./pages/ChatPage/ChatPage";
 import CreateTravelPlan from "./pages/TravelPage/CreateTravelPlan";
 import AddFavorite from "./pages/FavoritePage/AddFavorite";
-import Snake from "./components/SnakeGame/SnakeGame";
+import Snake from "./components/SnakeGame/snake";
 import ErrorPage from "./components/Error/ErrorPage";
 
 function App() {

@@ -456,20 +456,22 @@ export default function Settings() {
                 <div>
                   <div className="settings_page_privacy">
                     <h2 className="title">Privacy</h2>
-                    <h3>Can be found by</h3>
-                    <div className="settings_page_radio">
-                      <label>
-                        <Field type="radio" name="foundBy" value="all" />
-                        All
-                      </label>
-                      <label>
-                        <Field type="radio" name="foundBy" value="friends" />
-                        Friends
-                      </label>
-                      <label>
-                        <Field type="radio" name="foundBy" value="none" />
-                        None
-                      </label>
+                    <div className="settings_page_privacy_row">
+                      <h3>Can be found by</h3>
+                      <div className="settings_page_radio">
+                        <label>
+                          All
+                          <Field type="radio" name="foundBy" value="all" />
+                        </label>
+                        <label>
+                          Friends
+                          <Field type="radio" name="foundBy" value="friends" />
+                        </label>
+                        <label>
+                          None
+                          <Field type="radio" name="foundBy" value="none" />
+                        </label>
+                      </div>
                     </div>
                   </div>
                   <div className="settings_page_toggle">
