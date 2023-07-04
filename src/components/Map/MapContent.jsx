@@ -11,24 +11,7 @@ import { MapContext } from "../../context/MapContext";
 // import "mapbox-gl/dist/mapbox-gl.css";
 import { useEffect, useState, useRef, useContext, useMemo } from "react";
 import MapMarker from "../MapMarker";
-
-const mapStyle = "mapbox://styles/stephanullmann/clj7lajvj005t01que278452b";
-const navigationPreference = "driving";
-const areAlternativeRoutes = "false";
-const markerColors = [
-  "#895392",
-  "#02b3b4",
-  "#741cb5",
-  "#0c3e5a",
-  "#0b3e3a",
-  "#00a299",
-  "#0b4e4a",
-  "#92278f",
-  "#662d91",
-  "#00b394",
-  "#743478",
-  "#841cb5",
-];
+import { ThemeContext } from "../../context/ThemeContext";
 
 export default function MapContent({
   viewState,
@@ -39,8 +22,28 @@ export default function MapContent({
   setParentPoints = null,
 }) {
   const { user } = useContext(AuthContext);
+  const { lightMode } = useContext(ThemeContext);
   const { markers, retrieveByCoords, bookmarkPoint } = useContext(MapContext);
   const [userPointObject, setUserPointObject] = useState(null);
+  const mapStyle = lightMode
+    ? "mapbox://styles/stephanullmann/clj7lajvj005t01que278452b"
+    : "mapbox://styles/stephanullmann/cljnybgvq00ii01pqglfgat0a";
+  const navigationPreference = "driving";
+  const areAlternativeRoutes = "false";
+  const markerColors = [
+    "#895392",
+    "#02b3b4",
+    "#741cb5",
+    "#0c3e5a",
+    "#0b3e3a",
+    "#00a299",
+    "#0b4e4a",
+    "#92278f",
+    "#662d91",
+    "#00b394",
+    "#743478",
+    "#841cb5",
+  ];
   // const [userCoords, setUserCoords] = useState({});
   // const [viewState, setViewState] = useState({
   //   longitude: 13.540060456464587,
@@ -153,11 +156,7 @@ export default function MapContent({
                     setPopupInfo(marker);
                   }}
                 >
-                  <img
-                    className="markers-colored"
-                    src="./assets/marker.png"
-                    alt="marker"
-                  />
+                  <MapMarker fill={"#13c397"} />
                 </Marker>
               </>
             ) : null
@@ -345,9 +344,7 @@ export default function MapContent({
               {userPointObject ? <p>{userPointObject.name}</p> : null}
               {userPointObject ? <p>{userPointObject.address}</p> : null}
               <div className="button-wrapper">
-                <button onClick={bookmarkCurrentLocation}>
-                  Add to Favorite
-                </button>
+                <button onClick={bookmarkCurrentLocation}>Bookmark</button>
               </div>
             </div>
           </Popup>
@@ -362,7 +359,11 @@ export default function MapContent({
             setShowPopup((prev) => !prev);
           }}
         >
-          <img src="./assets/marker.png" alt="marker" />
+          <img
+            src="./assets/marker.png"
+            alt="marker"
+            className={lightMode ? null : "mapboxgl-ctrl-icon"}
+          />
         </Marker>
         {clickedMapPoint && (
           <Marker

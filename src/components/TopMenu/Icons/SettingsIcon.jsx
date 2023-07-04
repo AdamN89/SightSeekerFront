@@ -1,4 +1,8 @@
+import { useContext } from "react";
+import { ThemeContext } from "../../../context/ThemeContext";
+
 export default function SettingsIcon() {
+  const { lightMode } = useContext(ThemeContext);
   return (
     <>
       <svg
@@ -21,8 +25,8 @@ export default function SettingsIcon() {
             y2="51.1976"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stopColor="#662D91" />
-            <stop offset="1" stopColor="#92278F" />
+            <stop stopColor={lightMode ? "#662D91" : "#8a4abe"} />
+            <stop offset="1" stopColor={lightMode ? "#92278F" : "#b775b5"} />
           </linearGradient>
         </defs>
       </svg>

@@ -58,7 +58,7 @@
   width: 25px;
   height: 25px;
   font-size: 25px;
-  color: var(--txt);
+  color: #fff;
   transition: all 0.3s ease;
   border-left: 2px solid rgba(255, 255, 255, 0.5);
   border-bottom: 2px solid rgba(255, 255, 255, 0.5);
@@ -72,6 +72,7 @@
 .mapboxgl-popup-content {
   opacity: 0;
   background-image: var(--title);
+  color: #fff;
   font: inherit;
   padding: 10px 25px 10px 10px;
   border-radius: 10px;
@@ -159,15 +160,15 @@
   border-radius: 50% !important;
   height: 40px;
   width: 40px;
-  background-color: var(--dark_green);
-  border: 2px solid var(--light_green) !important;
+  background-color: var(--icon_dark_green);
+  border: 2px solid var(--icon_light_green) !important;
   transition: all 0.3s ease;
 }
 
 .mapboxgl-ctrl-group button:hover,
 .add_favorite_icon_btn:hover {
-  background-color: var(--dark_purple) !important;
-  border: 2px solid var(--light_purple) !important;
+  background-color: var(--icon_dark_purple) !important;
+  border: 2px solid var(--icon_light_purple) !important;
   transition: all 0.3s ease;
 }
 

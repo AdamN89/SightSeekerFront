@@ -26,12 +26,12 @@
 }
 
 .chat_page button svg {
-  fill: var(--dark_green);
+  fill: var(--icon_dark_green);
   transition: all 0.3s ease;
 }
 
 .chat_page button:hover svg {
-  fill: var(--light_green);
+  fill: var(--icon_light_green);
 }
 
 .Chat {
