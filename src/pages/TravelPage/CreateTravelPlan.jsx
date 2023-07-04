@@ -9,7 +9,6 @@ import { AuthContext } from "../../context/AuthContext";
 export default function CreateTravelPlan() {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
-
   const [userCoords, setUserCoords] = useState({});
   const [viewState, setViewState] = useState({
     longitude: 13.540060456464587,

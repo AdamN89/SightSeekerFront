@@ -78,7 +78,6 @@ export default function Settings() {
         if (response.ok) {
           const responseData = await response.json();
           setUser(responseData.data);
-          console.log(responseData);
         } else {
           console.log("Error");
         }

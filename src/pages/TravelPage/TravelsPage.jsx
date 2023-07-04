@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { DataContext } from "../../context/DataContext";
 import AuthorIcon from "../../components/AuthorIcon";
 import { AuthContext } from "../../context/AuthContext";
+import EditIcon from "../../components/EditIcon";
 
 export default function TravelPage() {
   const { closeMenu, closeTopMenu } = useContext(DataContext);
@@ -14,6 +15,15 @@ export default function TravelPage() {
   const trevelRef = useRef(null);
   const navigate = useNavigate();
   // console.log(user)
+
+  const openTravelplan = (plan) => {
+    //navigate(`/travelplan/open/${plan._id}`)
+    console.log("plan")
+  }
+
+  const handleEditTravelplan = (e, plan) => {
+    navigate(`/travelplan/edit/${plan._id}`)
+  }
 
   return {
     trevelRef,
@@ -47,9 +57,11 @@ export default function TravelPage() {
               {user?.travelPlans?.map((plan)=>{
               return(
               <div className="travel_plans">
-                <span>{plan.name}</span>
+                <span onClick={() => openTravelplan(plan)}>{plan.name}</span>
+                <button onClick={(e) => handleEditTravelplan(e, plan)}>
+                  <EditIcon />
+                </button>
               </div>)
-
               })}
             </div>
             {/* end of content of navigation page */}
