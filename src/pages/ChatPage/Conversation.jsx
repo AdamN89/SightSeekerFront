@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import DeleteIcon from "../../components/DeleteIcon";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Conversation({
   data,
@@ -10,6 +11,7 @@ export default function Conversation({
   receiveMessage,
   onlineUsers,
 }) {
+  const { backendURL } = useContext(AuthContext);
   const [userData, setUserData] = useState([]); // This is who we send the messages to
   const [multipleUsers, setMultipleUsers] = useState([]);
 
@@ -49,7 +51,7 @@ export default function Conversation({
 
     const getUserData = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/user/chatmembers`, {
+        const response = await fetch(`${backendURL}/user/chatmembers`, {
           headers: {
             "Content-type": "application/json",
           },
