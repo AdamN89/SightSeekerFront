@@ -13,7 +13,7 @@ export default function TravelPage() {
   const { user } = useContext(AuthContext);
   const trevelRef = useRef(null);
   const navigate = useNavigate();
-  // console.log(user)
+  console.log(user);
 
   return {
     trevelRef,
@@ -44,12 +44,15 @@ export default function TravelPage() {
                 func={() => navigate("/createtravelplan")}
                 key="createtravelplan"
               />
-              {user?.travelPlans?.map((plan)=>{
-              return(
-              <div className="travel_plans">
-                <span>{plan.name}</span>
-              </div>)
-
+              {user?.travelPlans?.map((plan) => {
+                return (
+                  <div
+                    className="travel_plans"
+                    onClick={() => navigate(`/plantravel/${plan._id}`)}
+                  >
+                    <span>{plan.name}</span>
+                  </div>
+                );
               })}
             </div>
             {/* end of content of navigation page */}

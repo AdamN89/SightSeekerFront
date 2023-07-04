@@ -35,6 +35,8 @@ export default function MapContent({
   setViewState,
   userCoords,
   parent = "home",
+  customPointObjs = null,
+  setParentPoints = null,
 }) {
   const { user } = useContext(AuthContext);
   const { markers, retrieveByCoords, bookmarkPoint } = useContext(MapContext);
@@ -239,23 +241,38 @@ export default function MapContent({
   );
 
   const addToRoute = (pointObj, isUserPoint = false) => {
-    // console.log("adding to route", pointObj, isUserPoint);
+    console.log("adding to route", pointObj, isUserPoint);
     if (!pointObj) return;
     if (isUserPoint) setDirectionsPoints((prev) => [pointObj, ...prev]);
     else setDirectionsPoints((prev) => [...prev, pointObj]);
+    if (setParentPoints) setParentPoints((prev) => [...prev, pointObj]);
   };
 
   const removeFromRoute = (pointObj) => {
     setDirectionsPoints((prev) =>
       prev.filter((point) => point.address !== pointObj.address)
     );
+    if (setParentPoints)
+      setParentPoints((prev) =>
+        prev.filter((point) => point.address !== pointObj.address)
+      );
   };
+
+  console.log(directionsPoints);
+  useEffect(() => {
+    console.log("useEffect runs - customPointObjs: ", customPointObjs);
+    if (customPointObjs)
+      customPointObjs.forEach((pointObj) => {
+        console.log("adding preset points: ");
+        addToRoute(pointObj);
+      });
+  }, [customPointObjs]);
 
   const getUserPointObject = async () => {
     const coordString = [userCoords.longitude, userCoords.latitude].join(",");
     const pointObj = await retrieveByCoords(coordString);
     setUserPointObject(pointObj);
-    addToRoute(pointObj, true);
+    if (parent === "home") addToRoute(pointObj, true);
   };
 
   useEffect(() => {
