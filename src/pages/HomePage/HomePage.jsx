@@ -370,7 +370,6 @@ export default function HomePage() {
   return (
     <div className="map-container">
       <TopMenu />
-      <PlanTravel />
       {userCoords.latitude && userCoords.longitude && (
         <Map
           {...viewState}
