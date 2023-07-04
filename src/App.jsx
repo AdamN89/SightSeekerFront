@@ -16,10 +16,11 @@ import Loader from "./components/Loader/Loader";
 import TravelsPage from "./pages/TravelPage/TravelsPage";
 import ChatPage from "./pages/ChatPage/ChatPage";
 import CreateTravelPlan from "./pages/TravelPage/CreateTravelPlan";
-import AddFavorite from "./pages/FavoritePage/AddFavorite";
+import AddFavorite from "./pages/FavoritePage/PoiPreference";
 import Snake from "./components/SnakeGame/snake";
 import ErrorPage from "./components/Error/ErrorPage";
 import PlanTravel from "./pages/TravelPage/PlanTravel";
+import EditBookmark from "./pages/FavoritePage/EditBookmark";
 
 function App() {
   // const token = localStorage.getItem("token")
@@ -88,6 +89,7 @@ function App() {
         />
         <Route path="/snake" element={<Snake />} />
         <Route path="*" element={<ErrorPage />} />
+        <Route path="/test" element={<EditBookmark />} />
       </Routes>
     </div>
   );

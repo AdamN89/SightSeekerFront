@@ -1,8 +1,9 @@
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import CloseIcon from "../../components/CloseIcon";
 import Button from "../../components/Button";
+import ButtonDelete from "../../components/ButtonDelete";
 
-export default function AddFavorite() {
+export default function EditBookmark() {
   const navigate = useNavigate();
   return (
     <div className="container add_favorite">
@@ -12,13 +13,15 @@ export default function AddFavorite() {
       >
         <CloseIcon />
       </button>
-      <h1 className="title">Add favorite</h1>
+      <h1 className="title">Edit bookmark</h1>
       <div className="first_element">
         <div className="add_favorite_map"></div>
-        <form className="add_favorite_form">
-          <input type="text" placeholder="favorite name" />
-        </form>
-        <Button txt={"Create Favorite"} func={""} key="createfavorite" />
+        <Button txt={"Edit name"} func={null} key="renamebookmark" />
+        <ButtonDelete
+          txt={"Remove bookmark"}
+          func={null}
+          key="removebookmark"
+        />
       </div>
     </div>
   );
