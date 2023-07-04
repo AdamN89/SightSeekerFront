@@ -1,11 +1,10 @@
 import * as React from "react";
 
-// Taken from: https://gist.github.com/rikukissa/cb291a4a82caa670d2e0547c520eae53
 export function useAddToHomescreenPrompt() {
-  const [prompt, setState] = React.useState(null);
+  const [prompt, setPrompt] = React.useState(null);
+  const [isAppInstalled, setIsAppInstalled] = React.useState(false);
 
   const promptToInstall = () => {
-    console.log(prompt);
     if (prompt) {
       return prompt.prompt();
     }
@@ -17,17 +16,46 @@ export function useAddToHomescreenPrompt() {
   };
 
   React.useEffect(() => {
-    const ready = (e) => {
-      e.preventDefault();
-      setState(e);
+    const ready = (event) => {
+      event.preventDefault();
+      setPrompt(event);
+
+      console.log("beforeinstallprompt event:", event);
+
+      // Check the installation status after the beforeinstallprompt event fires
+      const checkInstallationStatus = () => {
+        console.log("Check installation status");
+
+        if (
+          window.matchMedia("(display-mode: standalone)").matches ||
+          window.navigator.standalone === true
+        ) {
+          console.log("PWA is already installed");
+          setIsAppInstalled(true);
+        } else {
+          console.log("PWA is not installed");
+          setIsAppInstalled(false);
+        }
+      };
+
+      checkInstallationStatus();
     };
 
+    const appInstalled = () => {
+      console.log("App installed");
+      setIsAppInstalled(true);
+    };
+
+    console.log("IS IT INSTALLED", isAppInstalled);
+
     window.addEventListener("beforeinstallprompt", ready);
+    window.addEventListener("appinstalled", appInstalled);
 
     return () => {
       window.removeEventListener("beforeinstallprompt", ready);
+      window.removeEventListener("appinstalled", appInstalled);
     };
   }, []);
 
-  return [prompt, promptToInstall];
+  return [prompt, promptToInstall, isAppInstalled, setIsAppInstalled];
 }
