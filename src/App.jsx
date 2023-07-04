@@ -21,6 +21,7 @@ import Snake from "./components/SnakeGame/snake";
 import ErrorPage from "./components/Error/ErrorPage";
 import PlanTravel from "./pages/TravelPage/PlanTravel";
 import FeatureProgress from "./pages/FeaturesPage/FeatureProgress";
+import TravelPageEdit from "./pages/TravelPage/TravelPageEdit";
 
 function App() {
   // const token = localStorage.getItem("token")
@@ -77,7 +78,7 @@ function App() {
         />
         <Route
           path="/travelplan/edit/:_id"
-          element={token ? <TravelsPageEdit /> : <Navigate to="/" />}
+          element={token ? <TravelPageEdit /> : <Navigate to="/" />}
         />
         <Route
           path="/createtravelplan"
