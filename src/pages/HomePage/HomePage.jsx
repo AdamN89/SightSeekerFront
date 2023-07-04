@@ -1,4 +1,10 @@
-import Map, { Marker, Popup, NavigationControl } from "react-map-gl";
+import Map, {
+  Marker,
+  Popup,
+  NavigationControl,
+  Layer,
+  Source,
+} from "react-map-gl";
 import { v4 as uuidv4 } from "uuid";
 import { useEffect, useState, useRef, useContext, useMemo } from "react";
 import { AuthContext } from "../../context/AuthContext";
@@ -12,7 +18,7 @@ import AddFavoriteIcon from "../../components/AddFavoriteIcon";
 import MapMarker from "../../components/MapMarker";
 
 const mapStyle = "mapbox://styles/stephanullmann/clj7lajvj005t01que278452b";
-
+const navigationPreference = "driving";
 const markerColors = [
   "#895392",
   "#02b3b4",
@@ -46,6 +52,7 @@ export default function HomePage() {
   const [markerColorsState, setMarkerColorsState] = useState({});
   const [clickedMapPoint, setClickedMapPoint] = useState(null);
   const [directionsPoints, setDirectionsPoints] = useState([]);
+  const [directionsData, setDirectionsData] = useState(null);
 
   const [error, setError] = useState(null);
 
@@ -55,6 +62,7 @@ export default function HomePage() {
   };
 
   useEffect(() => {
+    setDirectionsPoints([]);
     if (!user) return;
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -164,9 +172,12 @@ export default function HomePage() {
     setViewState(e.viewState);
   };
 
+  console.log(user)
   // &types=poi%2Caddress
   const handleMapClick = async (e) => {
+    // console.log(e.lngLat);
     const poiObj = await retrieveByCoords([e.lngLat.lng, e.lngLat.lat]);
+    setRecommendationPopup(poiObj);
     setClickedMapPoint(poiObj);
   };
 
@@ -179,6 +190,7 @@ export default function HomePage() {
                 key={marker.address + "-selected"}
                 longitude={marker.coords[0]}
                 latitude={marker.coords[1]}
+                anchor="bottom"
                 onClick={(e) => {
                   e.originalEvent.stopPropagation();
                   setPopupInfo(marker);
@@ -195,7 +207,6 @@ export default function HomePage() {
         : null,
     [markers]
   );
-
   const recommendationMarkers = useMemo(
     () =>
       recommendations?.length
@@ -205,8 +216,8 @@ export default function HomePage() {
               key={marker.address + "-recommendations"}
               longitude={marker.coords[0]}
               latitude={marker.coords[1]}
-              // anchor="top"
-              offset={[-5, -15]}
+              anchor="bottom"
+              // offset={[-5, -15]}
               onClick={(e) => {
                 e.originalEvent.stopPropagation();
                 setRecommendationPopup(marker);
@@ -219,34 +230,57 @@ export default function HomePage() {
     [recommendations]
   );
 
-  const userFavoritesMarkers = useMemo(
+  // const userFavoritesMarkers = useMemo(
+  //   () =>
+  //     user?.favorites?.length
+  //       ? user.favorites.map((marker) => (
+  //           <Marker
+  //             className="recommendation-marker"
+  //             key={marker.address + "-favorites"}
+  //             longitude={marker.coords[0]}
+  //             latitude={marker.coords[1]}
+  //             anchor="bottom"
+  //             // offset={[-5, -15]}
+  //             onClick={(e) => {
+  //               e.originalEvent.stopPropagation();
+  //               setRecommendationPopup({ ...marker, bookmark: true });
+  //             }}
+  //           >
+  //             <MapMarker fill={"#13c397"} />
+  //           </Marker>
+  //         ))
+  //       : null,
+  //   [user]
+  // );
+  // console.log(recommendationPopup);
+  const directionsPointMarkers = useMemo(
     () =>
-      user?.favorites?.length
-        ? user.favorites.map((marker) => (
+      directionsPoints.length > 1
+        ? directionsPoints.map((marker) => (
             <Marker
               className="recommendation-marker"
-              key={marker.address + "-favorites"}
+              key={marker.address + "-directions"}
               longitude={marker.coords[0]}
               latitude={marker.coords[1]}
-              // anchor="top"
-              offset={[-5, -15]}
+              anchor="bottom"
+              // offset={[-5, -15]}
               onClick={(e) => {
                 e.originalEvent.stopPropagation();
-                setRecommendationPopup({ ...marker, bookmark: true });
+                setRecommendationPopup({ ...marker });
               }}
             >
-              <MapMarker fill={"#13c397"} />
+              <MapMarker fill={"#33c397"} />
             </Marker>
           ))
         : null,
-    [user]
+    [directionsPoints]
   );
 
   const bookmarkPoint = async (pointObj) => {
     // console.log(pointObj);
     try {
-      const res = await fetch(`${backendURL}/user/add-favorite`, {
-        method: "PUT",
+      const res = await fetch(`${backendURL}/point`, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -261,10 +295,16 @@ export default function HomePage() {
   };
 
   const addToRoute = (pointObj, isUserPoint = false) => {
-    console.log("adding to route", pointObj);
-    if (isUserPoint)
-      setDirectionsPoints((prev) => [...pointObj.coords, ...prev]);
-    else setDirectionsPoints((prev) => [...prev, pointObj.coords]);
+    console.log("adding to route", pointObj, isUserPoint);
+    if (!pointObj) return;
+    if (isUserPoint) setDirectionsPoints((prev) => [pointObj, ...prev]);
+    else setDirectionsPoints((prev) => [...prev, pointObj]);
+  };
+
+  const removeFromRoute = (pointObj) => {
+    setDirectionsPoints((prev) =>
+      prev.filter((point) => point.address !== pointObj.address)
+    );
   };
 
   const getUserPointObject = async () => {
@@ -288,15 +328,25 @@ export default function HomePage() {
   // fetch navigation
 
   const fetchDirections = async (directionsPoints) => {
-    const coordsStr = directionsPoints.flat().join(",");
-    console.log(coordsStr);
+    console.log("directions fetch run: ");
+    const coordsStr = directionsPoints
+      .map((point) => point.coords.join(","))
+      .join(";");
+    // console.log(coordsStr);
     try {
+      const res = await fetch(
+        `https://api.mapbox.com/directions/v5/mapbox/${navigationPreference}/${coordsStr}?alternatives=true&annotations=distance%2Cduration%2Cspeed&banner_instructions=true&geometries=geojson&language=en&overview=full&roundabout_exits=true&steps=true&access_token=${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}`
+      );
+      const data = await res.json();
+      setDirectionsData(data);
+      console.log(data);
     } catch (error) {
       setError(error);
     }
   };
 
   useEffect(() => {
+    if (directionsPoints.length === 1) setDirectionsData(null);
     if (directionsPoints.length > 1 && directionsPoints.length < 26)
       fetchDirections(directionsPoints);
   }, [directionsPoints]);
@@ -326,7 +376,6 @@ export default function HomePage() {
           onClick={handleMapClick}
         >
           <NavigationControl />
-          <AddFavoriteIcon />
           {showPopup && (
             <Popup
               latitude={userCoords.latitude}
@@ -352,7 +401,8 @@ export default function HomePage() {
           <Marker
             longitude={userCoords.longitude}
             latitude={userCoords.latitude}
-            offset={[-12, -32]}
+            anchor="bottom"
+            // offset={[-12, -32]}
             onClick={(e) => {
               e.originalEvent.stopPropagation();
               setShowPopup((prev) => !prev);
@@ -364,17 +414,20 @@ export default function HomePage() {
             <Marker
               longitude={clickedMapPoint.coords[0]}
               latitude={clickedMapPoint.coords[1]}
-              offset={[-12, -32]}
+              anchor="bottom"
+              // offset={[-12, -32]}
               onClick={(e) => {
                 e.originalEvent.stopPropagation();
                 setRecommendationPopup(clickedMapPoint);
               }}
             >
-              <img src="./assets/marker.png" alt="marker" />
+              <MapMarker fill={"#33c397"} />
             </Marker>
           )}
+
+          {/* Markers and Popups for selections from searchbar and user favorites */}
           {selectedMarkers}
-          {userFavoritesMarkers}
+          {/* {userFavoritesMarkers} */}
           {popupInfo && (
             <Popup
               longitude={popupInfo.coords[0]}
@@ -391,13 +444,23 @@ export default function HomePage() {
                   <button onClick={() => bookmarkPoint(popupInfo)}>
                     Bookmark Point
                   </button>
-                  <button onClick={() => addToRoute(popupInfo)}>
-                    Add to route
-                  </button>
+                  {directionsPoints.findIndex(
+                    (point) => point.address === popupInfo.address
+                  ) !== -1 ? (
+                    <button onClick={() => removeFromRoute(popupInfo)}>
+                      - route
+                    </button>
+                  ) : (
+                    <button onClick={() => addToRoute(popupInfo)}>
+                      + route
+                    </button>
+                  )}
                 </div>
               </div>
             </Popup>
           )}
+          {/* Marker and Popup for recommended points  and map clicked points*/}
+          {directionsPointMarkers}
           {recommendationMarkers}
           {recommendationPopup && (
             <Popup
@@ -418,12 +481,48 @@ export default function HomePage() {
                       Bookmark Point
                     </button>
                   )}
-                  <button onClick={() => addToRoute(popupInfo)}>
-                    Add to route
-                  </button>
+                  {directionsPoints.findIndex(
+                    (point) => point.address === recommendationPopup.address
+                  ) !== -1 ? (
+                    <button
+                      onClick={() => removeFromRoute(recommendationPopup)}
+                    >
+                      -- route
+                    </button>
+                  ) : (
+                    <button onClick={() => addToRoute(recommendationPopup)}>
+                      ++ route
+                    </button>
+                  )}
                 </div>
               </div>
             </Popup>
+          )}
+          {directionsData && (
+            <>
+              <Source
+                id="route"
+                type="geojson"
+                data={{
+                  type: "Feature",
+                  geometry: directionsData.routes[0].geometry,
+                }}
+              />
+              <Layer
+                id="route"
+                type="line"
+                source="route"
+                layout={{
+                  "line-join": "round",
+                  "line-cap": "round",
+                }}
+                paint={{
+                  "line-color": "#fff",
+                  "line-width": 5,
+                  "line-opacity": 0.75,
+                }}
+              />
+            </>
           )}
         </Map>
       )}

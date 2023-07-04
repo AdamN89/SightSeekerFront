@@ -25,7 +25,7 @@ export default function ErrorPage() {
       </span>
       <div className="error_page_choice">
         <Button txt={"back to exploring"} func={() => navigate("/")} />
-        <Button txt={"snake game"} func={() => navigate("/snake")} />
+        {/* <Button txt={"snake game"} func={() => navigate("/snake")} /> */}
       </div>
     </div>
   );

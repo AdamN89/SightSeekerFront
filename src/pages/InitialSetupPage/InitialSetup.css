@@ -96,8 +96,9 @@
 .initial_setup_radio {
   width: fit-content;
   display: flex;
-  justify-content: end;
-  gap: 20px;
+  flex-direction: column;
+  align-items: end;
+  gap: 10px;
 }
 
 .selectedAvatar {

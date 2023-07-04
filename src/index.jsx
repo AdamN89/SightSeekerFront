@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import AuthContextProvider from "./context/AuthContext";
 import DataContextProvider from "./context/DataContext";
 import MapContextProvider from "./context/MapContext";
+// import "mapbox-gl/dist/mapbox-gl.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
