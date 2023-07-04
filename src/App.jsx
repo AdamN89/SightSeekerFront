@@ -20,8 +20,7 @@ import AddFavorite from "./pages/FavoritePage/PoiPreference";
 import Snake from "./components/SnakeGame/snake";
 import ErrorPage from "./components/Error/ErrorPage";
 import PlanTravel from "./pages/TravelPage/PlanTravel";
-import EditBookmark from "./pages/FavoritePage/EditBookmark";
-import TravelsPageEdit from "./pages/TravelPage/TravelPageEdit";
+import FeatureProgress from "./pages/FeaturesPage/FeatureProgress";
 
 function App() {
   // const token = localStorage.getItem("token")
@@ -45,7 +44,7 @@ function App() {
         />
         <Route
           path="/features"
-          element={token ? <FeaturesPage /> : <Navigate to="/" />}
+          element={token ? <FeatureProgress /> : <Navigate to="/" />}
         />
         <Route
           path="/about"
@@ -94,7 +93,6 @@ function App() {
         />
         <Route path="/snake" element={<Snake />} />
         <Route path="*" element={<ErrorPage />} />
-        <Route path="/test" element={<EditBookmark />} />
       </Routes>
     </div>
   );
