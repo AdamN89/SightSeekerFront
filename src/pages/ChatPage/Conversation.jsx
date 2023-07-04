@@ -2,6 +2,8 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import DeleteIcon from "../../components/DeleteIcon";
 import { AuthContext } from "../../context/AuthContext";
+import { DataContext } from "../../context/DataContext";
+import EditIcon from "../../components/EditIcon";
 
 export default function Conversation({
   data,
@@ -14,8 +16,12 @@ export default function Conversation({
 }) {
   const navigate = useNavigate()
   const { backendURL } = useContext(AuthContext);
+  const [ chatName, setChatName ] = useState(data.chatName)
+  const [ newChatName, setNewChatName ] = useState()
   const [userData, setUserData] = useState([]); // This is who we send the messages to
   const [multipleUsers, setMultipleUsers] = useState([]);
+  // const [ chatName, setChatName ] = useState("My Group Chat")
+  const [ rename, setRename ] = useState(false)
 
   const displayOnline =
     multipleUsers.length > 1 ? (
@@ -48,7 +54,7 @@ export default function Conversation({
     const filteredMembers = data.members.filter(
       (member) => member !== currentUserId
     );
-    // console.log("this is current chat passed down from chat component", data._id)
+    console.log("this is current chat passed down from chat component", data)
     // console.log("this is filtered members", filteredMembers)
 
     const getUserData = async () => {
@@ -77,13 +83,11 @@ export default function Conversation({
       }
     };
     getUserData();
-    // if (Array.isArray(filteredMembers[0])? filteredMembers[0][0] : filteredMembers[0]){
-    //   }
   }, [data]);
 
   const deleteChat = async (e) => {
     try {
-      const response = await fetch(`http://localhost:8080/`, {
+      const response = await fetch(`${backendURL}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -99,12 +103,50 @@ export default function Conversation({
     }
     navigate("/")
   };
+  
+  const renameChat = async (event) => {
+    if (event.key === 'Enter') {
+      try {
+        const response = await fetch(`${backendURL}`,{
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            newChatName : newChatName,
+            _id: data._id
+          }),
+        });
+        console.log("update response", response)
+        const renamedChat = await response.json()
+        setChatName(renamedChat.chatName)
+        console.log("this is response json renamedChat", renamedChat)
+      } catch (error) {
+        console.log(error)
+      }
+     setRename(!rename)
+    }
+  };
+
+  const showInput = (e) => {
+    e.stopPropagation();
+    setRename(!rename)
+  }
+
+  const handleButtonClick = (event) => {
+    event.stopPropagation();
+  };
+
+  const handleChange = (e) => {
+    setNewChatName(e.target.value)
+    console.log(e.target.value)
+  };
+
+  const classname = rename ? "active-field" : "rename-field"
 
   return (
     <>
       <div className="groupchat">
         <div className="groupchat-content">
-          <div className="groupchat-name">My group chat</div>
+          <div className="groupchat-name">{chatName}</div>
           <div className="groupchat-members">
             {/* {multipleUsers.length > 1 ? (multipleUsers.map((user) => (
                 <div>{user._id}<span>{user._id === online?.userId ?  " - Online" : " - Offline"}</span></div>
@@ -112,8 +154,20 @@ export default function Conversation({
             {displayOnline}
           </div>
         </div>
-        <button className="groupchat-graphic" onClick={deleteChat}>
+        <button className="groupchat-graphic" onClick={handleButtonClick}>
+        <div onClick={showInput}>
+          <EditIcon />
+        </div>
+        <div onClick={deleteChat}>
           <DeleteIcon />
+        </div>
+          <input 
+            className={classname} 
+            type="text" 
+            value={newChatName}
+            onKeyDown={renameChat}
+            onChange={handleChange}
+            onClick={(e) => e.stopPropagation()} />
         </button>
       </div>
 
