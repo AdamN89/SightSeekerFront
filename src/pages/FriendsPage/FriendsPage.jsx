@@ -19,7 +19,8 @@ export default function FriendsPage() {
   const modalRef = useRef(null);
   const searchInputRef = useRef(null);
   const navigate = useNavigate();
-  const { closeMenu, closeTopMenu, setCurrentChat, chatFlag, setChatFlag } = useContext(DataContext);
+  const { closeMenu, closeTopMenu, setCurrentChat, chatFlag, setChatFlag } =
+    useContext(DataContext);
   const friendsRef = useRef(null);
 
   const handelUserSearch = (e) => {
@@ -56,7 +57,7 @@ export default function FriendsPage() {
   const createChat = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:8080/chat`, {
+      const response = await fetch(`${backendURL}/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -73,8 +73,12 @@ function App() {
           element={token ? <ReceivedInvitation /> : <Navigate to="/" />}
         />
         <Route
-          path="/travelplan"
+          path="/travelplan/open/:_id"
           element={token ? <TravelsPage /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/travelplan/edit/:_id"
+          element={token ? <TravelsPageEdit /> : <Navigate to="/" />}
         />
         <Route
           path="/createtravelplan"

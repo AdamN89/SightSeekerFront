@@ -12,7 +12,7 @@ export default function Conversation({
   receiveMessage,
   onlineUsers,
 }) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { backendURL } = useContext(AuthContext);
   const [userData, setUserData] = useState([]); // This is who we send the messages to
   const [multipleUsers, setMultipleUsers] = useState([]);
@@ -83,21 +83,21 @@ export default function Conversation({
 
   const deleteChat = async (e) => {
     try {
-      const response = await fetch(`http://localhost:8080/`, {
+      const response = await fetch(`${backendURL}/`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          _id: data._id
+          _id: data._id,
         }),
       });
-      console.log("response", response)
+      console.log("response", response);
       const deletedChat = await response.json();
-      console.log("this is the chat being deleted",deletedChat)
-      console.log("this is the chatId I'm sending back", data._id)
+      console.log("this is the chat being deleted", deletedChat);
+      console.log("this is the chatId I'm sending back", data._id);
     } catch (error) {
       console.log(error);
     }
-    navigate("/")
+    navigate("/");
   };
 
   return (

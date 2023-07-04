@@ -68,7 +68,7 @@ export default function Settings() {
       const formData = new FormData();
       formData.append("avatar", uploadedImgFile);
       try {
-        const response = await fetch("http://localhost:8080/user/avatar", {
+        const response = await fetch(`${backendURL}/user/avatar`, {
           method: "PUT",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -78,7 +78,6 @@ export default function Settings() {
         if (response.ok) {
           const responseData = await response.json();
           setUser(responseData.data);
-          console.log(responseData);
         } else {
           console.log("Error");
         }
@@ -87,17 +86,14 @@ export default function Settings() {
       }
     } else {
       try {
-        const response = await fetch(
-          "http://localhost:8080/user/default_avatar",
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({ avatar: theChosenOne }),
-          }
-        );
+        const response = await fetch(`${backendURL}/user/default_avatar`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ avatar: theChosenOne }),
+        });
         if (response.ok) {
           const responseData = await response.json();
           setUser(responseData.data);
@@ -113,7 +109,7 @@ export default function Settings() {
 
   const submitNewName = async () => {
     try {
-      const response = await fetch("http://localhost:8080/user/changeName", {
+      const response = await fetch(`${backendURL}/user/changeName`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -135,17 +131,14 @@ export default function Settings() {
 
   const submitNewPassword = async () => {
     try {
-      const response = await fetch(
-        "http://localhost:8080/user/changePassword",
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ password: typedPassword1 }),
-        }
-      );
+      const response = await fetch(`${backendURL}/user/changePassword`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ password: typedPassword1 }),
+      });
       if (response.ok) {
         const responseData = await response.json();
         setUser(responseData.data);
@@ -285,7 +278,7 @@ export default function Settings() {
 
   const deleteAccont = async () => {
     try {
-      const response = await fetch("http://localhost:8080/user/deleteUser", {
+      const response = await fetch(`${backendURL}/user/deleteUser`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
