@@ -16,7 +16,7 @@ export default function EditTravelPlan() {
   const [name, setName] = useState([]);
   const [startDate, setStartDate] = useState([]);
   const [endDate, setEndDate] = useState([]);
-  const { token, user } = useContext(AuthContext);
+  const { token, user, backendURL } = useContext(AuthContext);
   const { _id } = useParams();
 
   const handleAddMembers = (event) => {
@@ -40,23 +40,20 @@ export default function EditTravelPlan() {
 
   const handleSaveChanges = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:8080/travelplan/edit/${_id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            _id,
-            name,
-            startDate,
-            endDate,
-            members: selectedFriends,
-          }),
-        }
-      );
+      const response = await fetch(`${backendURL}/travelplan/edit/${_id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          _id,
+          name,
+          startDate,
+          endDate,
+          members: selectedFriends,
+        }),
+      });
       if (response.ok) {
         const data = await response.json();
         console.log(data);
@@ -70,7 +67,7 @@ export default function EditTravelPlan() {
 
   const getTravelplan = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/travelplan/${_id}`, {
+      const response = await fetch(`${backendURL}/travelplan/${_id}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
