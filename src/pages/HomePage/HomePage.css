@@ -112,7 +112,8 @@
 .mapboxgl-marker {
   /* position: relative; */
   width: 24px;
-  height: 32px;
+  height: 24px;
+  /* height: 32px; */
 }
 
 .mapboxgl-marker img {
