@@ -219,7 +219,8 @@ export default function FriendsPage() {
                   user?.friends.map((friend, index) =>
                     user?.friends.length > 0 &&
                     friend.accepted &&
-                    friend.user ? (
+                    friend.user &&
+                    friend?.user?.userName ? (
                       <div
                         className="friends__page-check-wrapper"
                         key={friend?.user?.userName + index}
