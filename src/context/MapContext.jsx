@@ -1,10 +1,19 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useRef, useContext } from "react";
+import { v4 as uuidv4 } from "uuid";
+import { AuthContext } from "./AuthContext";
 
 export const MapContext = createContext();
 
 export default function MapContextProvider({ children }) {
+  const { user, setUser, token, backendURL } = useContext(AuthContext);
   const [markers, setMarkers] = useState([]);
   const [error, setError] = useState(null);
+  const sessionUUID = useRef(null);
+
+  const getUUID = () => {
+    if (!sessionUUID.current) sessionUUID.current = uuidv4();
+    return sessionUUID.current;
+  };
 
   const addMarker = (name, address, coords) => {
     console.log({ name, coords });
@@ -69,18 +78,34 @@ export default function MapContextProvider({ children }) {
     }
   };
 
-  useEffect(() => {
-    console.log("markers: ", markers);
-  }, [markers]);
+  const bookmarkPoint = async (pointObj) => {
+    // console.log(pointObj);
+    try {
+      const res = await fetch(`${backendURL}/point`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(pointObj),
+      });
+      const data = await res.json();
+      setUser(data.data);
+    } catch (error) {
+      setError(error);
+    }
+  };
 
   return (
     <MapContext.Provider
       value={{
+        getUUID,
         markers,
         setMarkers,
         addMarker,
         retrieveByAddress,
         retrieveByCoords,
+        bookmarkPoint,
       }}
     >
       {children}
