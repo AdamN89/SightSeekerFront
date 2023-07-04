@@ -3,8 +3,11 @@ import { useNavigate } from "react-router";
 import CloseIcon from "../../components/CloseIcon";
 import Button from "../../components/Button";
 
+
+
 export default function CreateTravelPlan() {
   const navigate = useNavigate();
+
   return (
     <div className="container create_travel_plan">
       <button
