@@ -137,7 +137,7 @@ export default function ChatBox() {
   };
 
   const handleSend = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     const message = {
       chatId: currentChat._id,
       senderId: currentUserId,
@@ -250,8 +250,9 @@ export default function ChatBox() {
                 borderRadius="20px 0px 0px 20px"
                 value={newMessage}
                 onChange={handleChange}
+                onEnter={handleSend}
               />
-              <div className="send-button button" onSubmit={handleSend}>
+              <div className="send-button button" onClick={handleSend}>
                 Send
               </div>
             </div>
