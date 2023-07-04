@@ -66,8 +66,9 @@ export default function Chat() {
             </div>
             {/* start of content of navigation page */}
             <div className="navigation_wrapper_body_content">
-              {chats.map((chat) => (
+              {chats.map((chat, ind) => (
                 <div
+                  key={chat + user._id + ind}
                   onClick={() => {
                     setCurrentChat(chat);
                     navigate("/chat");

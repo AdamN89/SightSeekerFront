@@ -19,6 +19,7 @@ import MapMarker from "../../components/MapMarker";
 
 const mapStyle = "mapbox://styles/stephanullmann/clj7lajvj005t01que278452b";
 const navigationPreference = "driving";
+const areAlternativeRoutes = "false";
 const markerColors = [
   "#895392",
   "#02b3b4",
@@ -172,10 +173,11 @@ export default function HomePage() {
     setViewState(e.viewState);
   };
 
-  console.log(user)
+  // console.log(user);
   // &types=poi%2Caddress
   const handleMapClick = async (e) => {
     // console.log(e.lngLat);
+    if (popupInfo || recommendationPopup) return;
     const poiObj = await retrieveByCoords([e.lngLat.lng, e.lngLat.lat]);
     setRecommendationPopup(poiObj);
     setClickedMapPoint(poiObj);
@@ -184,94 +186,102 @@ export default function HomePage() {
   const selectedMarkers = useMemo(
     () =>
       markers?.length
-        ? markers.map((marker) => (
-            <>
-              <Marker
-                key={marker.address + "-selected"}
-                longitude={marker.coords[0]}
-                latitude={marker.coords[1]}
-                anchor="bottom"
-                onClick={(e) => {
-                  e.originalEvent.stopPropagation();
-                  setPopupInfo(marker);
-                }}
-              >
-                <img
-                  className="markers-colored"
-                  src="./assets/marker.png"
-                  alt="marker"
-                />
-              </Marker>
-            </>
-          ))
+        ? markers.map((marker) =>
+            marker.coords.length === 2 ? (
+              <>
+                <Marker
+                  key={marker.address + "-selected"}
+                  longitude={marker.coords[0]}
+                  latitude={marker.coords[1]}
+                  anchor="bottom"
+                  onClick={(e) => {
+                    e.originalEvent.stopPropagation();
+                    setPopupInfo(marker);
+                  }}
+                >
+                  <img
+                    className="markers-colored"
+                    src="./assets/marker.png"
+                    alt="marker"
+                  />
+                </Marker>
+              </>
+            ) : null
+          )
         : null,
     [markers]
   );
   const recommendationMarkers = useMemo(
     () =>
       recommendations?.length
-        ? recommendations.map((marker) => (
-            <Marker
-              className="recommendation-marker"
-              key={marker.address + "-recommendations"}
-              longitude={marker.coords[0]}
-              latitude={marker.coords[1]}
-              anchor="bottom"
-              // offset={[-5, -15]}
-              onClick={(e) => {
-                e.originalEvent.stopPropagation();
-                setRecommendationPopup(marker);
-              }}
-            >
-              <MapMarker fill={markerColorsState[marker.preference]} />
-            </Marker>
-          ))
+        ? recommendations.map((marker) =>
+            marker.coords.length === 2 ? (
+              <Marker
+                className="recommendation-marker"
+                key={marker.address + "-recommendations"}
+                longitude={marker.coords[0]}
+                latitude={marker.coords[1]}
+                anchor="bottom"
+                // offset={[-5, -15]}
+                onClick={(e) => {
+                  e.originalEvent.stopPropagation();
+                  setRecommendationPopup(marker);
+                }}
+              >
+                <MapMarker fill={markerColorsState[marker.preference]} />
+              </Marker>
+            ) : null
+          )
         : null,
     [recommendations]
   );
 
-  // const userFavoritesMarkers = useMemo(
-  //   () =>
-  //     user?.favorites?.length
-  //       ? user.favorites.map((marker) => (
-  //           <Marker
-  //             className="recommendation-marker"
-  //             key={marker.address + "-favorites"}
-  //             longitude={marker.coords[0]}
-  //             latitude={marker.coords[1]}
-  //             anchor="bottom"
-  //             // offset={[-5, -15]}
-  //             onClick={(e) => {
-  //               e.originalEvent.stopPropagation();
-  //               setRecommendationPopup({ ...marker, bookmark: true });
-  //             }}
-  //           >
-  //             <MapMarker fill={"#13c397"} />
-  //           </Marker>
-  //         ))
-  //       : null,
-  //   [user]
-  // );
+  const userFavoritesMarkers = useMemo(
+    () =>
+      user && user?.favorites?.length
+        ? user?.favorites.map((marker) =>
+            marker?.coords?.length === 2 ? (
+              <Marker
+                className="recommendation-marker"
+                key={marker.address + "-favorites"}
+                longitude={marker.coords[0]}
+                latitude={marker.coords[1]}
+                anchor="bottom"
+                // offset={[-5, -15]}
+                onClick={(e) => {
+                  e.originalEvent.stopPropagation();
+                  setRecommendationPopup({ ...marker, bookmark: true });
+                }}
+              >
+                <MapMarker fill={"#13c397"} />
+              </Marker>
+            ) : null
+          )
+        : null,
+    [user]
+  );
   // console.log(recommendationPopup);
   const directionsPointMarkers = useMemo(
     () =>
       directionsPoints.length > 1
-        ? directionsPoints.map((marker) => (
-            <Marker
-              className="recommendation-marker"
-              key={marker.address + "-directions"}
-              longitude={marker.coords[0]}
-              latitude={marker.coords[1]}
-              anchor="bottom"
-              // offset={[-5, -15]}
-              onClick={(e) => {
-                e.originalEvent.stopPropagation();
-                setRecommendationPopup({ ...marker });
-              }}
-            >
-              <MapMarker fill={"#33c397"} />
-            </Marker>
-          ))
+        ? directionsPoints.map((marker) =>
+            marker.coords.length === 2 ? (
+              <Marker
+                className="recommendation-marker"
+                key={marker.address + "-directions"}
+                longitude={marker.coords[0]}
+                latitude={marker.coords[1]}
+                anchor="bottom"
+                // offset={[-5, -15]}
+                onClick={(e) => {
+                  e.originalEvent.stopPropagation();
+                  setRecommendationPopup({ ...marker });
+                }}
+              >
+                <MapMarker fill={"#33c397"} />
+              </Marker>
+            ) : null
+          )
         : null,
     [directionsPoints]
   );
@@ -285,7 +295,7 @@ export default function HomePage() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ favorite: pointObj }),
+        body: JSON.stringify(pointObj),
       });
       const data = await res.json();
       setUser(data.data);
@@ -295,7 +305,7 @@ export default function HomePage() {
   };
 
   const addToRoute = (pointObj, isUserPoint = false) => {
-    console.log("adding to route", pointObj, isUserPoint);
+    // console.log("adding to route", pointObj, isUserPoint);
     if (!pointObj) return;
     if (isUserPoint) setDirectionsPoints((prev) => [pointObj, ...prev]);
     else setDirectionsPoints((prev) => [...prev, pointObj]);
@@ -328,18 +338,18 @@ export default function HomePage() {
   // fetch navigation
 
   const fetchDirections = async (directionsPoints) => {
-    console.log("directions fetch run: ");
+    // console.log("directions fetch run: ");
     const coordsStr = directionsPoints
       .map((point) => point.coords.join(","))
       .join(";");
     // console.log(coordsStr);
     try {
       const res = await fetch(
-        `https://api.mapbox.com/directions/v5/mapbox/${navigationPreference}/${coordsStr}?alternatives=true&annotations=distance%2Cduration%2Cspeed&banner_instructions=true&geometries=geojson&language=en&overview=full&roundabout_exits=true&steps=true&access_token=${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}`
+        `https://api.mapbox.com/directions/v5/mapbox/${navigationPreference}/${coordsStr}?alternatives=${areAlternativeRoutes}&annotations=distance%2Cduration%2Cspeed&banner_instructions=true&geometries=geojson&language=en&overview=full&roundabout_exits=true&steps=true&access_token=${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}`
       );
       const data = await res.json();
       setDirectionsData(data);
-      console.log(data);
+      // console.log(data);
     } catch (error) {
       setError(error);
     }
@@ -355,6 +365,7 @@ export default function HomePage() {
   // console.log(recommendations);
   // console.log(userFavoritesMarkers);
   // console.log(userPointObject);
+  // console.log(user);
   return (
     <div className="container map-container">
       <TopMenu />
@@ -384,7 +395,7 @@ export default function HomePage() {
               // closeButton={true}
               closeOnClick={true}
               // offsetBottom={100}
-              offset={35}
+              offset={20}
             >
               <div className="popup_inside">
                 <h3>Current location</h3>
@@ -427,7 +438,7 @@ export default function HomePage() {
 
           {/* Markers and Popups for selections from searchbar and user favorites */}
           {selectedMarkers}
-          {/* {userFavoritesMarkers} */}
+          {userFavoritesMarkers}
           {popupInfo && (
             <Popup
               longitude={popupInfo.coords[0]}
@@ -435,7 +446,7 @@ export default function HomePage() {
               onClose={() => setPopupInfo(null)}
               closeButton={true}
               closeOnClick={true}
-              // offsetTop={-30}
+              offsetTop={120}
             >
               <div className="popup_inside">
                 <h3>{popupInfo.name}</h3>
@@ -469,7 +480,7 @@ export default function HomePage() {
               onClose={() => setRecommendationPopup(null)}
               closeButton={true}
               closeOnClick={true}
-              // offsetTop={-30}
+              offsetTop={1200}
             >
               <div className="popup_inside">
                 <h3>{recommendationPopup.name}</h3>

@@ -53,7 +53,7 @@ export default function MapContextProvider({ children }) {
             .join(",")
             .trim(),
           coords: data.query,
-          preference: data.type,
+          preference: [data.type],
         };
         return pointObj;
       } else {
@@ -61,7 +61,7 @@ export default function MapContextProvider({ children }) {
           name: "",
           address: data.features[0].place_name,
           coords: data.query,
-          preference: "",
+          preference: [],
         };
       }
     } catch (error) {
