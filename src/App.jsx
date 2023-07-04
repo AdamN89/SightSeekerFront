@@ -19,6 +19,7 @@ import CreateTravelPlan from "./pages/TravelPage/CreateTravelPlan";
 import AddFavorite from "./pages/FavoritePage/AddFavorite";
 import Snake from "./components/SnakeGame/snake";
 import ErrorPage from "./components/Error/ErrorPage";
+import PlanTravel from "./pages/TravelPage/PlanTravel";
 
 function App() {
   // const token = localStorage.getItem("token")
@@ -76,6 +77,10 @@ function App() {
         <Route
           path="/createtravelplan"
           element={token ? <CreateTravelPlan /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/plantravel"
+          element={token ? <PlanTravel /> : <Navigate to="/" />}
         />
         <Route
           path="/addfavorite"

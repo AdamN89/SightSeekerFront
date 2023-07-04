@@ -137,7 +137,7 @@ export default function ChatBox() {
   };
 
   const handleSend = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     const message = {
       chatId: currentChat._id,
       senderId: currentUserId,
@@ -153,7 +153,7 @@ export default function ChatBox() {
         },
         body: JSON.stringify(message),
       });
-      console.log(response);
+      // console.log(response);
       const data = await response.json();
       setMessages([...messages, data]);
       setNewMessage("");
@@ -163,7 +163,7 @@ export default function ChatBox() {
 
     // send messages to socket server
     const receiverId = filteredMembers;
-    console.log("receiverId", receiverId);
+    // console.log("receiverId", receiverId);
     setSendMessage({ ...message, receiverId });
   };
 
@@ -250,8 +250,9 @@ export default function ChatBox() {
                 borderRadius="20px 0px 0px 20px"
                 value={newMessage}
                 onChange={handleChange}
+                onEnter={handleSend}
               />
-              <div className="send-button button" onSubmit={handleSend}>
+              <div className="send-button button" onClick={handleSend}>
                 Send
               </div>
             </div>
