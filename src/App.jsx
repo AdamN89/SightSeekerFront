@@ -20,7 +20,6 @@ import AddFavorite from "./pages/FavoritePage/PoiPreference";
 import Snake from "./components/SnakeGame/snake";
 import ErrorPage from "./components/Error/ErrorPage";
 import PlanTravel from "./pages/TravelPage/PlanTravel";
-import EditBookmark from "./pages/FavoritePage/EditBookmark";
 import FeatureProgress from "./pages/FeaturesPage/FeatureProgress";
 
 function App() {
