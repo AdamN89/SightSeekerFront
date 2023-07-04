@@ -1,42 +1,14 @@
-import Map, {
-  Marker,
-  Popup,
-  NavigationControl,
-  Layer,
-  Source,
-} from "react-map-gl";
-import { v4 as uuidv4 } from "uuid";
-import { useEffect, useState, useRef, useContext, useMemo } from "react";
+import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { MapContext } from "../../context/MapContext";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "./HomePage.css";
 import TopMenu from "../../components/TopMenu/TopMenu";
 import Menu from "../../components/Menu";
-import MapMarker from "../../components/MapMarker";
-import PlanTravel from "../TravelPage/PlanTravel";
 import MapContent from "../../components/Map/MapContent";
 
-const mapStyle = "mapbox://styles/stephanullmann/clj7lajvj005t01que278452b";
-const navigationPreference = "driving";
-const areAlternativeRoutes = "false";
-const markerColors = [
-  "#895392",
-  "#02b3b4",
-  "#741cb5",
-  "#0c3e5a",
-  "#0b3e3a",
-  "#00a299",
-  "#0b4e4a",
-  "#92278f",
-  "#662d91",
-  "#00b394",
-  "#743478",
-  "#841cb5",
-];
 // 52.45685631705479, 13.540060456464587
 export default function HomePage() {
-  const { user, setUser, backendURL, token } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   // const { markers, retrieveByCoord } = useContext(MapContext);
   const [userCoords, setUserCoords] = useState({});
   const [viewState, setViewState] = useState({

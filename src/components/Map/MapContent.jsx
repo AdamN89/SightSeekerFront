@@ -5,9 +5,10 @@ import Map, {
   Layer,
   Source,
 } from "react-map-gl";
+
 import { AuthContext } from "../../context/AuthContext";
 import { MapContext } from "../../context/MapContext";
-import "mapbox-gl/dist/mapbox-gl.css";
+// import "mapbox-gl/dist/mapbox-gl.css";
 import { useEffect, useState, useRef, useContext, useMemo } from "react";
 import MapMarker from "../MapMarker";
 
