@@ -643,7 +643,8 @@ add to about page */
 ===========================================*/
 
 .navigation_wrapper {
-  height: 100vh;
+  height: 100%;
+  padding-bottom: 30px;
   position: fixed;
   display: flex;
   align-items: center;
@@ -652,6 +653,7 @@ add to about page */
   top: 70px;
   left: 0;
   z-index: 20;
+  overflow-y: auto;
   transform: translateY(-110%);
 }
 
