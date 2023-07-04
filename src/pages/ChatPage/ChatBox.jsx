@@ -66,7 +66,7 @@ export default function ChatBox() {
   useEffect(() => {
     const getUserData = async() => {
       try {
-        const response = await fetch(`http://localhost:8080/user/chatmembers`, {
+        const response = await fetch(`${backendURL}/user/chatmembers`, {
           headers: {
             "Content-type": "application/json",
           },
@@ -111,7 +111,7 @@ export default function ChatBox() {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/message/${currentChat._id}`)
+        const response = await fetch(`${backendURL}/message/${currentChat._id}`)
         const data = await response.json()
         // console.log("fetched messages", data)
         setMessages(data)
@@ -136,7 +136,7 @@ export default function ChatBox() {
 
     // sending to DB
     try {
-      const response = await fetch(`http://localhost:8080/message/`, {
+      const response = await fetch(`${backendURL}/message/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -234,7 +234,7 @@ export default function ChatBox() {
                 value={newMessage}
                 onChange={handleChange}
               />
-              <div className="send-button button" onClick={handleSend}>
+              <div className="send-button button" onSubmit={handleSend}>
                 Send
               </div>
             </div>
