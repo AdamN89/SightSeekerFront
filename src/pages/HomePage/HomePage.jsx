@@ -16,6 +16,7 @@ import Loader from "../../components/Loader/Loader";
 import Menu from "../../components/Menu";
 import AddFavoriteIcon from "../../components/AddFavoriteIcon";
 import MapMarker from "../../components/MapMarker";
+import PlanTravel from "../TravelPage/PlanTravel";
 
 const mapStyle = "mapbox://styles/stephanullmann/clj7lajvj005t01que278452b";
 const navigationPreference = "driving";
@@ -367,7 +368,7 @@ export default function HomePage() {
   // console.log(userPointObject);
   // console.log(user);
   return (
-    <div className="container map-container">
+    <div className="map-container">
       <TopMenu />
       {userCoords.latitude && userCoords.longitude && (
         <Map
