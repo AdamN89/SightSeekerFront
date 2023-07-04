@@ -16,25 +16,11 @@ import Loader from "../../components/Loader/Loader";
 import Menu from "../../components/Menu";
 import AddFavoriteIcon from "../../components/AddFavoriteIcon";
 import MapMarker from "../../components/MapMarker";
+import { ThemeContext } from "../../context/ThemeContext";
 
-const mapStyle = "mapbox://styles/stephanullmann/clj7lajvj005t01que278452b";
-const navigationPreference = "driving";
-const markerColors = [
-  "#895392",
-  "#02b3b4",
-  "#741cb5",
-  "#0c3e5a",
-  "#0b3e3a",
-  "#00a299",
-  "#0b4e4a",
-  "#92278f",
-  "#662d91",
-  "#00b394",
-  "#743478",
-  "#841cb5",
-];
 // 52.45685631705479, 13.540060456464587
 export default function HomePage() {
+  const { lightMode } = useContext(ThemeContext);
   const { user, setUser, backendURL, token } = useContext(AuthContext);
   const { markers, retrieveByCoords } = useContext(MapContext);
   const [userCoords, setUserCoords] = useState({});
@@ -55,6 +41,26 @@ export default function HomePage() {
   const [directionsData, setDirectionsData] = useState(null);
 
   const [error, setError] = useState(null);
+
+  // styling for map and markers
+  const mapStyle = lightMode
+    ? "mapbox://styles/stephanullmann/clj7lajvj005t01que278452b"
+    : "mapbox://styles/stephanullmann/cljnybgvq00ii01pqglfgat0a";
+  const navigationPreference = "driving";
+  const markerColors = [
+    "#895392",
+    "#02b3b4",
+    "#741cb5",
+    "#0c3e5a",
+    "#0b3e3a",
+    "#00a299",
+    "#0b4e4a",
+    "#92278f",
+    "#662d91",
+    "#00b394",
+    "#743478",
+    "#841cb5",
+  ];
 
   const getUUID = () => {
     if (!sessionUUID.current) sessionUUID.current = uuidv4();
@@ -172,7 +178,7 @@ export default function HomePage() {
     setViewState(e.viewState);
   };
 
-  console.log(user)
+  console.log(user);
   // &types=poi%2Caddress
   const handleMapClick = async (e) => {
     // console.log(e.lngLat);

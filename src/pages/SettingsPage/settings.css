@@ -21,12 +21,12 @@
 }
 
 .settings_page_close_btn svg {
-  fill: var(--dark_green);
+  fill: var(--icon_dark_green);
   transition: all 0.3s ease;
 }
 
 .settings_page_close_btn:hover svg {
-  fill: var(--light_green);
+  fill: var(--icon_light_green);
 }
 
 .settings_page h1 {
@@ -165,7 +165,7 @@
   background: var(--install_bg);
   border: 0;
   border-radius: 20px;
-  color: var(--txt);
+  color: #fff;
   font-family: "Poppins", sans-serif;
   font-weight: 700;
   font-size: 22px;

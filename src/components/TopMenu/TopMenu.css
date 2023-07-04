@@ -53,10 +53,14 @@
 }
 
 .topmenu__topbar svg {
-  fill: var(--dark_purple);
+  fill: var(--icon_dark_purple);
   width: 60px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
+}
+
+.topmenu__topbar:hover svg {
+  fill: var(--icon_light_purple);
 }
 
 .topmenu__body-wrapper {
@@ -70,7 +74,7 @@
   z-index: 20;
   width: -webkit-fill-available;
   align-items: center;
-  background: rgba(13, 13, 13, 0.7);
+  background: var(--modal_bg);
 }
 
 .opening {
@@ -155,14 +159,14 @@
   position: absolute;
   top: 30px;
   right: 30px;
-  fill: rgba(11, 78, 74, 1);
+  fill: var(--icon_dark_green);
   width: 32px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
 
 .topmenu__body_header svg:hover {
-  fill: var(--light_green);
+  fill: var(--icon_light_green);
 }
 
 .topmenu__body_body {
@@ -262,9 +266,9 @@
 
 .logout_btn svg {
   width: 32px;
-  fill: var(--dark_purple);
+  fill: var(--icon_dark_purple);
   transition: all 0.3s ease;
 }
 .logout_btn:hover svg {
-  fill: var(--light_purple);
+  fill: var(--icon_light_purple);
 }
