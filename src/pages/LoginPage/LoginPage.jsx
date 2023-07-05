@@ -13,6 +13,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [invitations, setInvitations] = useState(false);
 
   const navigate = useNavigate();
 
@@ -38,7 +39,7 @@ export default function LoginPage() {
       setLoginOne("");
       setPassword("");
       localStorage.setItem("token", data.token);
-      login(data.token);
+      // login(data.token);
       setUser(data.data);
       setIsLoading(false);
       console.log("data from login fetch: ", data);
@@ -46,8 +47,9 @@ export default function LoginPage() {
       const invitationsReceived = data.data.friends.some(
         (friend) => friend.received
       );
-      if (invitationsReceived) navigate("/invitation");
-      else navigate("/home");
+      if (invitationsReceived) setInvitations(true);
+      // navigate("/invitation");
+      // else navigate("/home");
     }
   };
 
@@ -88,6 +90,9 @@ export default function LoginPage() {
           </div>
         </form>
       </div>
+      {invitations ? (
+        <button onClick={() => navigate("/invitation")}>Invitationst!</button>
+      ) : null}
     </div>
   );
 }
