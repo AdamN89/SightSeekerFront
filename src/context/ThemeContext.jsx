@@ -7,7 +7,7 @@ export const ThemeContext = createContext();
 
 export default function ThemeContextProvider({ children }) {
   const { user } = useContext(AuthContext);
-  const [lightMode, setLightMode] = useState();
+  const [lightMode, setLightMode] = useState(true);
 
   useEffect(() => {
     if (user) {

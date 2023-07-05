@@ -16,36 +16,36 @@ export default function Conversation({
 }) {
   const navigate = useNavigate();
   const { backendURL } = useContext(AuthContext);
-  const [ chatName, setChatName ] = useState(data.chatName)
-  const [ newChatName, setNewChatName ] = useState()
+  const [chatName, setChatName] = useState(data.chatName);
+  const [newChatName, setNewChatName] = useState();
   const [userData, setUserData] = useState([]); // This is who we send the messages to
   const [multipleUsers, setMultipleUsers] = useState([]);
   // const [ chatName, setChatName ] = useState("My Group Chat")
-  const [ rename, setRename ] = useState(false)
+  const [rename, setRename] = useState(false);
 
   const displayOnline =
     multipleUsers.length > 1 ? (
       multipleUsers.map((user) => (
         <div className="multiple-users" key={user._id}>
           {user.name}
-          <span>
+          {/* <span>
             {onlineUsers.find((onlineUser) => onlineUser.userId === user._id)
               ?.online
               ? " - Online"
               : " - Offline"}
-          </span>
+          </span> */}
         </div>
       ))
     ) : (
       <div className="single-user">
         {userData[0]?.name}
-        <span>
+        {/* <span>
           {onlineUsers.find(
             (onlineUser) => onlineUser.userId === userData[0]?._id
           )?.online
             ? " - Online"
             : " - Offline"}
-        </span>
+        </span> */}
       </div>
     );
 
@@ -103,44 +103,44 @@ export default function Conversation({
     }
     navigate("/");
   };
-  
+
   const renameChat = async (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       try {
-        const response = await fetch(`${backendURL}`,{
+        const response = await fetch(`${backendURL}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            newChatName : newChatName,
-            _id: data._id
+            newChatName: newChatName,
+            _id: data._id,
           }),
         });
-        console.log("update response", response)
-        const renamedChat = await response.json()
-        setChatName(renamedChat.chatName)
+        console.log("update response", response);
+        const renamedChat = await response.json();
+        setChatName(renamedChat.chatName);
         // console.log("this is response json renamedChat", renamedChat)
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-     setRename(!rename)
+      setRename(!rename);
     }
   };
 
   const showInput = (e) => {
     e.stopPropagation();
-    setRename(!rename)
-  }
+    setRename(!rename);
+  };
 
   const handleButtonClick = (event) => {
     event.stopPropagation();
   };
 
   const handleChange = (e) => {
-    setNewChatName(e.target.value)
-    console.log(e.target.value)
+    setNewChatName(e.target.value);
+    console.log(e.target.value);
   };
 
-  const classname = rename ? "active-field" : "rename-field"
+  const classname = rename ? "active-field" : "rename-field";
 
   return (
     <>
@@ -155,19 +155,20 @@ export default function Conversation({
           </div>
         </div>
         <button className="groupchat-graphic" onClick={handleButtonClick}>
-        <div onClick={showInput}>
-          <EditIcon />
-        </div>
-        <div onClick={deleteChat}>
-          <DeleteIcon />
-        </div>
-          <input 
-            className={classname} 
-            type="text" 
+          <div onClick={showInput}>
+            <EditIcon />
+          </div>
+          <div onClick={deleteChat}>
+            <DeleteIcon />
+          </div>
+          <input
+            className={classname}
+            type="text"
             value={newChatName}
             onKeyDown={renameChat}
             onChange={handleChange}
-            onClick={(e) => e.stopPropagation()} />
+            onClick={(e) => e.stopPropagation()}
+          />
         </button>
       </div>
 
