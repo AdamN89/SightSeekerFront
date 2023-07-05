@@ -16,7 +16,7 @@ export default function FavoritesPage() {
   const favoritesRef = useRef(null);
   const navigate = useNavigate();
 
-  console.log(user);
+  // console.log(user);
 
   return {
     favoritesRef,

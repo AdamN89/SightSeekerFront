@@ -113,11 +113,32 @@ export default function PlanTravel() {
   };
   console.log(allSelectedPoints);
 
+  const saveCurrentRoute = async () => {
+    console.log(allSelectedPoints);
+
+    const idsOnly = allSelectedPoints.map((point) => point._id);
+    try {
+      const res = await fetch(`${backendURL}/travelplan/savePoints/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ points: idsOnly }),
+      });
+      const data = await res.json();
+      console.log(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       {/* <TopMenu /> */}
       <div className="plan_travel_header">
         <h1>Travel plan name</h1>
+        <button onClick={saveCurrentRoute}>save</button>
         <div className="plan_travel_close_btn" onClick={() => navigate("/")}>
           <CloseIcon />
         </div>
