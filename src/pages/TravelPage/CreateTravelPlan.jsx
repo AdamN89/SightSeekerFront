@@ -1,5 +1,5 @@
 import "./TravelsPage.css";
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import CloseIcon from "../../components/CloseIcon";
 import Button from "../../components/Button";
 import MapContent from "../../components/Map/MapContent";
@@ -22,7 +22,7 @@ export default function CreateTravelPlan() {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [selectedFriends, setSelectedFriends] = useState([]);
-  const [bookmarks, setBookmark] = useState();
+  const [bookmarks, setBookmarks] = useState();
   const [selectedBookmarks, setSelectedBookmarks] = useState([]);
 
   const [userCoords, setUserCoords] = useState({});
@@ -35,8 +35,12 @@ export default function CreateTravelPlan() {
   useEffect(() => {
     if (user) {
       setFriends(user.friends);
+      setBookmarks(user.favorites);
     }
   }, []);
+
+  console.log(user);
+  console.log(name);
 
   useEffect(() => {
     if (!user) return;
@@ -66,7 +70,7 @@ export default function CreateTravelPlan() {
     setOpenDrop1(false);
     setOpenDrop2(false);
     membersDialog.current.close();
-    //selectedPointsDialog.current.close();
+    selectedPointsDialog.current.close();
   };
 
   const handleFriendCheckbox = (e) => {
@@ -74,6 +78,15 @@ export default function CreateTravelPlan() {
     if (!e.target.checked)
       setSelectedFriends((prev) =>
         prev.filter((friend) => friend !== e.target.id)
+      );
+  };
+
+  const handleBookmarkCheckbox = (e) => {
+    if (e.target.checked)
+      setSelectedBookmarks((prev) => [...prev, e.target.id]);
+    if (!e.target.checked)
+      setSelectedBookmarks((prev) =>
+        prev.filter((bookmark) => bookmark !== e.target.id)
       );
   };
 
@@ -91,7 +104,7 @@ export default function CreateTravelPlan() {
       setOpenDrop1(!openDrop1);
       setOpenDrop2(false);
     }
-    if (event.target.innerHTML === "point preferences") {
+    if (event.target.innerHTML === "select from bookmarks") {
       if (openDrop1) {
         selectedPointsDialog.current.close();
       } else {
@@ -103,28 +116,35 @@ export default function CreateTravelPlan() {
   };
 
   const saveNewTravelPlan = async () => {
-    try {
-      const response = await fetch(`${backendURL}/travelplan/new`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          name,
-          startDate,
-          endDate,
-          members: selectedFriends,
-        }),
-      });
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-      } else {
-        console.log("Error");
+    console.log(name);
+    if (name) {
+      try {
+        const response = await fetch(`${backendURL}/travelplan/new`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            name,
+            startDate,
+            endDate,
+            members: selectedFriends,
+            selectedPoints: selectedBookmarks,
+          }),
+        });
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+          navigate("/home");
+        } else {
+          console.log("Error");
+        }
+      } catch (error) {
+        console.error("Error", error);
       }
-    } catch (error) {
-      console.error("Error", error);
+    } else {
+      alert("name is required");
     }
   };
 
@@ -207,6 +227,42 @@ export default function CreateTravelPlan() {
                     </div>
                   ) : null
                 )}
+            </div>
+            <div className="friends__search-wrapper"></div>
+          </dialog>
+          <dialog
+            ref={selectedPointsDialog}
+            className={openDrop2 ? "modal" : null}
+          >
+            <div>
+              <h2 className="title">Add bookmarks</h2>
+              <CloseIcon func={handleCloseModel} />
+            </div>
+            <div className="friends__page-friends-wrapper">
+              {bookmarks?.length > 0 &&
+                bookmarks?.map((bookmark, index) => (
+                  <div
+                    className="friends__page-check-wrapper"
+                    key={bookmark?.name + index}
+                  >
+                    <div
+                      className={`${
+                        selectedBookmarks?.includes(bookmark?._id)
+                          ? "btn--friends"
+                          : "btn_hallow--friends"
+                      }`}
+                    >
+                      {bookmark.name}
+                    </div>
+                    <input
+                      className="friends__page-checkbox"
+                      type="checkbox"
+                      name={bookmark.name}
+                      id={bookmark._id}
+                      onChange={handleBookmarkCheckbox}
+                    />
+                  </div>
+                ))}
             </div>
             <div className="friends__search-wrapper"></div>
           </dialog>

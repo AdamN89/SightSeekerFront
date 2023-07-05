@@ -1,16 +1,22 @@
 import "./FavoritesPage.css";
 import { useContext, useRef } from "react";
+import { AuthContext } from "../../context/AuthContext";
 import { DataContext } from "../../context/DataContext";
 import { useNavigate } from "react-router-dom";
 import CloseIcon from "../../components/CloseIcon";
 import FavoritesSearchBar from "./FavoritesSearchBar";
 import Button from "../../components/Button";
 import DeleteIcon from "../../components/DeleteIcon";
+import { useState, useEffect } from "react";
 
 export default function FavoritesPage() {
   const { closeMenu, isOpen, closeTopMenu } = useContext(DataContext);
+  const { token, user, backendURL } = useContext(AuthContext);
+
   const favoritesRef = useRef(null);
   const navigate = useNavigate();
+
+  console.log(user);
 
   return {
     favoritesRef,
@@ -39,32 +45,24 @@ export default function FavoritesPage() {
                 <CloseIcon />
               </button>
             </div>
-            <FavoritesSearchBar />
             {/* start of content of navigation page */}
             <div className="navigation_wrapper_body_content">
+              <h2 className="title">Filter displayed points on map</h2>
               <Button
-                txt={"add favorite"}
+                txt={"Add Filter"}
                 func={() => navigate("/addfavorite")}
                 key="addfavorite"
               />
-              <div className="favorites_page">
-                <span>My favorite plase</span>
-                <div className="favorites_page_icons">
-                  <DeleteIcon />
-                </div>
-              </div>
-              <div className="favorites_page">
-                <span>My favorite plase</span>
-                <div className="favorites_page_icons">
-                  <DeleteIcon />
-                </div>
-              </div>
-              <div className="favorites_page">
-                <span>My favorite plase</span>
-                <div className="favorites_page_icons">
-                  <DeleteIcon />
-                </div>
-              </div>
+              <h2 className="title">My Bookmarks</h2>
+              {user?.favorites?.length > 0 &&
+                user?.favorites?.map((bookmark, index) => (
+                  <div className="favorites_page">
+                    <span>{bookmark?.name}</span>
+                    <div className="favorites_page_icons">
+                      <DeleteIcon />
+                    </div>
+                  </div>
+                ))}
             </div>
             {/* end of content of navigation page */}
           </div>
