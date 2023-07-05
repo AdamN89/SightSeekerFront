@@ -5,10 +5,12 @@ import "./HomePage.css";
 import TopMenu from "../../components/TopMenu/TopMenu";
 import Menu from "../../components/Menu";
 import MapContent from "../../components/Map/MapContent";
+import { useNavigate } from "react-router";
 
 // 52.45685631705479, 13.540060456464587
 export default function HomePage() {
-  const { user } = useContext(AuthContext);
+  const { user, afterRegistration } = useContext(AuthContext);
+  const navigate = useNavigate();
   // const { markers, retrieveByCoord } = useContext(MapContext);
   const [userCoords, setUserCoords] = useState({});
   const [viewState, setViewState] = useState({
@@ -16,6 +18,13 @@ export default function HomePage() {
     latitude: 52.45685631705479,
     zoom: 15,
   });
+
+  useEffect(() => {
+    if (afterRegistration) {
+      navigate("/features");
+    }
+  }, []);
+
   // const [userPointObject, setUserPointObject] = useState(null);
   // const [showPopup, setShowPopup] = useState(true);
   // const sessionUUID = useRef(null);

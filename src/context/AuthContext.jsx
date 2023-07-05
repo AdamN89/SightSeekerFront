@@ -7,7 +7,10 @@ export default function AuthContextProvider({ children }) {
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [afterRegistration, setAfterRegistration] = useState(false);
+
   const navigate = useNavigate();
+
   const backendURL =
     process.env.NODE_ENV === "development"
       ? "http://localhost:8080"
@@ -79,6 +82,8 @@ export default function AuthContextProvider({ children }) {
         token,
         login,
         logout,
+        afterRegistration,
+        setAfterRegistration,
         user,
         setUser,
         setToken,
