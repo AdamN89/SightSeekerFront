@@ -87,6 +87,11 @@ h1 {
   -moz-text-fill-color: transparent;
 }
 
+.subtitle {
+  color: var(--txt);
+  opacity: 0.5;
+}
+
 .container {
   display: flex;
   align-items: center;
@@ -757,6 +762,12 @@ add to about page */
 .navigation_wrapper_body_content {
   margin-top: 30px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.navigation_wrapper_body_content_row {
   display: flex;
   flex-direction: column;
   gap: 20px;

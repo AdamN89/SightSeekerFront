@@ -86,7 +86,7 @@ function App() {
           element={token ? <CreateTravelPlan /> : <Navigate to="/" />}
         />
         <Route
-          path="/plantravel"
+          path="/plantravel/:id"
           element={token ? <PlanTravel /> : <Navigate to="/" />}
         />
         <Route

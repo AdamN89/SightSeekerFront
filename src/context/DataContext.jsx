@@ -26,6 +26,7 @@ export default function DataContextProvider({ children }) {
   const [ receiveMessage, setReceiveMessage ] = useState(null)
   const [ chats, setChats ] = useState([])
   const [ onlineUsers, setOnlineUsers ] = useState([]);  
+  const [ chatName, setChatName ] = useState()
 
   const openMenu = (menuRef) => {
     // console.log(menuRef.current.parentNode);
@@ -86,7 +87,9 @@ export default function DataContextProvider({ children }) {
           chats,
           setChats,
           onlineUsers,
-          setOnlineUsers
+          setOnlineUsers,
+          chatName,
+          setChatName
         }}>
             {children}
         </DataContext.Provider>

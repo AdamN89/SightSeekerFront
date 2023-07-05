@@ -186,6 +186,7 @@ export default function CreateTravelPlan() {
             <div className="create_travel_plan_time">
               <input
                 type="date"
+                className="edit_travel_plan_time_picker"
                 placeholder="start date"
                 onChange={(e) => {
                   setStartDate(e.target.value);
@@ -193,6 +194,7 @@ export default function CreateTravelPlan() {
               />
               <input
                 type="date"
+                className="edit_travel_plan_time_picker"
                 placeholder="end date"
                 onChange={(e) => {
                   setEndDate(e.target.value);
@@ -208,11 +210,11 @@ export default function CreateTravelPlan() {
             {/* <input type="text" placeholder="search places" /> */}
           </form>
           <dialog ref={membersDialog} className={openDrop1 ? "modal" : null}>
-            <div>
+            <div className="edit_travel_plan_modal_header">
               <h2 className="title">Add member</h2>
               <CloseIcon func={handleCloseModel} />
             </div>
-            <div className="friends__page-friends-wrapper">
+            <div className="edit_travel_plan_modal">
               {friends?.length > 0 &&
                 friends?.map((friend, index) =>
                   friend.accepted && friend.user ? (
@@ -230,7 +232,7 @@ export default function CreateTravelPlan() {
                         {friend.user?.name}
                       </div>
                       <input
-                        className="friends__page-checkbox"
+                        className="edit_travel_plan_checkbox"
                         type="checkbox"
                         name={friend.user?.userName}
                         id={friend.user?._id}
@@ -246,11 +248,11 @@ export default function CreateTravelPlan() {
             ref={selectedPointsDialog}
             className={openDrop2 ? "modal" : null}
           >
-            <div>
+            <div className="edit_travel_plan_modal_header">
               <h2 className="title">Add bookmarks</h2>
               <CloseIcon func={handleCloseModel} />
             </div>
-            <div className="friends__page-friends-wrapper">
+            <div className="edit_travel_plan_modal">
               {bookmarks?.length > 0 &&
                 bookmarks?.map((bookmark, index) => (
                   <div
@@ -267,7 +269,7 @@ export default function CreateTravelPlan() {
                       {bookmark.name}
                     </div>
                     <input
-                      className="friends__page-checkbox"
+                      className="edit_travel_plan_checkbox"
                       type="checkbox"
                       name={bookmark.name}
                       id={bookmark._id}

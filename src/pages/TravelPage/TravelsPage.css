@@ -393,3 +393,7 @@
 .correct {
   opacity: 0;
 }
+.plan_travel_poi_buttons {
+  width: 70px;
+  display: flex;
+}

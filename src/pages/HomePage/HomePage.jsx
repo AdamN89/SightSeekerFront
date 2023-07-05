@@ -306,6 +306,7 @@ export default function HomePage() {
         viewState={viewState}
         setViewState={setViewState}
         userCoords={userCoords}
+        parent="Home"
       />
       <Menu viewState={viewState} userCoords={userCoords} />
     </div>
