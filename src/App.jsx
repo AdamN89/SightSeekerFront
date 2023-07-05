@@ -14,11 +14,15 @@ import LandingPage from "./pages/LandingPage/LandingPage";
 import ReceivedInvitation from "./pages/FriendsPage/ReceivedInvitation";
 import Loader from "./components/Loader/Loader";
 import TravelsPage from "./pages/TravelPage/TravelsPage";
+import TravelsPageEdit from "./pages/TravelPage/TravelPageEdit";
 import ChatPage from "./pages/ChatPage/ChatPage";
 import CreateTravelPlan from "./pages/TravelPage/CreateTravelPlan";
-import AddFavorite from "./pages/FavoritePage/AddFavorite";
+import PoiPreference from "./pages/FavoritePage/PoiPreference";
 import Snake from "./components/SnakeGame/snake";
 import ErrorPage from "./components/Error/ErrorPage";
+import PlanTravel from "./pages/TravelPage/PlanTravel";
+import FeatureProgress from "./pages/FeaturesPage/FeatureProgress";
+import TravelPageEdit from "./pages/TravelPage/TravelPageEdit";
 
 function App() {
   // const token = localStorage.getItem("token")
@@ -42,7 +46,7 @@ function App() {
         />
         <Route
           path="/features"
-          element={token ? <FeaturesPage /> : <Navigate to="/" />}
+          element={token ? <FeatureProgress /> : <Navigate to="/" />}
         />
         <Route
           path="/about"
@@ -70,16 +74,24 @@ function App() {
           element={token ? <ReceivedInvitation /> : <Navigate to="/" />}
         />
         <Route
-          path="/travelplan"
+          path="/travelplan/open/:_id"
           element={token ? <TravelsPage /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/travelplan/edit/:_id"
+          element={token ? <TravelPageEdit /> : <Navigate to="/" />}
         />
         <Route
           path="/createtravelplan"
           element={token ? <CreateTravelPlan /> : <Navigate to="/" />}
         />
         <Route
+          path="/plantravel"
+          element={token ? <PlanTravel /> : <Navigate to="/" />}
+        />
+        <Route
           path="/addfavorite"
-          element={token ? <AddFavorite /> : <Navigate to="/" />}
+          element={token ? <PoiPreference /> : <Navigate to="/" />}
         />
         <Route path="/snake" element={<Snake />} />
         <Route path="*" element={<ErrorPage />} />

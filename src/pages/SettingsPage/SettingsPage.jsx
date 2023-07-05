@@ -2,16 +2,19 @@ import "./settings.css";
 import { useContext, useState, useRef, useEffect } from "react";
 import Button from "../../components/Button";
 import ButtonDelete from "../../components/ButtonDelete";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, useFormik } from "formik";
 import { AuthContext } from "../../context/AuthContext";
 import { DataContext } from "../../context/DataContext";
 import EditIcon from "../../components/EditIcon";
 import CloseIcon from "../../components/CloseIcon";
 import { useNavigate } from "react-router-dom";
 import UploadButton from "../../components/UploadButton";
+import { ThemeContext } from "../../context/ThemeContext";
+import userEvent from "@testing-library/user-event";
 
 export default function Settings() {
   const { token, user, setUser, backendURL } = useContext(AuthContext);
+  const { setLight, setLightMode } = useContext(ThemeContext);
   const { avatars } = useContext(DataContext);
 
   const [openDrop1, setOpenDrop1] = useState(false);
@@ -42,6 +45,12 @@ export default function Settings() {
     showName: user?.settings.showName,
   };
 
+  // const formik = useFormik({
+  //   onChange: (event) => {
+  //     console.log(event);
+  //   },
+  // });
+
   const handleFormSubmit = async (values) => {
     await saveChangedSettings(values);
   };
@@ -59,7 +68,7 @@ export default function Settings() {
       const formData = new FormData();
       formData.append("avatar", uploadedImgFile);
       try {
-        const response = await fetch("http://localhost:8080/user/avatar", {
+        const response = await fetch(`${backendURL}/user/avatar`, {
           method: "PUT",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -69,7 +78,6 @@ export default function Settings() {
         if (response.ok) {
           const responseData = await response.json();
           setUser(responseData.data);
-          console.log(responseData);
         } else {
           console.log("Error");
         }
@@ -78,17 +86,14 @@ export default function Settings() {
       }
     } else {
       try {
-        const response = await fetch(
-          "http://localhost:8080/user/default_avatar",
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({ avatar: theChosenOne }),
-          }
-        );
+        const response = await fetch(`${backendURL}/user/default_avatar`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ avatar: theChosenOne }),
+        });
         if (response.ok) {
           const responseData = await response.json();
           setUser(responseData.data);
@@ -104,7 +109,7 @@ export default function Settings() {
 
   const submitNewName = async () => {
     try {
-      const response = await fetch("http://localhost:8080/user/changeName", {
+      const response = await fetch(`${backendURL}/user/changeName`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -126,17 +131,14 @@ export default function Settings() {
 
   const submitNewPassword = async () => {
     try {
-      const response = await fetch(
-        "http://localhost:8080/user/changePassword",
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ password: typedPassword1 }),
-        }
-      );
+      const response = await fetch(`${backendURL}/user/changePassword`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ password: typedPassword1 }),
+      });
       if (response.ok) {
         const responseData = await response.json();
         setUser(responseData.data);
@@ -164,6 +166,7 @@ export default function Settings() {
       if (response.ok) {
         const responseData = await response.json();
         setUser(responseData.data);
+        setLight((prev) => !prev);
       } else {
         console.log("Error");
       }
@@ -275,7 +278,7 @@ export default function Settings() {
 
   const deleteAccont = async () => {
     try {
-      const response = await fetch("http://localhost:8080/user/deleteUser", {
+      const response = await fetch(`${backendURL}/user/deleteUser`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -292,6 +295,10 @@ export default function Settings() {
     } catch (error) {
       console.error("Error", error);
     }
+  };
+
+  const toggleDarkMode = () => {
+    setLightMode(!setLight);
   };
 
   return (
@@ -339,11 +346,11 @@ export default function Settings() {
             </dialog>
             <div className="settings_page_data_row">
               <span>user name</span>
-              <h3>{user.userName}</h3>
+              <h3>{user?.userName}</h3>
             </div>
             <div className="settings_page_data_row">
               <span>email</span>
-              <h3>{user.email}</h3>
+              <h3>{user?.email}</h3>
             </div>
             <div className="settings_page_data_row">
               <span>change</span>
@@ -374,7 +381,7 @@ export default function Settings() {
             </dialog>
           </div>
           <div className="avatar">
-            <img src={user.avatar} onClick={handleClick} name="changeAvatar" />
+            <img src={user?.avatar} onClick={handleClick} name="changeAvatar" />
           </div>
           <dialog ref={avatarDialog} className={openDrop1 ? "modal" : null}>
             <h2 className="title">Choose Avatar</h2>
@@ -396,7 +403,7 @@ export default function Settings() {
               <div className="avatars_upload">
                 <div className="avatars_upload_btn">
                   {/* <label
-                      for="uploadButton"
+                      htmlFor="uploadButton"
                       className="btn inital_setup_upload"
                     >
                       + Upload Image
@@ -443,13 +450,13 @@ export default function Settings() {
                   <h2 className="title">Customise</h2>
                   <div className="settings_page_toggle">
                     <h3>Darkmode</h3>
-                    <label class="toggle">
+                    <label className="toggle">
                       <Field
                         type="checkbox"
                         className="toggle_checkbox"
                         name="darkMode"
                       />
-                      <div class="toggle_switch"></div>
+                      <div className="toggle_switch"></div>
                     </label>
                   </div>
                 </div>
@@ -476,35 +483,35 @@ export default function Settings() {
                   </div>
                   <div className="settings_page_toggle">
                     <h3>Location Services</h3>
-                    <label class="toggle">
+                    <label className="toggle">
                       <Field
                         type="checkbox"
                         className="toggle_checkbox"
                         name="locationServices"
                       />
-                      <div class="toggle_switch"></div>
+                      <div className="toggle_switch"></div>
                     </label>
                   </div>
                   <div className="settings_page_toggle">
                     <h3>Show email</h3>
-                    <label class="toggle">
+                    <label className="toggle">
                       <Field
                         type="checkbox"
                         className="toggle_checkbox"
                         name="showEmail"
                       />
-                      <div class="toggle_switch"></div>
+                      <div className="toggle_switch"></div>
                     </label>
                   </div>
                   <div className="settings_page_toggle">
                     <h3>Show name</h3>
-                    <label class="toggle">
+                    <label className="toggle">
                       <Field
                         type="checkbox"
                         className="toggle_checkbox"
                         name="showName"
                       />
-                      <div class="toggle_switch"></div>
+                      <div className="toggle_switch"></div>
                     </label>
                   </div>
                 </div>

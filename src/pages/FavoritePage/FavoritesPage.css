@@ -42,7 +42,8 @@
   padding: 30px;
 }
 
-.add_favorite .first_element {
+.add_favorite .first_element,
+.add_favorite .second_element {
   width: 100%;
   gap: 20px;
 }

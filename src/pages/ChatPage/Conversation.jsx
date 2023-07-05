@@ -14,7 +14,7 @@ export default function Conversation({
   receiveMessage,
   onlineUsers,
 }) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { backendURL } = useContext(AuthContext);
   const [ chatName, setChatName ] = useState(data.chatName)
   const [ newChatName, setNewChatName ] = useState()
@@ -91,17 +91,17 @@ export default function Conversation({
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          _id: data._id
+          _id: data._id,
         }),
       });
-      console.log("response", response)
+      console.log("response", response);
       const deletedChat = await response.json();
-      console.log("this is the chat being deleted",deletedChat)
-      console.log("this is the chatId I'm sending back", data._id)
+      console.log("this is the chat being deleted", deletedChat);
+      console.log("this is the chatId I'm sending back", data._id);
     } catch (error) {
       console.log(error);
     }
-    navigate("/")
+    navigate("/");
   };
   
   const renameChat = async (event) => {
