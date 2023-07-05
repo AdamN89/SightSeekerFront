@@ -8,7 +8,7 @@ import ChatIcon from "./Icons/ChatIcon";
 import SettingsIcon from "./Icons/SettingsIcon";
 import AboutIcon from "./Icons/AboutIcon";
 import CloseIcon from "./Icons/CloseIcon";
-import { useState, useRef, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import TravelsPage from "../../pages/TravelPage/TravelsPage";
 import { DataContext } from "../../context/DataContext";
@@ -19,6 +19,7 @@ import FavoritesPage from "../../pages/FavoritePage/FavoritesPage";
 import FriendsPage from "../../pages/FriendsPage/FriendsPage";
 import Chat from "../Chat/Chat";
 import ButtonInstall from "../ButtonInstall";
+import { fromJS } from "immutable";
 
 export default function TopMenu() {
   const {
@@ -35,6 +36,12 @@ export default function TopMenu() {
   const { renderFriendsPage, friendsRef } = FriendsPage();
   const { renderChatsPage, chatsRef } = Chat();
   const { setToken, setUser, user, isLoading } = useContext(AuthContext);
+  const [invitations, setInvitations] = useState(false);
+
+  useEffect(() => {
+    const invitationsReceived = user.friends.some((friend) => friend.received);
+    if (invitationsReceived) setInvitations(true);
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -50,6 +57,11 @@ export default function TopMenu() {
           <div id="logo">
             <LogoHorizontal />
           </div>
+          {invitations ? (
+            <button id="inv_btn" onClick={() => navigate("/invitation")}>
+              Invitationst!
+            </button>
+          ) : null}
           <button
             onClick={() => {
               openTopMenu();
