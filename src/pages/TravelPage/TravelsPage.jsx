@@ -56,11 +56,11 @@ export default function TravelPage() {
               />
               {user?.travelPlans?.map((plan) => {
                 return (
-                  <div
-                    className="travel_plans"
-                    onClick={() => navigate(`/plantravel/${plan._id}`)}
-                  >
-                    <span onClick={() => openTravelplan(plan)}>
+                  <div className="travel_plans">
+                    <span
+                      className="travel_plans_span"
+                      onClick={() => navigate(`/plantravel/${plan._id}`)}
+                    >
                       {plan.name}
                     </span>
                     <button onClick={(e) => handleEditTravelplan(e, plan)}>

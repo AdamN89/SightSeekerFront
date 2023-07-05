@@ -55,18 +55,22 @@
 
 .mapboxgl-popup-close-button {
   /* display: none; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 25px;
   height: 25px;
   font-size: 25px;
   color: #fff;
   transition: all 0.3s ease;
-  border-left: 2px solid rgba(255, 255, 255, 0.5);
-  border-bottom: 2px solid rgba(255, 255, 255, 0.5);
-  border-radius: 0 0 0 10px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 0 10px 0 10px;
+  transition: all 0.3s ease;
 }
 
 .mapboxgl-popup-close-button:hover {
   color: #31094f;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .mapboxgl-popup-content {
@@ -210,7 +214,7 @@
 
 .button-wrapper {
   position: absolute;
-  bottom: -20px;
+  bottom: -25px;
   right: -25px;
   display: flex;
 }

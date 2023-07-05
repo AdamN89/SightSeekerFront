@@ -14,9 +14,9 @@
   transition: all 0.3s ease;
 }
 
-.favorites_page:hover {
+/* .favorites_page:hover {
   border: 2px solid var(--light_purple);
-}
+} */
 
 .favorites_page svg {
   width: 24px;
