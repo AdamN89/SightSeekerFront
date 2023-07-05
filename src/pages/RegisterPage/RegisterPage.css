@@ -54,3 +54,7 @@
 .register_page_form > input {
   text-transform: unset;
 }
+
+.input-error {
+  border-color: #fc8181
+}
