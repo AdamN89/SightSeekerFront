@@ -264,20 +264,51 @@
   background: var(--search_bg);
 }
 
+.plan_travel_header_data {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
 .plan_travel_header h1 {
-  font-size: 30px;
+  font-size: 25px;
   text-align: left;
-  margin-bottom: 15px;
+  line-height: 1;
+  margin-top: -5px;
+}
+
+.plan_travel_header span {
+  font-size: 14px;
+  opacity: 0.9;
+  text-align: left;
+  margin-right: 10px;
+}
+
+.plan_travel_header svg {
+  width: 11px;
+  fill: var(--light_green);
+  margin-right: 5px;
 }
 
 .plan_travel {
-  width: 100dvw;
+  width: 100%;
+  position: relative;
   /* padding: 30px; */
   display: flex;
   flex-direction: column;
   gap: 15px;
   height: calc(100dvh - 70px);
   overflow: hidden;
+}
+
+.plan_travel_container {
+  position: absolute;
+  width: 100%;
+  min-height: 90vh;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 /* .plan_travel .mapboxgl-map {
@@ -300,10 +331,7 @@
 }
 
 .plan_travel input {
-  position: absolute;
-  width: 350px;
-  top: 75px;
-  left: 30px;
+  width: 100%;
   /* right: 30px; */
   border: none;
   text-align: left;
@@ -312,7 +340,7 @@
   box-shadow: 5px 5px 8px var(--shadow_dark);
 }
 
-.plan_travel_date {
+/* .plan_travel_date {
   display: flex;
   gap: 15px;
 }
@@ -329,7 +357,7 @@
   padding-left: 25px;
   background: var(--btn_bg);
   box-shadow: 5px 5px 8px var(--shadow_dark);
-}
+} */
 
 .plan_travel_pois {
   width: 100%;
@@ -337,11 +365,6 @@
   box-shadow: 5px 5px 8px var(--shadow_dark);
   padding: 5px;
   border-radius: 20px;
-  position: absolute;
-  top: 150px;
-  left: 30px;
-  right: 30px;
-  width: 350px;
   max-height: 215px;
   overflow-y: auto;
 }
@@ -359,24 +382,29 @@
   transition: all 0.3s ease;
 }
 
+.plan_travel_poi span {
+  width: 70%;
+}
+
 .plan_travel_poi:hover {
   background: var(--shadow_dark);
 }
 
-.plan_travel_poi button {
+.plan_travel_poi_button {
   background: transparent;
   outline: 0;
   border: 0;
   cursor: pointer;
+  margin-left: 10px;
 }
 
-.plan_travel_poi button svg {
+.plan_travel_poi_button svg {
   width: 24px;
   fill: var(--dark_purple);
   transition: all 0.3s ease;
 }
 
-.plan_travel_poi button:hover svg {
+.plan_travel_poi_button:hover svg {
   width: 24px;
   fill: var(--delete);
 }
@@ -391,6 +419,38 @@
 }
 
 .plan_travel_poi_buttons {
-  width: 70px;
   display: flex;
+}
+
+.plan_travel_poi_arrow {
+  padding: 0 5px;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+}
+
+.plan_travel_poi_arrow svg {
+  fill: var(--txt);
+  opacity: 0.1;
+  width: 24px;
+  transition: all 0.3s ease;
+}
+
+.plan_travel_poi_arrow:hover svg {
+  opacity: 1;
+}
+
+.plan_travel_save_btn {
+  position: fixed;
+  padding: 30px;
+  width: 100%;
+  bottom: 0;
+}
+
+.plan_travel .searchbar__suggestions {
+  top: 85px;
+  margin: 0 30px;
+  max-height: 400px;
+  z-index: 50;
 }
