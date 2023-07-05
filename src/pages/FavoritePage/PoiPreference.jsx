@@ -4,23 +4,67 @@ import Button from "../../components/Button";
 import DeleteIcon from "../../components/DeleteIcon";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext, useEffect, useState, useRef } from "react";
+import { async } from "react-input-emoji";
 
 export default function PoiPreference() {
-  const { token, user, backendURL } = useContext(AuthContext);
-
-  const [filter, setFilter] = useState(["Hi (hardcoded)", "beach (hardcoded)"]);
+  const { token, user, backendURL, setUser } = useContext(AuthContext);
+  const [newPOI, setNewPOI] = useState("");
+  const [reload, setReload] = useState();
 
   const favoritesRef = useRef(null);
   const navigate = useNavigate();
 
   console.log(user);
-  console.log(filter);
 
-  // useEffect(() => {
-  //   if (user) {
-  //     setFilter(user.settings.poi);
-  //   }
-  // }, []);
+  const handleAddPOI = async (e) => {
+    try {
+      e.preventDefault();
+      if (!newPOI) return alert("Please say sth");
+      const response = await fetch(`${backendURL}/user/addPOI`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          _id: user._id,
+          filterPOI: newPOI,
+        }),
+      });
+      if (response.ok) {
+        const { data } = await response.json();
+        setUser(data);
+      } else {
+        console.log("Error");
+      }
+      setNewPOI("");
+    } catch (error) {
+      console.error("Error", error);
+    }
+  };
+
+  const handleDeletePOI = async (filter) => {
+    try {
+      const response = await fetch(`${backendURL}/user/deletePOI`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          filter,
+        }),
+      });
+      if (response.ok) {
+        const { data } = await response.json();
+        setUser(data);
+      } else {
+        console.log("Error");
+      }
+    } catch (error) {
+      console.error("Error", error);
+    }
+  };
 
   return (
     <div className="container add_favorite">
@@ -33,16 +77,26 @@ export default function PoiPreference() {
       <h1 className="title">Filter by Preference</h1>
       <div className="first_element">
         <form className="add_favorite_form">
-          <input type="text" placeholder="castle, museum, beach, ..." />
+          <input
+            type="text"
+            value={newPOI}
+            placeholder="castle, museum, beach, ..."
+            onChange={(e) => {
+              setNewPOI(e.target.value);
+            }}
+          />
+          <Button txt={"add"} func={handleAddPOI} key="createfavorite" />
         </form>
-        <Button txt={"add"} func={null} key="createfavorite" />
       </div>
       <div className="second_element">
-        {filter?.length > 0 &&
-          filter?.map((filter, index) => (
+        {user?.settings.poi?.length > 0 &&
+          user?.settings.poi?.map((filter, index) => (
             <div className="favorites_page">
               <span>{filter}</span>
-              <div className="favorites_page_icons">
+              <div
+                className="favorites_page_icons"
+                onClick={() => handleDeletePOI(filter)}
+              >
                 <DeleteIcon />
               </div>
             </div>
