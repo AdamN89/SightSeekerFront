@@ -418,6 +418,9 @@
   overflow: hidden;
 }
 
+.correct {
+  opacity: 0;
+}
 .plan_travel_poi_buttons {
   display: flex;
 }

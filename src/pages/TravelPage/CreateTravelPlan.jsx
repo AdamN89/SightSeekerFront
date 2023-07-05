@@ -10,6 +10,8 @@ import { async } from "q";
 export default function CreateTravelPlan() {
   const navigate = useNavigate();
 
+  const [ isCorrect, setIsCorrect ] = useState(true)
+
   const membersDialog = useRef(null);
   const selectedPointsDialog = useRef(null);
   const { user, backendURL, token } = useContext(AuthContext);
@@ -144,9 +146,18 @@ export default function CreateTravelPlan() {
         console.error("Error", error);
       }
     } else {
-      alert("name is required");
+      setIsCorrect(false)
+      // setTimeout(() => {
+      //   setIsCorrect(true)
+      // }, 2000)
+      // alert("name is required");
     }
   };
+
+  useEffect(() => {
+    if (name)
+    setIsCorrect(true)
+  },[name])
 
   return (
     <>
@@ -171,6 +182,7 @@ export default function CreateTravelPlan() {
                 setName(e.target.value);
               }}
             />
+            <p className={isCorrect ? "correct" : "error"}>Name is required!</p>
             <div className="create_travel_plan_time">
               <input
                 type="date"
