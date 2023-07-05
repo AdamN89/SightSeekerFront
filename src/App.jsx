@@ -14,6 +14,7 @@ import LandingPage from "./pages/LandingPage/LandingPage";
 import ReceivedInvitation from "./pages/FriendsPage/ReceivedInvitation";
 import Loader from "./components/Loader/Loader";
 import TravelsPage from "./pages/TravelPage/TravelsPage";
+import TravelsPageEdit from "./pages/TravelPage/TravelPageEdit";
 import ChatPage from "./pages/ChatPage/ChatPage";
 import CreateTravelPlan from "./pages/TravelPage/CreateTravelPlan";
 import AddFavorite from "./pages/FavoritePage/PoiPreference";

@@ -13,9 +13,9 @@ export default function EditTravelPlan() {
   const [currentTravelplan, setCurrentTravelplan] = useState();
   const [friends, setFriends] = useState([]);
   const [selectedFriends, setSelectedFriends] = useState([]);
-  const [name, setName] = useState([]);
-  const [startDate, setStartDate] = useState([]);
-  const [endDate, setEndDate] = useState([]);
+  const [name, setName] = useState();
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
   const { token, user, backendURL } = useContext(AuthContext);
   const { _id } = useParams();
 
