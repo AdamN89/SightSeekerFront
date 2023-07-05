@@ -30,8 +30,9 @@ export default function RegisterPage() {
   const { login, setUser, backendURL } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const [valuesToSubmit, setValuesToSubmit] = useState();
 
-  const register = async (values) => {
+  const register = async () => {
     setIsLoading(true);
     console.log(1);
     try {
@@ -42,7 +43,7 @@ export default function RegisterPage() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(values),
+          body: JSON.stringify(valuesToSubmit),
         }
       );
       console.log(2);
@@ -66,12 +67,13 @@ export default function RegisterPage() {
   };
 
   const handleFormSubmit = async (values) => {
+    setValuesToSubmit(values);
     console.log("inside handleFormSubmit");
-    await register(values);
   };
 
   const handleSubmitButtonClick = async (submitForm) => {
     await submitForm();
+    await register();
     console.log("inside handleSubmitButtonClick");
   };
 
