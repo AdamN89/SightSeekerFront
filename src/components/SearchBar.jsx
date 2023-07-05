@@ -14,7 +14,7 @@ export default function SearchBar({ viewState, userCoords }) {
   const [searchInput, setSearchInput] = useState("");
   const searchInputRef = useRef(null);
   const [error, setError] = useState(null);
-
+  const [overlayOpen, setOverlayOpen] = useState(false);
   const [mapBoxSuggestions, setMapboxSuggestions] = useState([]);
 
   useEffect(() => {
@@ -65,11 +65,12 @@ export default function SearchBar({ viewState, userCoords }) {
       retrievePointBySearchbox(e.target.id);
     else if (e.target.dataset.address)
       retrieveByAddress(e.target.dataset.address, e.target.dataset.name);
+    setOverlayOpen(false);
   };
 
   return (
     <>
-      {mapBoxSuggestions.length > 0 ? (
+      {mapBoxSuggestions.length > 0 && overlayOpen ? (
         <ul className="searchbar__suggestions">
           {mapBoxSuggestions
             .toSorted((a, b) => a.distance - b.distance)
@@ -124,7 +125,10 @@ export default function SearchBar({ viewState, userCoords }) {
           ref={searchInputRef}
           type="text"
           placeholder="search"
-          onChange={(e) => setSearchInput(e.target.value)}
+          onChange={(e) => {
+            setSearchInput(e.target.value);
+            if (!overlayOpen) setOverlayOpen(true);
+          }}
           value={searchInput}
         />
         {/* <button type="submit">

@@ -14,7 +14,7 @@ export default function TravelPage() {
   const { user } = useContext(AuthContext);
   const trevelRef = useRef(null);
   const navigate = useNavigate();
-  // console.log(user)
+  // console.log(user);
 
   const openTravelplan = (plan) => {
     //navigate(`/travelplan/open/${plan._id}`)
@@ -56,7 +56,10 @@ export default function TravelPage() {
               />
               {user?.travelPlans?.map((plan) => {
                 return (
-                  <div className="travel_plans">
+                  <div
+                    className="travel_plans"
+                    onClick={() => navigate(`/plantravel/${plan._id}`)}
+                  >
                     <span onClick={() => openTravelplan(plan)}>
                       {plan.name}
                     </span>
