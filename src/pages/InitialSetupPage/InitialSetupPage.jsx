@@ -34,7 +34,8 @@ export default function InitalSetup() {
   const [newPOI, setNewPOI] = useState("");
 
   const { avatars } = useContext(DataContext);
-  const { token, user, backendURL, setUser } = useContext(AuthContext);
+  const { token, user, backendURL, setUser, setAfterRegistration } =
+    useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -419,6 +420,7 @@ export default function InitalSetup() {
                   txt="done"
                   func={() => {
                     navigate("/home");
+                    setAfterRegistration(false);
                   }}
                 ></Button>
               </Form>

@@ -27,25 +27,23 @@ const initialRegisterValues = {
 };
 
 export default function RegisterPage() {
-  const { login, setUser, backendURL } = useContext(AuthContext);
+  const { login, setUser, backendURL, setAfterRegistration } =
+    useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const [valuesToSubmit, setValuesToSubmit] = useState();
 
-  const register = async () => {
+  const register = async (values) => {
     setIsLoading(true);
     console.log(1);
     try {
-      const response = await fetch(
-        "https://sightseeker-backend.onrender.com/user/signup",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(valuesToSubmit),
-        }
-      );
+      const response = await fetch(`${backendURL}/user/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
       console.log(2);
       if (response.ok) {
         console.log("3-ok");
@@ -67,13 +65,14 @@ export default function RegisterPage() {
   };
 
   const handleFormSubmit = async (values) => {
-    setValuesToSubmit(values);
+    //setValuesToSubmit(values);
     console.log("inside handleFormSubmit");
+    await register(values);
   };
 
   const handleSubmitButtonClick = async (submitForm) => {
+    setAfterRegistration(true);
     await submitForm();
-    await register();
     console.log("inside handleSubmitButtonClick");
   };
 
