@@ -243,12 +243,36 @@ export default function MapContent({
     [directionsPoints]
   );
 
-  const addToRoute = (pointObj, isUserPoint = false) => {
-    console.log("adding to route", pointObj, isUserPoint);
+  const saveSinglePoint = async (point) => {
+    try {
+      const res = await fetch(`${backendURL}/point/single`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(point),
+      });
+      const data = await res.json();
+      return data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const addToRoute = async (pointObj, isUserPoint = false) => {
+    // console.log("adding to route", pointObj, isUserPoint);
+    // console.log(Object.hasOwn(pointObj, "_id"));
+    let savedPoint;
     if (!pointObj) return;
-    if (isUserPoint) setDirectionsPoints((prev) => [pointObj, ...prev]);
-    else setDirectionsPoints((prev) => [...prev, pointObj]);
-    if (setParentPoints) setParentPoints((prev) => [...prev, pointObj]);
+    if (!Object.hasOwn(pointObj, "_id")) {
+      savedPoint = await saveSinglePoint(pointObj);
+      // console.log(savedPoint);
+    } else {
+      savedPoint = pointObj;
+    }
+    if (isUserPoint) setDirectionsPoints((prev) => [savedPoint, ...prev]);
+    else setDirectionsPoints((prev) => [...prev, savedPoint]);
+    if (setParentPoints) setParentPoints((prev) => [...prev, savedPoint]);
   };
 
   const removeFromRoute = (pointObj) => {
@@ -282,7 +306,7 @@ export default function MapContent({
     const coordString = [userCoords.longitude, userCoords.latitude].join(",");
     const pointObj = await retrieveByCoords(coordString);
     setUserPointObject(pointObj);
-    if (parent === "home") addToRoute(pointObj, true);
+    if (parent === "Home") addToRoute(pointObj, true);
   };
 
   useEffect(() => {
@@ -312,23 +336,6 @@ export default function MapContent({
       // console.log(data);
     } catch (error) {
       setError(error);
-    }
-  };
-
-  const saveSingePoint = async (point) => {
-    try {
-      const res = await fetch(`${backendURL}/point/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(point),
-      });
-      const data = await res.json();
-      setUser(data.data);
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -472,9 +479,9 @@ export default function MapContent({
             offsetTop={20}
           >
             <div className="popup_inside">
-              <h3>{recommendationPopup.name}</h3>
-              <p>{recommendationPopup.address}</p>
-              <p>{recommendationPopup.preference}</p>
+              <h3>{recommendationPopup?.name}</h3>
+              <p>{recommendationPopup?.address}</p>
+              <p>{recommendationPopup?.preference}</p>
               <div className="button-wrapper">
                 {!recommendationPopup.bookmark && (
                   <button onClick={() => bookmarkPoint(recommendationPopup)}>
@@ -488,7 +495,11 @@ export default function MapContent({
                     -- route
                   </button>
                 ) : (
-                  <button onClick={() => addToRoute(recommendationPopup)}>
+                  <button
+                    onClick={() => {
+                      addToRoute(recommendationPopup);
+                    }}
+                  >
                     ++ route
                   </button>
                 )}
