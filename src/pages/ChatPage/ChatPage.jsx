@@ -2,11 +2,13 @@ import "./chat.css";
 import { useState, useContext, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import { DataContext } from "../../context/DataContext";
 import ChatBox from "./ChatBox";
 import CloseIcon from "../../components/CloseIcon";
 
 export default function ChatPage() {
   const { user, backendURL } = useContext(AuthContext);
+  const { chatName, setChatName } = useContext(DataContext);
   const [chats, setChats] = useState([]);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const socket = useRef();
@@ -34,7 +36,7 @@ export default function ChatPage() {
   return (
     <div className="container chat_page">
       <div className="first_element">
-        <h1 className="title">My Group Chat</h1>
+        <h1 className="title">{chatName}</h1>
         <button onClick={() => navigate("/")}>
           <CloseIcon />
         </button>
