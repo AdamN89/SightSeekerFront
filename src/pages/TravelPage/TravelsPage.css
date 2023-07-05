@@ -18,6 +18,14 @@
   border: 2px solid var(--light_purple);
 }
 
+.travel_plans_span {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
 .travel_plans button {
   background: transparent;
   outline: 0;
