@@ -54,7 +54,7 @@ export default function Conversation({
     const filteredMembers = data.members.filter(
       (member) => member !== currentUserId
     );
-    console.log("this is current chat passed down from chat component", data)
+    // console.log("this is current chat passed down from chat component", data)
     // console.log("this is filtered members", filteredMembers)
 
     const getUserData = async () => {
@@ -118,7 +118,7 @@ export default function Conversation({
         console.log("update response", response)
         const renamedChat = await response.json()
         setChatName(renamedChat.chatName)
-        console.log("this is response json renamedChat", renamedChat)
+        // console.log("this is response json renamedChat", renamedChat)
       } catch (error) {
         console.log(error)
       }
