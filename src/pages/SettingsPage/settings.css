@@ -75,6 +75,12 @@
   width: 128px;
   border: 3px solid var(--dark_purple);
   border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.settings_page_first_element img:hover {
+  border: 3px solid var(--light_green);
 }
 
 .settings_page_data {

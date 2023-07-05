@@ -100,19 +100,41 @@ export default function RegisterPage() {
             }) => (
               <Form onSubmit={handleSubmit}>
                 <div className="register_page_form">
-                  <Field type="text" placeholder="full name" name="name" />
-                  <Field type="text" placeholder="username" name="userName" />
-                  <Field type="text" placeholder="email" name="email" />
+                  <Field 
+                    type="text"
+                    placeholder="full name"
+                    name="name"
+                    className={errors.name && touched.name ? "input-error" : ""}
+                   />
+                   {errors.name && touched.name && <p className="error-message">{errors.name}</p>}
+                  <Field 
+                    type="text"
+                    placeholder="username"
+                    name="userName"
+                    className={errors.userName && touched.userName ? "input-error" : ""}
+                   />
+                   {errors.userName && touched.userName && <p className="error-message">{errors.userName}</p>}
+                  <Field
+                    type="text"
+                    placeholder="email"
+                    name="email"
+                    className={errors.email && touched.email ? "input-error" : ""}
+                   />
+                   {errors.email && touched.email && <p className="error-message">{errors.email}</p>}
                   <Field
                     type="password"
                     placeholder="password"
                     name="password"
+                    className={errors.password && touched.password ? "input-error" : ""}
                   />
+                  {errors.password && touched.password && <p className="error-message">{errors.password}</p>}
                   <Field
                     type="password"
                     placeholder="confirm password"
                     name="confirmPassword"
+                    className={errors.confirmPassword && touched.confirmPassword ? "input-error" : ""}
                   />
+                  {errors.confirmPassword && touched.confirmPassword && <p className="error-message">{errors.confirmPassword}</p>}
                   <span>
                     By registering, you are agreeing to our Terms of Use and
                     Privacy Policy
@@ -125,18 +147,18 @@ export default function RegisterPage() {
                     func={() => {
                       handleSubmitButtonClick(submitForm);
 
-                      if (errors.confirmPassword) {
-                        alert(errors.confirmPassword);
-                      }
-                      if (errors.email) {
-                        alert(errors.email);
-                      }
-                      if (errors.name) {
-                        alert(errors.name);
-                      }
-                      if (errors.userName) {
-                        alert(errors.userName);
-                      }
+                      // if (errors.confirmPassword) {
+                      //   alert(errors.confirmPassword);
+                      // }
+                      // if (errors.email) {
+                      //   alert(errors.email);
+                      // }
+                      // if (errors.name) {
+                      //   alert(errors.name);
+                      // }
+                      // if (errors.userName) {
+                      //   alert(errors.userName);
+                      // }
                     }}
                   />
                   <div className="register_page_login">
