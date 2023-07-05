@@ -17,7 +17,7 @@ import ClockIcon from "../../components/ClockIcon";
 import Button from "../../components/Button";
 
 export default function PlanTravel() {
-  const { user, backendURL, token } = useContext(AuthContext);
+  const { user, backendURL, token, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const [userCoords, setUserCoords] = useState({});
   const [viewState, setViewState] = useState({
@@ -121,6 +121,32 @@ export default function PlanTravel() {
   };
   // console.log(allSelectedPoints);
 
+  const saveCurrentRoute = async () => {
+    console.log(allSelectedPoints);
+
+    const idsOnly = allSelectedPoints.map((point) => point._id);
+    try {
+      const res = await fetch(`${backendURL}/travelplan/savePoints/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ points: idsOnly }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setUser(data.data);
+        console.log(data.data);
+        setAllSelectedPoints([]);
+        setCurrentPointObjs(null);
+        setCurrentPoints(null);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log("all selected Points: ", allSelectedPoints);
   return (
     <>
       {/* <TopMenu /> */}
@@ -202,7 +228,7 @@ export default function PlanTravel() {
           )}
         </div>
         <div className="plan_travel_save_btn">
-          <Button txt={"save"} func={null} key="savetravel plan" />
+          <Button txt={"save"} func={saveCurrentRoute} key="savetravel plan" />
         </div>
       </div>
     </>

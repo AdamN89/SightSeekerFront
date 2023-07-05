@@ -312,7 +312,7 @@
 .plan_travel_container {
   position: absolute;
   width: 100%;
-  min-height: 90vh;
+  min-height: 30vh;
   padding: 30px;
   display: flex;
   flex-direction: column;
@@ -426,6 +426,9 @@
   overflow: hidden;
 }
 
+.correct {
+  opacity: 0;
+}
 .plan_travel_poi_buttons {
   display: flex;
 }

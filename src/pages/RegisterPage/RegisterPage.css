@@ -54,3 +54,11 @@
 .register_page_form > input {
   text-transform: unset;
 }
+
+.input-error {
+  border-color: var(--input_error)
+}
+
+.error-message {
+  color: var(--input_error)
+}

@@ -32,6 +32,7 @@ body {
   --radio_border: rgba(255, 255, 255, 0.5);
   --toggle: linear-gradient(180deg, #ffffff 0%, #646464 100%);
   --shadow_dark: rgba(0, 0, 0, 0.5);
+  --input_error: #ff0000;
 }
 
 .light {
@@ -60,6 +61,7 @@ body {
   --radio_border: rgba(0, 0, 0, 0.5);
   --toggle: linear-gradient(180deg, #696969 0%, #000000 100%);
   --shadow_dark: rgba(0, 0, 0, 0.3);
+  --input_error: #fc8181;
 }
 
 body {
