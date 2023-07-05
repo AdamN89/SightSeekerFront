@@ -32,7 +32,7 @@ export default function MapContent({
   const mapStyle = lightMode
     ? "mapbox://styles/stephanullmann/clj7lajvj005t01que278452b"
     : "mapbox://styles/stephanullmann/cljnybgvq00ii01pqglfgat0a";
-  const navigationPreference = "driving";
+  const navigationPreference = "walking";
   const areAlternativeRoutes = "false";
   const markerColors = [
     "#895392",
