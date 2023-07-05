@@ -26,6 +26,7 @@ export default function Chat() {
       try {
         const response = await fetch(`${backendURL}/chat/${user._id}`);
         const data = await response.json();
+        console.log("fetched chats", data)
         setChats(data);
       } catch (error) {
         console.log(error);
@@ -66,7 +67,31 @@ export default function Chat() {
             </div>
             {/* start of content of navigation page */}
             <div className="navigation_wrapper_body_content">
-              {chats.map((chat, ind) => (
+            {chats.map((chat, ind) => (
+              <div
+                key={chat + user._id + ind}
+                onClick={(event) => {
+                  if (event.target.tagName !== "BUTTON") {
+                    setCurrentChat(chat);
+                    navigate("/chat");
+                  }
+                }}
+              >
+                <Conversation
+                  data={chat}
+                  currentUserId={user._id}
+                  online={checkOnlineStatus(chat)}
+                  onlineUsers={onlineUsers}
+                  onButtonClick={(event) => {
+                    event.stopPropagation();
+                    // This will prevent navigation when the button is clicked
+                  }}
+                />
+              </div>
+            ))}
+
+
+              {/* {chats.map((chat) => (
                 <div
                   key={chat + user._id + ind}
                   onClick={() => {
@@ -81,7 +106,7 @@ export default function Chat() {
                     onlineUsers={onlineUsers}
                   />
                 </div>
-              ))}
+              ))} */}
             </div>
             {/* end of content of navigation page */}
           </div>
