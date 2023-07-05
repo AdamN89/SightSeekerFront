@@ -9,6 +9,12 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import "./TravelsPage.css";
 import { useNavigate, useParams } from "react-router-dom";
 import SearchBar from "../../components/SearchBar";
+import UpArrow from "../../components/UpArrow";
+import DownArrow from "../../components/DownArrow";
+import CalendarIcon from "../../components/CalendarIcon";
+import RoadIcon from "../../components/RoadIcon";
+import ClockIcon from "../../components/ClockIcon";
+import Button from "../../components/Button";
 
 export default function PlanTravel() {
   const { user, backendURL, token } = useContext(AuthContext);
@@ -20,6 +26,7 @@ export default function PlanTravel() {
     zoom: 15,
   });
   const [currentPoints, setCurrentPoints] = useState(null);
+  const [travelName, setTravelName] = useState(null);
   const [currentPointObjs, setCurrentPointObjs] = useState(null);
 
   const [allSelectedPoints, setAllSelectedPoints] = useState([]);
@@ -55,6 +62,7 @@ export default function PlanTravel() {
     setCurrentPoints(
       user.travelPlans.find((plan) => plan._id === id).selectedPoints
     );
+    setTravelName(user.travelPlans.find((plan) => plan._id === id).name);
   }, [user]);
 
   const getCurrentPointObjects = async () => {
@@ -111,13 +119,32 @@ export default function PlanTravel() {
         ...prev.slice(index + 2, prev.length),
       ]);
   };
-  console.log(allSelectedPoints);
+  // console.log(allSelectedPoints);
 
   return (
     <>
       {/* <TopMenu /> */}
       <div className="plan_travel_header">
-        <h1>Travel plan name</h1>
+        <div className="plan_travel_header_data">
+          <h1 className="title">{travelName}</h1>
+          {routeData ? (
+            <div>
+              <span>
+                <CalendarIcon /> 19.08.2023 - 01.09.2023
+              </span>
+              <span>
+                <ClockIcon />
+                {routeData.duration / 60 > 60
+                  ? `${(routeData.duration / 3600).toFixed(1)}h`
+                  : `${(routeData.duration / 60).toFixed(1)}mins`}
+              </span>
+              <span>
+                <RoadIcon />
+                {(routeData.distance / 1000).toFixed(2)}km
+              </span>
+            </div>
+          ) : null}
+        </div>
         <div className="plan_travel_close_btn" onClick={() => navigate("/")}>
           <CloseIcon />
         </div>
@@ -136,39 +163,47 @@ export default function PlanTravel() {
           setRouteData={setRouteData}
         />
         {/* <input type="text" placeholder="search places" /> */}
-        <SearchBar viewState={viewState} userCoords={userCoords} />
-        {allSelectedPoints.length > 0 && (
-          <div className="plan_travel_pois">
-            {allSelectedPoints && allSelectedPoints?.length > 0
-              ? allSelectedPoints.map((point, index, arr) => (
-                  <div className="plan_travel_poi">
-                    <span>{point.name ? point.name : point.address}</span>
-                    <div className="plan_travel_poi_buttons">
-                      {/* {index !== 0 && ( */}
-                      <button onClick={() => moveUp(index)}>Up</button>
-                      {/* )} */}
-                      {/* {index !== arr.length - 1 && ( */}
-                      <button onClick={() => moveDown(index)}>Down</button>
-                      {/* )} */}
-                      <button onClick={() => deletePoint(point)}>
-                        <DeleteIcon />
-                      </button>
+        <div className="plan_travel_container">
+          <SearchBar viewState={viewState} userCoords={userCoords} />
+          {allSelectedPoints.length > 0 && (
+            <div className="plan_travel_pois">
+              {allSelectedPoints && allSelectedPoints?.length > 0
+                ? allSelectedPoints.map((point, index, arr) => (
+                    <div className="plan_travel_poi">
+                      <span>{point.name ? point.name : point.address}</span>
+                      <div className="plan_travel_poi_buttons">
+                        {/* {index !== 0 && ( */}
+                        <button
+                          className="plan_travel_poi_arrow"
+                          onClick={() => moveUp(index)}
+                        >
+                          <UpArrow />
+                        </button>
+                        {/* )} */}
+                        {/* {index !== arr.length - 1 && ( */}
+                        <button
+                          className="plan_travel_poi_arrow"
+                          onClick={() => moveDown(index)}
+                        >
+                          <DownArrow />
+                        </button>
+                        {/* )} */}
+                        <button
+                          className="plan_travel_poi_button"
+                          onClick={() => deletePoint(point)}
+                        >
+                          <DeleteIcon />
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                ))
-              : null}
-          </div>
-        )}
-        {routeData ? (
-          <div>
-            <span>
-              {routeData.duration / 60 > 60
-                ? `~${(routeData.duration / 3600).toFixed(1)}hrs 🚗`
-                : `~${(routeData.duration / 60).toFixed(1)}mins 🚗`}
-            </span>
-            <span>~{(routeData.distance / 1000).toFixed(2)}km</span>
-          </div>
-        ) : null}
+                  ))
+                : null}
+            </div>
+          )}
+        </div>
+        <div className="plan_travel_save_btn">
+          <Button txt={"save"} func={null} key="savetravel plan" />
+        </div>
       </div>
     </>
   );
