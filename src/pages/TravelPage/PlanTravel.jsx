@@ -8,7 +8,7 @@ import "../HomePage/HomePage.css";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "./TravelsPage.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import SearchBar from "../../components/SearchBar";
 
 export default function PlanTravel() {
   const { user, backendURL, token } = useContext(AuthContext);
@@ -23,6 +23,9 @@ export default function PlanTravel() {
   const [currentPointObjs, setCurrentPointObjs] = useState(null);
 
   const [allSelectedPoints, setAllSelectedPoints] = useState([]);
+  const [pointToDelete, setPointToDelete] = useState(null);
+  const [routeData, setRouteData] = useState(null);
+
   const { id } = useParams();
 
   // console.log("current plan", currentPoints);
@@ -55,7 +58,7 @@ export default function PlanTravel() {
   }, [user]);
 
   const getCurrentPointObjects = async () => {
-    console.log("getPoints fired");
+    // console.log("getPoints fired");
     try {
       const res = await fetch(`${backendURL}/point/getMultiplePoints`, {
         method: "POST",
@@ -82,8 +85,34 @@ export default function PlanTravel() {
   useEffect(() => {
     if (currentPoints?.length > 0) getCurrentPointObjects();
   }, [currentPoints]);
-  console.log("all selected points", allSelectedPoints);
+  // console.log("all selected points", allSelectedPoints);
   // console.log("current points", currentPointObjs);
+
+  const deletePoint = (point) => {
+    setPointToDelete(point);
+  };
+
+  const moveUp = (index) => {
+    if (index !== 0)
+      setAllSelectedPoints((prev) => [
+        ...prev.slice(0, index - 1),
+        prev[index],
+        prev[index - 1],
+        ...prev.slice(index + 1, prev.length),
+      ]);
+  };
+
+  const moveDown = (index) => {
+    if (index !== allSelectedPoints.length - 1)
+      setAllSelectedPoints((prev) => [
+        ...prev.slice(0, index),
+        prev[index + 1],
+        prev[index],
+        ...prev.slice(index + 2, prev.length),
+      ]);
+  };
+  console.log(allSelectedPoints);
+
   return (
     <>
       {/* <TopMenu /> */}
@@ -98,41 +127,48 @@ export default function PlanTravel() {
           viewState={viewState}
           setViewState={setViewState}
           userCoords={userCoords}
-          parent={"CreateTravelPlan"}
+          parent={"PlanTravel"}
           customPointObjs={currentPointObjs}
           setParentPoints={setAllSelectedPoints}
+          allSelectedPoints={allSelectedPoints}
+          setPointToDelete={setPointToDelete}
+          pointToDelete={pointToDelete}
+          setRouteData={setRouteData}
         />
-        <input type="text" placeholder="search places" />
-        <div className="plan_travel_pois">
-          {allSelectedPoints && allSelectedPoints?.length > 0
-            ? allSelectedPoints.map((point) => (
-                <div className="plan_travel_poi">
-                  <span>{point.name ? point.name : point.address}</span>
-                  <button>
-                    <DeleteIcon />
-                  </button>
-                </div>
-              ))
-            : null}
-          {/* <div className="plan_travel_poi">
-            <span>poi name 02</span>
-            <button>
-              <DeleteIcon />
-            </button>
+        {/* <input type="text" placeholder="search places" /> */}
+        <SearchBar viewState={viewState} userCoords={userCoords} />
+        {allSelectedPoints.length > 0 && (
+          <div className="plan_travel_pois">
+            {allSelectedPoints && allSelectedPoints?.length > 0
+              ? allSelectedPoints.map((point, index, arr) => (
+                  <div className="plan_travel_poi">
+                    <span>{point.name ? point.name : point.address}</span>
+                    <div className="plan_travel_poi_buttons">
+                      {/* {index !== 0 && ( */}
+                      <button onClick={() => moveUp(index)}>Up</button>
+                      {/* )} */}
+                      {/* {index !== arr.length - 1 && ( */}
+                      <button onClick={() => moveDown(index)}>Down</button>
+                      {/* )} */}
+                      <button onClick={() => deletePoint(point)}>
+                        <DeleteIcon />
+                      </button>
+                    </div>
+                  </div>
+                ))
+              : null}
           </div>
-          <div className="plan_travel_poi">
-            <span>poi name 03</span>
-            <button>
-              <DeleteIcon />
-            </button>
+        )}
+        {routeData ? (
+          <div>
+            <span>
+              {routeData.duration / 60 > 60
+                ? `~${(routeData.duration / 3600).toFixed(1)}hrs 🚗`
+                : `~${(routeData.duration / 60).toFixed(1)}mins 🚗`}
+            </span>
+            <span>~{(routeData.distance / 1000).toFixed(2)}km</span>
           </div>
-          <div className="plan_travel_poi">
-            <span>poi name 04</span>
-            <button>
-              <DeleteIcon />
-            </button>
-          </div> */}
-        </div>
+        ) : null}
       </div>
     </>
   );

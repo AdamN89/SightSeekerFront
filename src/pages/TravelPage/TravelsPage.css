@@ -389,3 +389,8 @@
 .App {
   overflow: hidden;
 }
+
+.plan_travel_poi_buttons {
+  width: 70px;
+  display: flex;
+}

@@ -20,8 +20,12 @@ export default function MapContent({
   parent = "home",
   customPointObjs = null,
   setParentPoints = null,
+  pointToDelete = null,
+  setPointToDelete = null,
+  allSelectedPoints = null,
+  setRouteData = null,
 }) {
-  const { user } = useContext(AuthContext);
+  const { user, setUser, backendURL, token } = useContext(AuthContext);
   const { lightMode } = useContext(ThemeContext);
   const { markers, retrieveByCoords, bookmarkPoint } = useContext(MapContext);
   const [userPointObject, setUserPointObject] = useState(null);
@@ -257,7 +261,14 @@ export default function MapContent({
       );
   };
 
-  console.log(directionsPoints);
+  useEffect(() => {
+    if (pointToDelete) {
+      removeFromRoute(pointToDelete);
+      setPointToDelete(null);
+    }
+  }, [pointToDelete]);
+
+  // console.log(directionsPoints);
   useEffect(() => {
     console.log("useEffect runs - customPointObjs: ", customPointObjs);
     if (customPointObjs)
@@ -297,17 +308,48 @@ export default function MapContent({
       );
       const data = await res.json();
       setDirectionsData(data);
+      if (setRouteData) setRouteData(data.routes[0]);
       // console.log(data);
     } catch (error) {
       setError(error);
     }
   };
 
+  const saveSingePoint = async (point) => {
+    try {
+      const res = await fetch(`${backendURL}/point/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(point),
+      });
+      const data = await res.json();
+      setUser(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // const savePoints = (unstoredPoints) => {
+  //   // console.log("unstored points, though: ", unstoredPoints);
+  //   unstoredPoints.forEach((point) => saveSingePoint(point));
+  // };
+
   useEffect(() => {
     if (directionsPoints.length === 1) setDirectionsData(null);
     if (directionsPoints.length > 1 && directionsPoints.length < 26)
       fetchDirections(directionsPoints);
+    // const unstoredPoints = directionsPoints.filter(
+    //   (point) => !Object.hasOwn(point, "_id")
+    // );
+    // if (unstoredPoints.length > 0) savePoints(unstoredPoints);
   }, [directionsPoints]);
+
+  useEffect(() => {
+    if (allSelectedPoints) setDirectionsPoints(allSelectedPoints);
+  }, [allSelectedPoints]);
 
   return (
     userCoords.latitude &&
@@ -359,11 +401,12 @@ export default function MapContent({
             setShowPopup((prev) => !prev);
           }}
         >
-          <img
+          {/* <img
             src="./assets/marker.png"
             alt="marker"
             className={lightMode ? null : "mapboxgl-ctrl-icon"}
-          />
+          /> */}
+          <MapMarker fill={"#8f278f"} />
         </Marker>
         {clickedMapPoint && (
           <Marker
@@ -382,7 +425,9 @@ export default function MapContent({
 
         {/* Markers and Popups for selections from searchbar and user favorites */}
         {parent !== "CreateTravelPlan" && selectedMarkers}
-        {parent !== "CreateTravelPlan" && userFavoritesMarkers}
+        {parent !== "CreateTravelPlan" &&
+          parent !== "PlanTravel" &&
+          userFavoritesMarkers}
         {parent !== "CreateTravelPlan" && popupInfo && (
           <Popup
             longitude={popupInfo.coords[0]}
@@ -390,7 +435,7 @@ export default function MapContent({
             onClose={() => setPopupInfo(null)}
             closeButton={true}
             closeOnClick={true}
-            offsetTop={120}
+            offsetTop={20}
           >
             <div className="popup_inside">
               <h3>{popupInfo.name}</h3>
@@ -414,7 +459,9 @@ export default function MapContent({
         )}
         {/* Marker and Popup for recommended points  and map clicked points*/}
         {directionsPointMarkers}
-        {parent !== "CreateTravelPlan" && recommendationMarkers}
+        {parent !== "CreateTravelPlan" &&
+          parent !== "PlanTravel" &&
+          recommendationMarkers}
         {recommendationPopup && (
           <Popup
             longitude={recommendationPopup.coords[0]}
@@ -422,7 +469,7 @@ export default function MapContent({
             onClose={() => setRecommendationPopup(null)}
             closeButton={true}
             closeOnClick={true}
-            offsetTop={1200}
+            offsetTop={20}
           >
             <div className="popup_inside">
               <h3>{recommendationPopup.name}</h3>

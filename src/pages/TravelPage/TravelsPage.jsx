@@ -14,7 +14,7 @@ export default function TravelPage() {
   const { user } = useContext(AuthContext);
   const trevelRef = useRef(null);
   const navigate = useNavigate();
-  console.log(user);
+  // console.log(user);
 
   const openTravelplan = (plan) => {
     //navigate(`/travelplan/open/${plan._id}`)
