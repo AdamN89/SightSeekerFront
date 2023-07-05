@@ -46,7 +46,7 @@ export default function TravelPage() {
                 <CloseIcon />
               </button>
             </div>
-            <TravelSearchBar />
+            {/* <TravelSearchBar /> */}
             {/* start of content of navigation page */}
             <div className="navigation_wrapper_body_content">
               <Button
@@ -54,6 +54,17 @@ export default function TravelPage() {
                 func={() => navigate("/createtravelplan")}
                 key="createtravelplan"
               />
+              {user?.travelPlans?.map((plan) => {
+                return (
+                  <div className="travel_plans">
+                    <span onClick={() => openTravelplan(plan)}>
+                      {plan.name}
+                    </span>
+                    <button onClick={(e) => handleEditTravelplan(e, plan)}>
+                      <EditIcon />
+                    </button>
+                  </div>
+                );
               {user?.travelPlans?.map((plan) => {
                 return (
                   <div

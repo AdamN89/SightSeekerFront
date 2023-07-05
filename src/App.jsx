@@ -14,9 +14,10 @@ import LandingPage from "./pages/LandingPage/LandingPage";
 import ReceivedInvitation from "./pages/FriendsPage/ReceivedInvitation";
 import Loader from "./components/Loader/Loader";
 import TravelsPage from "./pages/TravelPage/TravelsPage";
+import TravelsPageEdit from "./pages/TravelPage/TravelPageEdit";
 import ChatPage from "./pages/ChatPage/ChatPage";
 import CreateTravelPlan from "./pages/TravelPage/CreateTravelPlan";
-import AddFavorite from "./pages/FavoritePage/PoiPreference";
+import PoiPreference from "./pages/FavoritePage/PoiPreference";
 import Snake from "./components/SnakeGame/snake";
 import ErrorPage from "./components/Error/ErrorPage";
 import PlanTravel from "./pages/TravelPage/PlanTravel";
@@ -90,7 +91,7 @@ function App() {
         />
         <Route
           path="/addfavorite"
-          element={token ? <AddFavorite /> : <Navigate to="/" />}
+          element={token ? <PoiPreference /> : <Navigate to="/" />}
         />
         <Route path="/snake" element={<Snake />} />
         <Route path="*" element={<ErrorPage />} />
