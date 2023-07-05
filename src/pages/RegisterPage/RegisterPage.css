@@ -56,5 +56,9 @@
 }
 
 .input-error {
-  border-color: #fc8181
+  border-color: var(--input_error)
+}
+
+.error-message {
+  color: var(--input_error)
 }
