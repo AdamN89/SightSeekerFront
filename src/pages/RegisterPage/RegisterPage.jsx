@@ -106,35 +106,35 @@ export default function RegisterPage() {
                     name="name"
                     className={errors.name && touched.name ? "input-error" : ""}
                    />
-                   {errors.name && touched.name && <p className="error">{errors.name}</p>}
+                   {errors.name && touched.name && <p className="error-message">{errors.name}</p>}
                   <Field 
                     type="text"
                     placeholder="username"
                     name="userName"
                     className={errors.userName && touched.userName ? "input-error" : ""}
                    />
-                   {errors.userName && touched.userName && <p className="error">{errors.userName}</p>}
+                   {errors.userName && touched.userName && <p className="error-message">{errors.userName}</p>}
                   <Field
                     type="text"
                     placeholder="email"
                     name="email"
                     className={errors.email && touched.email ? "input-error" : ""}
                    />
-                   {errors.email && touched.email && <p className="error">{errors.email}</p>}
+                   {errors.email && touched.email && <p className="error-message">{errors.email}</p>}
                   <Field
                     type="password"
                     placeholder="password"
                     name="password"
                     className={errors.password && touched.password ? "input-error" : ""}
                   />
-                  {errors.password && touched.password && <p className="error">{errors.password}</p>}
+                  {errors.password && touched.password && <p className="error-message">{errors.password}</p>}
                   <Field
                     type="password"
                     placeholder="confirm password"
                     name="confirmPassword"
                     className={errors.confirmPassword && touched.confirmPassword ? "input-error" : ""}
                   />
-                  {errors.confirmPassword && touched.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
+                  {errors.confirmPassword && touched.confirmPassword && <p className="error-message">{errors.confirmPassword}</p>}
                   <span>
                     By registering, you are agreeing to our Terms of Use and
                     Privacy Policy
