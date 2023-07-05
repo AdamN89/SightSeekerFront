@@ -389,3 +389,7 @@
 .App {
   overflow: hidden;
 }
+
+.correct {
+  opacity: 0;
+}
