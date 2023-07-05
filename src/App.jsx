@@ -26,72 +26,73 @@ import TravelPageEdit from "./pages/TravelPage/TravelPageEdit";
 
 function App() {
   // const token = localStorage.getItem("token")
-  const { token } = useContext(AuthContext);
+  // const { token } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={token ? <HomePage /> : <LandingPage />} />
+        <Route path="/" element={user ? <HomePage /> : <LandingPage />} />
         <Route
           path="/login"
-          element={token ? <Navigate to="/" /> : <LoginPage />}
+          element={user ? <Navigate to="/" /> : <LoginPage />}
         />
         <Route
           path="/register"
-          element={token ? <Navigate to="/" /> : <RegisterPage />}
+          element={user ? <Navigate to="/" /> : <RegisterPage />}
         />
         <Route
           path="/settings"
-          element={token ? <SettingsPage /> : <Navigate to="/" />}
+          element={user ? <SettingsPage /> : <Navigate to="/" />}
         />
         <Route
           path="/features"
-          element={token ? <FeatureProgress /> : <Navigate to="/" />}
+          element={user ? <FeatureProgress /> : <Navigate to="/" />}
         />
         <Route
           path="/about"
-          element={token ? <AboutPage /> : <Navigate to="/" />}
+          element={user ? <AboutPage /> : <Navigate to="/" />}
         />
         <Route
           path="/initialsetup"
-          element={token ? <InitialSetupPage /> : <Navigate to="/" />}
+          element={user ? <InitialSetupPage /> : <Navigate to="/" />}
         />
         <Route
           path="/home"
-          element={token ? <HomePage /> : <Navigate to="/" />}
+          element={user ? <HomePage /> : <Navigate to="/" />}
         />
         <Route path="/spiner" element={<Loader />} />
         <Route
           path="/friends"
-          element={token ? <FriendsPage /> : <Navigate to="/" />}
+          element={user ? <FriendsPage /> : <Navigate to="/" />}
         />
         <Route
           path="/chat"
-          element={token ? <ChatPage /> : <Navigate to="/" />}
+          element={user ? <ChatPage /> : <Navigate to="/" />}
         />
         <Route
           path="/invitation"
-          element={token ? <ReceivedInvitation /> : <Navigate to="/" />}
+          element={user ? <ReceivedInvitation /> : <Navigate to="/" />}
         />
         <Route
           path="/travelplan/open/:_id"
-          element={token ? <TravelsPage /> : <Navigate to="/" />}
+          element={user ? <TravelsPage /> : <Navigate to="/" />}
         />
         <Route
           path="/travelplan/edit/:_id"
-          element={token ? <TravelPageEdit /> : <Navigate to="/" />}
+          element={user ? <TravelPageEdit /> : <Navigate to="/" />}
         />
         <Route
           path="/createtravelplan"
-          element={token ? <CreateTravelPlan /> : <Navigate to="/" />}
+          element={user ? <CreateTravelPlan /> : <Navigate to="/" />}
         />
         <Route
           path="/plantravel/:id"
-          element={token ? <PlanTravel /> : <Navigate to="/" />}
+          element={user ? <PlanTravel /> : <Navigate to="/" />}
         />
         <Route
           path="/addfavorite"
-          element={token ? <PoiPreference /> : <Navigate to="/" />}
+          element={user ? <PoiPreference /> : <Navigate to="/" />}
         />
         <Route path="/snake" element={<Snake />} />
         <Route path="*" element={<ErrorPage />} />

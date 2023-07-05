@@ -897,3 +897,18 @@ add to about page */
   width: 24px;
   height: 32px;
 }
+
+#inv_btn {
+  background-color: var(--light_green);
+  border: 2px solid var(--dark_green);
+  border-radius: 10px;
+  outline: 0;
+  color: var(--txt);
+  padding: 10px;
+  transition: all 0.3s ease;
+}
+
+#inv_btn:hover {
+  background-color: var(--light_purple);
+  border: 2px solid var(--dark_purple);
+}
