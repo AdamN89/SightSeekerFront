@@ -173,6 +173,7 @@ export default function FriendsPage() {
                 onClick={() => {
                   closeMenu(friendsRef);
                   closeTopMenu();
+                  setInviteUserModalIsOpen(false);
                 }}
               >
                 <CloseIcon />

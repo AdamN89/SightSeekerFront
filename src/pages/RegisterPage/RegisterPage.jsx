@@ -35,13 +35,16 @@ export default function RegisterPage() {
     setIsLoading(true);
     console.log(1);
     try {
-      const response = await fetch('https://sightseeker-backend.onrender.com/user/signup', {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
+      const response = await fetch(
+        "https://sightseeker-backend.onrender.com/user/signup",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        }
+      );
       console.log(2);
       if (response.ok) {
         console.log("3-ok");
@@ -50,7 +53,7 @@ export default function RegisterPage() {
         localStorage.setItem("token", registeredUser.token);
         login(registeredUser.token);
         setUser(registeredUser.data);
-        navigate("/initialsetup");
+        navigate("/features");
       }
       // else {
       //   console.log("Error occurred while registering");
@@ -62,13 +65,14 @@ export default function RegisterPage() {
     }
   };
 
-  const handleFormSubmit = async (values, { setSubmitting }) => {
+  const handleFormSubmit = async (values) => {
+    console.log("inside handleFormSubmit");
     await register(values);
-    setSubmitting(false);
   };
 
   const handleSubmitButtonClick = async (submitForm) => {
     await submitForm();
+    console.log("inside handleSubmitButtonClick");
   };
 
   return (
@@ -93,48 +97,67 @@ export default function RegisterPage() {
               touched,
               handleChange,
               handleBlur,
-              handleSubmit,
               isSubmitting,
               submitForm,
               /* and other goodies */
             }) => (
-              <Form onSubmit={handleSubmit}>
+              <Form>
                 <div className="register_page_form">
-                  <Field 
+                  <Field
                     type="text"
                     placeholder="full name"
                     name="name"
                     className={errors.name && touched.name ? "input-error" : ""}
-                   />
-                   {errors.name && touched.name && <p className="error-message">{errors.name}</p>}
-                  <Field 
+                  />
+                  {errors.name && touched.name && (
+                    <p className="error-message">{errors.name}</p>
+                  )}
+                  <Field
                     type="text"
                     placeholder="username"
                     name="userName"
-                    className={errors.userName && touched.userName ? "input-error" : ""}
-                   />
-                   {errors.userName && touched.userName && <p className="error-message">{errors.userName}</p>}
+                    className={
+                      errors.userName && touched.userName ? "input-error" : ""
+                    }
+                  />
+                  {errors.userName && touched.userName && (
+                    <p className="error-message">{errors.userName}</p>
+                  )}
                   <Field
                     type="text"
                     placeholder="email"
                     name="email"
-                    className={errors.email && touched.email ? "input-error" : ""}
-                   />
-                   {errors.email && touched.email && <p className="error-message">{errors.email}</p>}
+                    className={
+                      errors.email && touched.email ? "input-error" : ""
+                    }
+                  />
+                  {errors.email && touched.email && (
+                    <p className="error-message">{errors.email}</p>
+                  )}
                   <Field
                     type="password"
                     placeholder="password"
                     name="password"
-                    className={errors.password && touched.password ? "input-error" : ""}
+                    className={
+                      errors.password && touched.password ? "input-error" : ""
+                    }
                   />
-                  {errors.password && touched.password && <p className="error-message">{errors.password}</p>}
+                  {errors.password && touched.password && (
+                    <p className="error-message">{errors.password}</p>
+                  )}
                   <Field
                     type="password"
                     placeholder="confirm password"
                     name="confirmPassword"
-                    className={errors.confirmPassword && touched.confirmPassword ? "input-error" : ""}
+                    className={
+                      errors.confirmPassword && touched.confirmPassword
+                        ? "input-error"
+                        : ""
+                    }
                   />
-                  {errors.confirmPassword && touched.confirmPassword && <p className="error-message">{errors.confirmPassword}</p>}
+                  {errors.confirmPassword && touched.confirmPassword && (
+                    <p className="error-message">{errors.confirmPassword}</p>
+                  )}
                   <span>
                     By registering, you are agreeing to our Terms of Use and
                     Privacy Policy
