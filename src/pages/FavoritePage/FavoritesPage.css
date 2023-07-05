@@ -97,3 +97,21 @@
   border-radius: 20px;
   border: 2px solid var(--light_green);
 }
+
+/*====================================
+      classes for navigation
+====================================*/
+
+.favorites_wrapper_body_content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.favorites_wrapper_body_content_row {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
