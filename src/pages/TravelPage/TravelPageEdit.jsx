@@ -107,16 +107,16 @@ export default function EditTravelPlan() {
         className={openDrop ? "showClickAway" : "hide"}
         onClick={handleCloseModel}
       ></div>
-      <div className="container create_travel_plan">
+      <div className="container edit_travel_plan">
         <button
-          className="create_travel_plan_close_btn"
+          className="edit_travel_plan_close_btn"
           onClick={() => navigate("/home")}
         >
           <CloseIcon />
         </button>
         <h1 className="title">Edit Travel Plan</h1>
         <div className="first_element">
-          <form className="create_travel_plan_form">
+          <form className="edit_travel_plan_form">
             <input
               type="text"
               placeholder={currentTravelplan.name}
@@ -124,9 +124,10 @@ export default function EditTravelPlan() {
                 setName(e.target.value);
               }}
             />
-            <div className="create_travel_plan_time">
+            <div className="edit_travel_plan_time">
               <input
                 type="date"
+                className="edit_travel_plan_time_picker"
                 defaultValue={currentTravelplan.dates.startDate.slice(0, 10)}
                 onChange={(e) => {
                   setStartDate(e.target.value);
@@ -134,6 +135,7 @@ export default function EditTravelPlan() {
               />
               <input
                 type="date"
+                className="edit_travel_plan_time_picker"
                 defaultValue={currentTravelplan.dates.endDate.slice(0, 10)}
                 onChange={(e) => {
                   setEndDate(e.target.value);
@@ -143,11 +145,11 @@ export default function EditTravelPlan() {
             <Button txt="add members" func={handleAddMembers} />
           </form>
           <dialog ref={membersDialog} className={openDrop ? "modal" : null}>
-            <div>
+            <div className="edit_travel_plan_modal_header">
               <h2 className="title">Add member</h2>
               <CloseIcon func={handleCloseModel} />
             </div>
-            <div className="friends__page-friends-wrapper">
+            <div className="edit_travel_plan_modal">
               {friends?.length > 0 &&
                 friends?.map((friend, index) =>
                   friend.accepted && friend.user ? (
@@ -165,7 +167,7 @@ export default function EditTravelPlan() {
                         {friend.user?.name}
                       </div>
                       <input
-                        className="friends__page-checkbox"
+                        className="edit_travel_plan_checkbox"
                         type="checkbox"
                         name={friend.user?.userName}
                         id={friend.user?._id}
@@ -179,7 +181,7 @@ export default function EditTravelPlan() {
           </dialog>
         </div>
         <div className="second_element">
-          <div className="create_travel_plan_map"></div>
+          <div className="edit_travel_plan_map"></div>
           <Button
             txt={"Save Travel Plan"}
             func={handleSaveChanges}
