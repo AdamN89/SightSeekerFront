@@ -9,6 +9,7 @@ import { DataContext } from "../../context/DataContext";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import UploadButton from "../../components/UploadButton";
+import DeleteIcon from "../../components/DeleteIcon";
 
 const initialSetupValues = {
   foundBy: "all",
@@ -30,10 +31,12 @@ export default function InitalSetup() {
   const [theChosenOne, setTheChosenOne] = useState(
     "https://res.cloudinary.com/dokiz6udc/image/upload/v1687449571/02_v1rulc.jpg"
   );
+  const [newPOI, setNewPOI] = useState("");
+
+  const { avatars } = useContext(DataContext);
+  const { token, user, backendURL, setUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
-  const { avatars } = useContext(DataContext);
-  const { token, backendURL } = useContext(AuthContext);
 
   const handleFormSubmit = async (values) => {
     await saveInitialSettings(values);
@@ -183,6 +186,56 @@ export default function InitalSetup() {
     }
   };
 
+  const handleAddPOI = async (e) => {
+    try {
+      e.preventDefault();
+      if (!newPOI) return alert("Please say sth");
+      const response = await fetch(`${backendURL}/user/addPOI`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          _id: user._id,
+          filterPOI: newPOI,
+        }),
+      });
+      if (response.ok) {
+        const { data } = await response.json();
+        setUser(data);
+      } else {
+        console.log("Error");
+      }
+      setNewPOI("");
+    } catch (error) {
+      console.error("Error", error);
+    }
+  };
+
+  const handleDeletePOI = async (filter) => {
+    try {
+      const response = await fetch(`${backendURL}/user/deletePOI`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          filter,
+        }),
+      });
+      if (response.ok) {
+        const { data } = await response.json();
+        setUser(data);
+      } else {
+        console.log("Error");
+      }
+    } catch (error) {
+      console.error("Error", error);
+    }
+  };
+
   return (
     <>
       <div
@@ -246,15 +299,37 @@ export default function InitalSetup() {
               <h2 className="title">Point preferences</h2>
               <CloseIcon func={handleCloseModel} />
               <div className="modal_container">
-                <p for="fname">Add types of points of interest as preferred:</p>
-                <br />
-                <input
-                  type="text"
-                  id="fname"
-                  name="fname"
-                  placeholder="Castles, Sports, Restraunts"
-                />
-                <br />
+                <div className="first_element">
+                  <form className="add_favorite_form">
+                    <input
+                      type="text"
+                      value={newPOI}
+                      placeholder="castle, museum, beach, ..."
+                      onChange={(e) => {
+                        setNewPOI(e.target.value);
+                      }}
+                    />
+                    <Button
+                      txt={"add"}
+                      func={handleAddPOI}
+                      key="createfavorite"
+                    />
+                  </form>
+                </div>
+                <div className="second_element">
+                  {user?.settings.poi?.length > 0 &&
+                    user?.settings.poi?.map((filter, index) => (
+                      <div className="favorites_page">
+                        <span>{filter}</span>
+                        <div
+                          className="favorites_page_icons"
+                          onClick={() => handleDeletePOI(filter)}
+                        >
+                          <DeleteIcon />
+                        </div>
+                      </div>
+                    ))}
+                </div>
               </div>
             </dialog>
             <ButtonHallow txt="privacy settings" func={handleClick} />

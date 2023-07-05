@@ -9,9 +9,7 @@ import { async } from "react-input-emoji";
 export default function PoiPreference() {
   const { token, user, backendURL, setUser } = useContext(AuthContext);
   const [newPOI, setNewPOI] = useState("");
-  const [reload, setReload] = useState();
 
-  const favoritesRef = useRef(null);
   const navigate = useNavigate();
 
   console.log(user);
