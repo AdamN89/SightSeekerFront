@@ -300,37 +300,37 @@ export default function InitalSetup() {
               <h2 className="title">Point preferences</h2>
               <CloseIcon func={handleCloseModel} />
               <div className="modal_container">
-                <div className="first_element">
-                  <form className="add_favorite_form">
-                    <input
-                      type="text"
-                      value={newPOI}
-                      placeholder="castle, museum, beach, ..."
-                      onChange={(e) => {
-                        setNewPOI(e.target.value);
-                      }}
-                    />
-                    <Button
-                      txt={"add"}
-                      func={handleAddPOI}
-                      key="createfavorite"
-                    />
-                  </form>
-                </div>
-                <div className="second_element">
-                  {user?.settings.poi?.length > 0 &&
-                    user?.settings.poi?.map((filter, index) => (
-                      <div className="favorites_page">
-                        <span>{filter}</span>
-                        <div
-                          className="favorites_page_icons"
-                          onClick={() => handleDeletePOI(filter)}
-                        >
-                          <DeleteIcon />
-                        </div>
+                {/* <div className="first_element"> */}
+                <form className="add_favorite_form">
+                  <input
+                    type="text"
+                    value={newPOI}
+                    placeholder="castle, museum, beach, ..."
+                    onChange={(e) => {
+                      setNewPOI(e.target.value);
+                    }}
+                  />
+                  <Button
+                    txt={"add"}
+                    func={handleAddPOI}
+                    key="createfavorite"
+                  />
+                </form>
+                {/* </div> */}
+                {/* <div className="second_element"> */}
+                {user?.settings.poi?.length > 0 &&
+                  user?.settings.poi?.map((filter, index) => (
+                    <div className="initial_setup_poi">
+                      <span>{filter}</span>
+                      <div
+                        className="initial_setup_poi_icons"
+                        onClick={() => handleDeletePOI(filter)}
+                      >
+                        <DeleteIcon />
                       </div>
-                    ))}
-                </div>
+                    </div>
+                  ))}
+                {/* </div> */}
               </div>
             </dialog>
             <ButtonHallow txt="privacy settings" func={handleClick} />

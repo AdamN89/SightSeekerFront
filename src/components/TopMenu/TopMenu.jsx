@@ -39,7 +39,7 @@ export default function TopMenu() {
   const [invitations, setInvitations] = useState(false);
 
   useEffect(() => {
-    const invitationsReceived = user.friends.some((friend) => friend.received);
+    const invitationsReceived = user?.friends.some((friend) => friend.received);
     if (invitationsReceived) setInvitations(true);
   }, []);
 
