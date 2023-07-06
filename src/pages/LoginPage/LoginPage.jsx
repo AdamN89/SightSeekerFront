@@ -39,7 +39,7 @@ export default function LoginPage() {
       setLoginOne("");
       setPassword("");
       localStorage.setItem("token", data.token);
-      // login(data.token);
+      login(data.token);
       setUser(data.data);
       setIsLoading(false);
       console.log("data from login fetch: ", data);
