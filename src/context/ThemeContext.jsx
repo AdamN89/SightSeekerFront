@@ -1,7 +1,7 @@
-import { useContext } from "react";
-import { createContext, useState } from "react";
-import { AuthContext } from "./AuthContext";
-import { useEffect } from "react";
+import { useContext } from 'react';
+import { createContext, useState } from 'react';
+import { AuthContext } from './AuthContext';
+import { useEffect } from 'react';
 
 export const ThemeContext = createContext();
 
@@ -15,23 +15,15 @@ export default function ThemeContextProvider({ children }) {
     }
   }, [user]);
 
-  console.log(lightMode);
-
   const toggleLightMode = () => {
     if (!lightMode) {
-      document.body.classList.add("light");
+      document.body.classList.add('light');
+      setLightMode(true);
     } else {
-      document.body.classList.remove("light");
+      document.body.classList.remove('light');
+      setLightMode(false);
     }
   };
 
-  useEffect(() => {
-    toggleLightMode();
-  }, [lightMode]);
-
-  return (
-    <ThemeContext.Provider value={{ lightMode, setLightMode, toggleLightMode }}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={{ lightMode, setLightMode, toggleLightMode }}>{children}</ThemeContext.Provider>;
 }

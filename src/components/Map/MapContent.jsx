@@ -1,23 +1,17 @@
-import Map, {
-  Marker,
-  Popup,
-  NavigationControl,
-  Layer,
-  Source,
-} from "react-map-gl";
+import Map, { Marker, Popup, NavigationControl, Layer, Source } from 'react-map-gl';
 
-import { AuthContext } from "../../context/AuthContext";
-import { MapContext } from "../../context/MapContext";
+import { AuthContext } from '../../context/AuthContext';
+import { MapContext } from '../../context/MapContext';
 // import "mapbox-gl/dist/mapbox-gl.css";
-import { useEffect, useState, useRef, useContext, useMemo } from "react";
-import MapMarker from "../MapMarker";
-import { ThemeContext } from "../../context/ThemeContext";
+import { useEffect, useState, useContext, useMemo } from 'react';
+import MapMarker from '../MapMarker';
+import { ThemeContext } from '../../context/ThemeContext';
 
 export default function MapContent({
   viewState,
   setViewState,
   userCoords,
-  parent = "home",
+  parent = 'home',
   customPointObjs = null,
   setParentPoints = null,
   pointToDelete = null,
@@ -30,23 +24,23 @@ export default function MapContent({
   const { markers, retrieveByCoords, bookmarkPoint } = useContext(MapContext);
   const [userPointObject, setUserPointObject] = useState(null);
   const mapStyle = lightMode
-    ? "mapbox://styles/stephanullmann/clj7lajvj005t01que278452b"
-    : "mapbox://styles/stephanullmann/cljnybgvq00ii01pqglfgat0a";
-  const navigationPreference = "walking";
-  const areAlternativeRoutes = "false";
+    ? 'mapbox://styles/stephanullmann/cljnybgvq00ii01pqglfgat0a'
+    : 'mapbox://styles/stephanullmann/clj7lajvj005t01que278452b';
+  const navigationPreference = 'walking';
+  const areAlternativeRoutes = 'false';
   const markerColors = [
-    "#895392",
-    "#02b3b4",
-    "#741cb5",
-    "#0c3e5a",
-    "#0b3e3a",
-    "#00a299",
-    "#0b4e4a",
-    "#92278f",
-    "#662d91",
-    "#00b394",
-    "#743478",
-    "#841cb5",
+    '#895392',
+    '#02b3b4',
+    '#741cb5',
+    '#0c3e5a',
+    '#0b3e3a',
+    '#00a299',
+    '#0b4e4a',
+    '#92278f',
+    '#662d91',
+    '#00b394',
+    '#743478',
+    '#841cb5',
   ];
   // const [userCoords, setUserCoords] = useState({});
   // const [viewState, setViewState] = useState({
@@ -116,14 +110,10 @@ export default function MapContent({
         const data = await res.json();
         // console.log("recommendations: ", data);
         return data.features
-          .filter((recommendation) => recommendation.place_type.includes("poi"))
+          .filter((recommendation) => recommendation.place_type.includes('poi'))
           .map((recommendation) => ({
-            name: recommendation.place_name.split(",")[0],
-            address: recommendation.place_name
-              .split(",")
-              .slice(1)
-              .join(",")
-              .trim(),
+            name: recommendation.place_name.split(',')[0],
+            address: recommendation.place_name.split(',').slice(1).join(',').trim(),
             coords: recommendation.center,
             preference,
           }));
@@ -135,7 +125,7 @@ export default function MapContent({
     try {
       const allRecommendations = await Promise.allSettled(fetchPromises);
       const flattenedRecommendations = allRecommendations.flatMap((rec) => {
-        if (rec.status === "fulfilled") return rec.value;
+        if (rec.status === 'fulfilled') return rec.value;
         else return [];
       });
       setRecommendations(flattenedRecommendations);
@@ -147,20 +137,20 @@ export default function MapContent({
   const selectedMarkers = useMemo(
     () =>
       markers?.length
-        ? markers.map((marker) =>
+        ? markers.map((marker, ind) =>
             marker.coords.length === 2 ? (
               <>
                 <Marker
-                  key={marker.address + "-selected"}
+                  key={marker.address + '-selected' + ind}
                   longitude={marker.coords[0]}
                   latitude={marker.coords[1]}
-                  anchor="bottom"
+                  anchor='bottom'
                   onClick={(e) => {
                     e.originalEvent.stopPropagation();
                     setPopupInfo(marker);
                   }}
                 >
-                  <MapMarker fill={"#13c397"} />
+                  <MapMarker fill={'#13c397'} />
                 </Marker>
               </>
             ) : null
@@ -171,14 +161,14 @@ export default function MapContent({
   const recommendationMarkers = useMemo(
     () =>
       recommendations?.length
-        ? recommendations.map((marker) =>
+        ? recommendations.map((marker, ind) =>
             marker.coords.length === 2 ? (
               <Marker
-                className="recommendation-marker"
-                key={marker.address + "-recommendations"}
+                className='recommendation-marker'
+                key={marker.address + '-recommendations' + ind}
                 longitude={marker.coords[0]}
                 latitude={marker.coords[1]}
-                anchor="bottom"
+                anchor='bottom'
                 // offset={[-5, -15]}
                 onClick={(e) => {
                   e.originalEvent.stopPropagation();
@@ -196,21 +186,21 @@ export default function MapContent({
   const userFavoritesMarkers = useMemo(
     () =>
       user && user?.favorites?.length
-        ? user?.favorites.map((marker) =>
+        ? user?.favorites.map((marker, ind) =>
             marker?.coords?.length === 2 ? (
               <Marker
-                className="recommendation-marker"
-                key={marker.address + "-favorites"}
+                className='recommendation-marker'
+                key={marker.address + '-favorites' + ind}
                 longitude={marker.coords[0]}
                 latitude={marker.coords[1]}
-                anchor="bottom"
+                anchor='bottom'
                 // offset={[-5, -15]}
                 onClick={(e) => {
                   e.originalEvent.stopPropagation();
                   setRecommendationPopup({ ...marker, bookmark: true });
                 }}
               >
-                <MapMarker fill={"#13c397"} />
+                <MapMarker fill={'#13c397'} />
               </Marker>
             ) : null
           )
@@ -221,21 +211,21 @@ export default function MapContent({
   const directionsPointMarkers = useMemo(
     () =>
       directionsPoints.length > 1
-        ? directionsPoints.map((marker) =>
+        ? directionsPoints.map((marker, ind) =>
             marker.coords.length === 2 ? (
               <Marker
-                className="recommendation-marker"
-                key={marker.address + "-directions"}
+                className='recommendation-marker'
+                key={marker.address + '-directions' + ind}
                 longitude={marker.coords[0]}
                 latitude={marker.coords[1]}
-                anchor="bottom"
+                anchor='bottom'
                 // offset={[-5, -15]}
                 onClick={(e) => {
                   e.originalEvent.stopPropagation();
                   setRecommendationPopup({ ...marker });
                 }}
               >
-                <MapMarker fill={"#33c397"} />
+                <MapMarker fill={'#33c397'} />
               </Marker>
             ) : null
           )
@@ -246,9 +236,9 @@ export default function MapContent({
   const saveSinglePoint = async (point) => {
     try {
       const res = await fetch(`${backendURL}/point/single`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(point),
       });
@@ -264,7 +254,7 @@ export default function MapContent({
     // console.log(Object.hasOwn(pointObj, "_id"));
     let savedPoint;
     if (!pointObj) return;
-    if (!Object.hasOwn(pointObj, "_id")) {
+    if (!Object.hasOwn(pointObj, '_id')) {
       savedPoint = await saveSinglePoint(pointObj);
       // console.log(savedPoint);
     } else {
@@ -276,13 +266,8 @@ export default function MapContent({
   };
 
   const removeFromRoute = (pointObj) => {
-    setDirectionsPoints((prev) =>
-      prev.filter((point) => point.address !== pointObj.address)
-    );
-    if (setParentPoints)
-      setParentPoints((prev) =>
-        prev.filter((point) => point.address !== pointObj.address)
-      );
+    setDirectionsPoints((prev) => prev.filter((point) => point.address !== pointObj.address));
+    if (setParentPoints) setParentPoints((prev) => prev.filter((point) => point.address !== pointObj.address));
   };
 
   useEffect(() => {
@@ -294,19 +279,19 @@ export default function MapContent({
 
   // console.log(directionsPoints);
   useEffect(() => {
-    console.log("useEffect runs - customPointObjs: ", customPointObjs);
+    console.log('useEffect runs - customPointObjs: ', customPointObjs);
     if (customPointObjs)
       customPointObjs.forEach((pointObj) => {
-        console.log("adding preset points: ");
+        console.log('adding preset points: ');
         addToRoute(pointObj);
       });
   }, [customPointObjs]);
 
   const getUserPointObject = async () => {
-    const coordString = [userCoords.longitude, userCoords.latitude].join(",");
+    const coordString = [userCoords.longitude, userCoords.latitude].join(',');
     const pointObj = await retrieveByCoords(coordString);
     setUserPointObject(pointObj);
-    if (parent === "Home") addToRoute(pointObj, true);
+    if (parent === 'Home') addToRoute(pointObj, true);
   };
 
   useEffect(() => {
@@ -322,9 +307,7 @@ export default function MapContent({
 
   const fetchDirections = async (directionsPoints) => {
     // console.log("directions fetch run: ");
-    const coordsStr = directionsPoints
-      .map((point) => point.coords.join(","))
-      .join(";");
+    const coordsStr = directionsPoints.map((point) => point.coords.join(',')).join(';');
     // console.log(coordsStr);
     try {
       const res = await fetch(
@@ -346,8 +329,7 @@ export default function MapContent({
 
   useEffect(() => {
     if (directionsPoints.length === 1) setDirectionsData(null);
-    if (directionsPoints.length > 1 && directionsPoints.length < 26)
-      fetchDirections(directionsPoints);
+    if (directionsPoints.length > 1 && directionsPoints.length < 26) fetchDirections(directionsPoints);
     // const unstoredPoints = directionsPoints.filter(
     //   (point) => !Object.hasOwn(point, "_id")
     // );
@@ -369,15 +351,15 @@ export default function MapContent({
           bottom: 0,
           left: 0,
           right: 0,
-          height: "100%",
-          overflow: "hidden",
+          height: '100%',
+          overflow: 'hidden',
         }}
         onMove={handleMapMove}
         reuseMaps={true}
-        cursor="drag"
+        cursor='drag'
         onClick={handleMapClick}
       >
-        {parent === "home" && <NavigationControl />}
+        {parent === 'home' && <NavigationControl />}
         {showPopup && (
           <Popup
             latitude={userCoords.latitude}
@@ -388,11 +370,11 @@ export default function MapContent({
             // offsetBottom={100}
             offset={20}
           >
-            <div className="popup_inside">
+            <div className='popup_inside'>
               <h3>Current location</h3>
               {userPointObject ? <p>{userPointObject.name}</p> : null}
               {userPointObject ? <p>{userPointObject.address}</p> : null}
-              <div className="button-wrapper">
+              <div className='button-wrapper'>
                 <button onClick={bookmarkCurrentLocation}>Bookmark</button>
               </div>
             </div>
@@ -401,7 +383,7 @@ export default function MapContent({
         <Marker
           longitude={userCoords.longitude}
           latitude={userCoords.latitude}
-          anchor="bottom"
+          anchor='bottom'
           // offset={[-12, -32]}
           onClick={(e) => {
             e.originalEvent.stopPropagation();
@@ -413,29 +395,27 @@ export default function MapContent({
             alt="marker"
             className={lightMode ? null : "mapboxgl-ctrl-icon"}
           /> */}
-          <MapMarker fill={"#8f278f"} />
+          <MapMarker fill={'#8f278f'} />
         </Marker>
         {clickedMapPoint && (
           <Marker
             longitude={clickedMapPoint.coords[0]}
             latitude={clickedMapPoint.coords[1]}
-            anchor="bottom"
+            anchor='bottom'
             // offset={[-12, -32]}
             onClick={(e) => {
               e.originalEvent.stopPropagation();
               setRecommendationPopup(clickedMapPoint);
             }}
           >
-            <MapMarker fill={"#33c397"} />
+            <MapMarker fill={'#33c397'} />
           </Marker>
         )}
 
         {/* Markers and Popups for selections from searchbar and user favorites */}
-        {parent !== "CreateTravelPlan" && selectedMarkers}
-        {parent !== "CreateTravelPlan" &&
-          parent !== "PlanTravel" &&
-          userFavoritesMarkers}
-        {parent !== "CreateTravelPlan" && popupInfo && (
+        {parent !== 'CreateTravelPlan' && selectedMarkers}
+        {parent !== 'CreateTravelPlan' && parent !== 'PlanTravel' && userFavoritesMarkers}
+        {parent !== 'CreateTravelPlan' && popupInfo && (
           <Popup
             longitude={popupInfo.coords[0]}
             latitude={popupInfo.coords[1]}
@@ -444,19 +424,13 @@ export default function MapContent({
             closeOnClick={true}
             offsetTop={20}
           >
-            <div className="popup_inside">
+            <div className='popup_inside'>
               <h3>{popupInfo.name}</h3>
               <p>{popupInfo.address}</p>
-              <div className="button-wrapper">
-                <button onClick={() => bookmarkPoint(popupInfo)}>
-                  Bookmark Point
-                </button>
-                {directionsPoints.findIndex(
-                  (point) => point.address === popupInfo.address
-                ) !== -1 ? (
-                  <button onClick={() => removeFromRoute(popupInfo)}>
-                    - route
-                  </button>
+              <div className='button-wrapper'>
+                <button onClick={() => bookmarkPoint(popupInfo)}>Bookmark Point</button>
+                {directionsPoints.findIndex((point) => point.address === popupInfo.address) !== -1 ? (
+                  <button onClick={() => removeFromRoute(popupInfo)}>- route</button>
                 ) : (
                   <button onClick={() => addToRoute(popupInfo)}>+ route</button>
                 )}
@@ -466,9 +440,7 @@ export default function MapContent({
         )}
         {/* Marker and Popup for recommended points  and map clicked points*/}
         {directionsPointMarkers}
-        {parent !== "CreateTravelPlan" &&
-          parent !== "PlanTravel" &&
-          recommendationMarkers}
+        {parent !== 'CreateTravelPlan' && parent !== 'PlanTravel' && recommendationMarkers}
         {recommendationPopup && (
           <Popup
             longitude={recommendationPopup.coords[0]}
@@ -478,22 +450,16 @@ export default function MapContent({
             closeOnClick={true}
             offsetTop={20}
           >
-            <div className="popup_inside">
+            <div className='popup_inside'>
               <h3>{recommendationPopup?.name}</h3>
               <p>{recommendationPopup?.address}</p>
               <p>{recommendationPopup?.preference}</p>
-              <div className="button-wrapper">
+              <div className='button-wrapper'>
                 {!recommendationPopup.bookmark && (
-                  <button onClick={() => bookmarkPoint(recommendationPopup)}>
-                    Bookmark Point
-                  </button>
+                  <button onClick={() => bookmarkPoint(recommendationPopup)}>Bookmark Point</button>
                 )}
-                {directionsPoints.findIndex(
-                  (point) => point.address === recommendationPopup.address
-                ) !== -1 ? (
-                  <button onClick={() => removeFromRoute(recommendationPopup)}>
-                    -- route
-                  </button>
+                {directionsPoints.findIndex((point) => point.address === recommendationPopup.address) !== -1 ? (
+                  <button onClick={() => removeFromRoute(recommendationPopup)}>-- route</button>
                 ) : (
                   <button
                     onClick={() => {
@@ -510,25 +476,25 @@ export default function MapContent({
         {directionsData && (
           <>
             <Source
-              id="route"
-              type="geojson"
+              id='route'
+              type='geojson'
               data={{
-                type: "Feature",
+                type: 'Feature',
                 geometry: directionsData.routes[0].geometry,
               }}
             />
             <Layer
-              id="route"
-              type="line"
-              source="route"
+              id='route'
+              type='line'
+              source='route'
               layout={{
-                "line-join": "round",
-                "line-cap": "round",
+                'line-join': 'round',
+                'line-cap': 'round',
               }}
               paint={{
-                "line-color": "#fff",
-                "line-width": 5,
-                "line-opacity": 0.75,
+                'line-color': '#fff',
+                'line-width': 5,
+                'line-opacity': 0.75,
               }}
             />
           </>

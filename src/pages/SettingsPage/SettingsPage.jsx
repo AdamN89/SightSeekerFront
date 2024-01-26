@@ -2,7 +2,7 @@ import './settings.css';
 import { useContext, useState, useRef, useEffect } from 'react';
 import Button from '../../components/Button';
 import ButtonDelete from '../../components/ButtonDelete';
-import { Formik, Form, Field, useFormik } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import { AuthContext } from '../../context/AuthContext';
 import { DataContext } from '../../context/DataContext';
 import EditIcon from '../../components/EditIcon';
@@ -10,11 +10,10 @@ import CloseIcon from '../../components/CloseIcon';
 import { useNavigate } from 'react-router-dom';
 import UploadButton from '../../components/UploadButton';
 import { ThemeContext } from '../../context/ThemeContext';
-import userEvent from '@testing-library/user-event';
 
 export default function Settings() {
   const { token, user, setUser, backendURL } = useContext(AuthContext);
-  const { setLight, setLightMode } = useContext(ThemeContext);
+  const { toggleLightMode } = useContext(ThemeContext);
   const { avatars } = useContext(DataContext);
 
   const [openDrop1, setOpenDrop1] = useState(false);
@@ -152,7 +151,7 @@ export default function Settings() {
   };
 
   const saveChangedSettings = async (values) => {
-    console.log(values);
+    // console.log(values);
     try {
       const response = await fetch(`${backendURL}/user/settings`, {
         method: 'PUT',
@@ -166,7 +165,7 @@ export default function Settings() {
       if (response.ok) {
         const responseData = await response.json();
         setUser(responseData.data);
-        setLight((prev) => !prev);
+        // setLight((prev) => !prev);
       } else {
         console.log('Error');
       }
@@ -179,7 +178,7 @@ export default function Settings() {
     console.log('handleclick triggered');
     event.preventDefault();
     console.log(event.target.name);
-    if (event.target.name == 'changeAvatar') {
+    if (event.target.name === 'changeAvatar') {
       if (openDrop1) {
         avatarDialog.current.close();
       } else {
@@ -189,7 +188,7 @@ export default function Settings() {
       setOpenDrop2(false);
       setOpenDrop3(false);
     }
-    if (event.target.name == 'changeName') {
+    if (event.target.name === 'changeName') {
       if (openDrop1) {
         nameDialog.current.close();
       } else {
@@ -199,7 +198,7 @@ export default function Settings() {
       setOpenDrop2(!openDrop2);
       setOpenDrop3(false);
     }
-    if (event.target.name == 'changePassword') {
+    if (event.target.name === 'changePassword') {
       if (openDrop1) {
         passwordDialog.current.close();
       } else {
@@ -220,7 +219,7 @@ export default function Settings() {
     setOpenDrop3(false);
   };
 
-  const fullHeight = '100%';
+  // const fullHeight = '100%';
 
   useEffect(() => {
     // openDrop1 ? setModalHeight(avatarDialog.current.offsetHeight) : null;
@@ -229,7 +228,7 @@ export default function Settings() {
     }
   }, [openDrop1]);
 
-  const calcHeight = `max(${modalHeight + 40}px, 100%)`;
+  // const calcHeight = `max(${modalHeight + 40}px, 100%)`;
   // console.log(calcHeight);
 
   const handleChosenOne = (event) => {
@@ -297,23 +296,15 @@ export default function Settings() {
     }
   };
 
-  const toggleDarkMode = () => {
-    setLightMode(!setLight);
-  };
+  // const toggleDarkMode = () => {
+  //   setLightMode(!setLight);
+  // };
 
   return (
     <>
-      <div
-        className={
-          openDrop1 || openDrop2 || openDrop3 ? 'showClickAway' : 'hide'
-        }
-        onClick={handleCloseModel}
-      ></div>
+      <div className={openDrop1 || openDrop2 || openDrop3 ? 'showClickAway' : 'hide'} onClick={handleCloseModel}></div>
       <div className='container settings_page'>
-        <button
-          className='settings_page_close_btn'
-          onClick={() => navigate('/home')}
-        >
+        <button className='settings_page_close_btn' onClick={() => navigate('/home')}>
           <CloseIcon />
         </button>
         <h1 className='title'>Settings</h1>
@@ -322,11 +313,7 @@ export default function Settings() {
             <div className='settings_page_data_row'>
               <span>name</span>
               <h3>{user?.name}</h3>
-              <button
-                className='svgButton'
-                onClick={handleClick}
-                name='changeName'
-              >
+              <button className='svgButton' onClick={handleClick} name='changeName'>
                 <EditIcon />
               </button>
             </div>
@@ -355,11 +342,7 @@ export default function Settings() {
             <div className='settings_page_data_row'>
               <span>change</span>
               <h3>password</h3>
-              <button
-                className='svgButton'
-                onClick={handleClick}
-                name='changePassword'
-              >
+              <button className='svgButton' onClick={handleClick} name='changePassword'>
                 <EditIcon />
               </button>
             </div>
@@ -368,20 +351,14 @@ export default function Settings() {
               <CloseIcon func={handleCloseModel} />
 
               <form className='modal_container' onSubmit={handleSavePassword}>
-                <input
-                  value={typedPassword1}
-                  onChange={(e) => setTypedPassword1(e.target.value)}
-                />
-                <input
-                  value={typedPassword2}
-                  onChange={(e) => setTypedPassword2(e.target.value)}
-                />
+                <input value={typedPassword1} onChange={(e) => setTypedPassword1(e.target.value)} />
+                <input value={typedPassword2} onChange={(e) => setTypedPassword2(e.target.value)} />
                 <Button txt='Save' />
               </form>
             </dialog>
           </div>
           <div className='avatar'>
-            <img src={user?.avatar} onClick={handleClick} name='changeAvatar' />
+            <img src={user?.avatar} onClick={handleClick} name='changeAvatar' alt='' />
           </div>
           <dialog ref={avatarDialog} className={openDrop1 ? 'modal' : null}>
             <h2 className='title'>Choose Avatar</h2>
@@ -391,11 +368,10 @@ export default function Settings() {
                 {avatars?.map((avatar, index) => {
                   return (
                     <img
-                      className={
-                        theChosenOne === avatar ? 'selectedAvatar' : ''
-                      }
+                      className={theChosenOne === avatar ? 'selectedAvatar' : ''}
                       src={avatar}
                       onClick={handleChosenOne}
+                      alt=''
                     />
                   );
                 })}
@@ -414,10 +390,9 @@ export default function Settings() {
                 {uploadedImgURL?.length > 0 ? (
                   <img
                     src={uploadedImgURL}
-                    className={
-                      theChosenOne === uploadedImgURL ? 'selectedAvatar' : ''
-                    }
+                    className={theChosenOne === uploadedImgURL ? 'selectedAvatar' : ''}
                     onClick={handleChosenOne}
+                    alt='Your choosen avatar'
                   />
                 ) : (
                   ''
@@ -427,10 +402,7 @@ export default function Settings() {
           </dialog>
         </div>
         <div className='second_element'>
-          <Formik
-            initialValues={initialSetupValues}
-            onSubmit={handleFormSubmit}
-          >
+          <Formik initialValues={initialSetupValues} onSubmit={handleFormSubmit}>
             {({
               values,
               errors,
@@ -442,20 +414,13 @@ export default function Settings() {
               submitForm,
               /* and other goodies */
             }) => (
-              <Form
-                className='settings_page_preference'
-                onSubmit={handleSubmit}
-              >
+              <Form className='settings_page_preference' onSubmit={handleSubmit}>
                 <div className='settings_page_customise'>
                   <h2 className='title'>Customise</h2>
                   <div className='settings_page_toggle'>
                     <h3>Darkmode</h3>
                     <label className='toggle'>
-                      <Field
-                        type='checkbox'
-                        className='toggle_checkbox'
-                        name='darkMode'
-                      />
+                      <Field type='checkbox' className='toggle_checkbox' name='darkMode' onClick={toggleLightMode} />
                       <div className='toggle_switch'></div>
                     </label>
                   </div>
@@ -484,42 +449,26 @@ export default function Settings() {
                   <div className='settings_page_toggle'>
                     <h3>Location Services</h3>
                     <label className='toggle'>
-                      <Field
-                        type='checkbox'
-                        className='toggle_checkbox'
-                        name='locationServices'
-                      />
+                      <Field type='checkbox' className='toggle_checkbox' name='locationServices' />
                       <div className='toggle_switch'></div>
                     </label>
                   </div>
                   <div className='settings_page_toggle'>
                     <h3>Show email</h3>
                     <label className='toggle'>
-                      <Field
-                        type='checkbox'
-                        className='toggle_checkbox'
-                        name='showEmail'
-                      />
+                      <Field type='checkbox' className='toggle_checkbox' name='showEmail' />
                       <div className='toggle_switch'></div>
                     </label>
                   </div>
                   <div className='settings_page_toggle'>
                     <h3>Show name</h3>
                     <label className='toggle'>
-                      <Field
-                        type='checkbox'
-                        className='toggle_checkbox'
-                        name='showName'
-                      />
+                      <Field type='checkbox' className='toggle_checkbox' name='showName' />
                       <div className='toggle_switch'></div>
                     </label>
                   </div>
                 </div>
-                <Button
-                  txt='done'
-                  onClick={handleSubmitButtonClick}
-                  func={backToMain}
-                ></Button>
+                <Button txt='done' onClick={handleSubmitButtonClick} func={backToMain}></Button>
               </Form>
             )}
           </Formik>
