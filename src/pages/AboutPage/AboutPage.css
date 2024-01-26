@@ -16,7 +16,7 @@
 }
 
 .about_page h2 {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   text-align: center;
   margin: 15px 0;
   position: relative;
@@ -30,10 +30,30 @@
 }
 
 .about_page h3 {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 900;
   display: block;
   font-size: 70px;
+}
+
+.about_page_close_btn {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  background: transparent;
+  outline: 0;
+  border: 0;
+  width: 64px;
+  cursor: pointer;
+}
+
+.about_page_close_btn svg {
+  fill: var(--icon_dark_green);
+  transition: all 0.3s ease;
+}
+
+.about_page_close_btn:hover svg {
+  fill: var(--icon_light_green);
 }
 
 .credits {
