@@ -2,7 +2,7 @@ import './settings.css';
 import { useContext, useState, useRef, useEffect } from 'react';
 import Button from '../../components/Button';
 import ButtonDelete from '../../components/ButtonDelete';
-import { Formik, Form, Field, useFormik } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import { AuthContext } from '../../context/AuthContext';
 import { DataContext } from '../../context/DataContext';
 import EditIcon from '../../components/EditIcon';
@@ -10,11 +10,10 @@ import CloseIcon from '../../components/CloseIcon';
 import { useNavigate } from 'react-router-dom';
 import UploadButton from '../../components/UploadButton';
 import { ThemeContext } from '../../context/ThemeContext';
-import userEvent from '@testing-library/user-event';
 
 export default function Settings() {
   const { token, user, setUser, backendURL } = useContext(AuthContext);
-  const { setLight, toggleLightMode } = useContext(ThemeContext);
+  const { toggleLightMode } = useContext(ThemeContext);
   const { avatars } = useContext(DataContext);
 
   const [openDrop1, setOpenDrop1] = useState(false);
@@ -179,7 +178,7 @@ export default function Settings() {
     console.log('handleclick triggered');
     event.preventDefault();
     console.log(event.target.name);
-    if (event.target.name == 'changeAvatar') {
+    if (event.target.name === 'changeAvatar') {
       if (openDrop1) {
         avatarDialog.current.close();
       } else {
@@ -189,7 +188,7 @@ export default function Settings() {
       setOpenDrop2(false);
       setOpenDrop3(false);
     }
-    if (event.target.name == 'changeName') {
+    if (event.target.name === 'changeName') {
       if (openDrop1) {
         nameDialog.current.close();
       } else {
@@ -199,7 +198,7 @@ export default function Settings() {
       setOpenDrop2(!openDrop2);
       setOpenDrop3(false);
     }
-    if (event.target.name == 'changePassword') {
+    if (event.target.name === 'changePassword') {
       if (openDrop1) {
         passwordDialog.current.close();
       } else {
@@ -220,7 +219,7 @@ export default function Settings() {
     setOpenDrop3(false);
   };
 
-  const fullHeight = '100%';
+  // const fullHeight = '100%';
 
   useEffect(() => {
     // openDrop1 ? setModalHeight(avatarDialog.current.offsetHeight) : null;
@@ -229,7 +228,7 @@ export default function Settings() {
     }
   }, [openDrop1]);
 
-  const calcHeight = `max(${modalHeight + 40}px, 100%)`;
+  // const calcHeight = `max(${modalHeight + 40}px, 100%)`;
   // console.log(calcHeight);
 
   const handleChosenOne = (event) => {
@@ -359,7 +358,7 @@ export default function Settings() {
             </dialog>
           </div>
           <div className='avatar'>
-            <img src={user?.avatar} onClick={handleClick} name='changeAvatar' role='button' alt='Change your Avatar' />
+            <img src={user?.avatar} onClick={handleClick} name='changeAvatar' alt='' />
           </div>
           <dialog ref={avatarDialog} className={openDrop1 ? 'modal' : null}>
             <h2 className='title'>Choose Avatar</h2>
@@ -369,7 +368,6 @@ export default function Settings() {
                 {avatars?.map((avatar, index) => {
                   return (
                     <img
-                      key={`avatar-${index}`}
                       className={theChosenOne === avatar ? 'selectedAvatar' : ''}
                       src={avatar}
                       onClick={handleChosenOne}
