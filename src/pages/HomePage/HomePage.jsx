@@ -1,11 +1,11 @@
-import { useEffect, useState, useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
-import "mapbox-gl/dist/mapbox-gl.css";
-import "./HomePage.css";
-import TopMenu from "../../components/TopMenu/TopMenu";
-import Menu from "../../components/Menu";
-import MapContent from "../../components/Map/MapContent";
-import { useNavigate } from "react-router";
+import { useEffect, useState, useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import './HomePage.css';
+import TopMenu from '../../components/TopMenu/TopMenu';
+import Menu from '../../components/Menu';
+import MapContent from '../../components/Map/MapContent';
+import { useNavigate } from 'react-router';
 
 // 52.45685631705479, 13.540060456464587
 export default function HomePage() {
@@ -21,7 +21,7 @@ export default function HomePage() {
 
   useEffect(() => {
     if (afterRegistration) {
-      navigate("/features");
+      navigate('/features');
     }
   }, []);
 
@@ -309,14 +309,9 @@ export default function HomePage() {
   // console.log(userPointObject);
   // console.log(user);
   return (
-    <div className="map-container">
+    <div className='map-container'>
       <TopMenu />
-      <MapContent
-        viewState={viewState}
-        setViewState={setViewState}
-        userCoords={userCoords}
-        parent="Home"
-      />
+      <MapContent viewState={viewState} setViewState={setViewState} userCoords={userCoords} parent='Home' />
       <Menu viewState={viewState} userCoords={userCoords} />
     </div>
   );

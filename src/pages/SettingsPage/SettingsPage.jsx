@@ -1,28 +1,28 @@
-import "./settings.css";
-import { useContext, useState, useRef, useEffect } from "react";
-import Button from "../../components/Button";
-import ButtonDelete from "../../components/ButtonDelete";
-import { Formik, Form, Field, useFormik } from "formik";
-import { AuthContext } from "../../context/AuthContext";
-import { DataContext } from "../../context/DataContext";
-import EditIcon from "../../components/EditIcon";
-import CloseIcon from "../../components/CloseIcon";
-import { useNavigate } from "react-router-dom";
-import UploadButton from "../../components/UploadButton";
-import { ThemeContext } from "../../context/ThemeContext";
-import userEvent from "@testing-library/user-event";
+import './settings.css';
+import { useContext, useState, useRef, useEffect } from 'react';
+import Button from '../../components/Button';
+import ButtonDelete from '../../components/ButtonDelete';
+import { Formik, Form, Field, useFormik } from 'formik';
+import { AuthContext } from '../../context/AuthContext';
+import { DataContext } from '../../context/DataContext';
+import EditIcon from '../../components/EditIcon';
+import CloseIcon from '../../components/CloseIcon';
+import { useNavigate } from 'react-router-dom';
+import UploadButton from '../../components/UploadButton';
+import { ThemeContext } from '../../context/ThemeContext';
+import userEvent from '@testing-library/user-event';
 
 export default function Settings() {
   const { token, user, setUser, backendURL } = useContext(AuthContext);
-  const { setLight, setLightMode } = useContext(ThemeContext);
+  const { setLight, toggleLightMode } = useContext(ThemeContext);
   const { avatars } = useContext(DataContext);
 
   const [openDrop1, setOpenDrop1] = useState(false);
   const [openDrop2, setOpenDrop2] = useState(false);
   const [openDrop3, setOpenDrop3] = useState(false);
-  const [typedName, setTypedName] = useState("");
-  const [typedPassword1, setTypedPassword1] = useState("");
-  const [typedPassword2, setTypedPassword2] = useState("");
+  const [typedName, setTypedName] = useState('');
+  const [typedPassword1, setTypedPassword1] = useState('');
+  const [typedPassword2, setTypedPassword2] = useState('');
 
   const avatarDialog = useRef(null);
   const nameDialog = useRef(null);
@@ -30,9 +30,9 @@ export default function Settings() {
 
   const [modalHeight, setModalHeight] = useState(0);
   const [uploadedImgFile, setUploadedImgFile] = useState(undefined);
-  const [uploadedImgURL, setUploadedImgURL] = useState("");
+  const [uploadedImgURL, setUploadedImgURL] = useState('');
   const [theChosenOne, setTheChosenOne] = useState(
-    "https://res.cloudinary.com/dokiz6udc/image/upload/v1687449571/02_v1rulc.jpg"
+    'https://res.cloudinary.com/dokiz6udc/image/upload/v1687449571/02_v1rulc.jpg'
   );
   const navigate = useNavigate();
 
@@ -60,16 +60,16 @@ export default function Settings() {
   };
 
   const backToMain = () => {
-    navigate("/home");
+    navigate('/home');
   };
 
   const submitNewAvatar = async (theChosenOne) => {
     if (uploadedImgURL === theChosenOne) {
       const formData = new FormData();
-      formData.append("avatar", uploadedImgFile);
+      formData.append('avatar', uploadedImgFile);
       try {
         const response = await fetch(`${backendURL}/user/avatar`, {
-          method: "PUT",
+          method: 'PUT',
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -79,17 +79,17 @@ export default function Settings() {
           const responseData = await response.json();
           setUser(responseData.data);
         } else {
-          console.log("Error");
+          console.log('Error');
         }
       } catch (error) {
-        console.error("Error", error);
+        console.error('Error', error);
       }
     } else {
       try {
         const response = await fetch(`${backendURL}/user/default_avatar`, {
-          method: "PUT",
+          method: 'PUT',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({ avatar: theChosenOne }),
@@ -99,10 +99,10 @@ export default function Settings() {
           setUser(responseData.data);
           console.log(responseData);
         } else {
-          console.log("Error");
+          console.log('Error');
         }
       } catch (error) {
-        console.error("Error", error);
+        console.error('Error', error);
       }
     }
   };
@@ -110,9 +110,9 @@ export default function Settings() {
   const submitNewName = async () => {
     try {
       const response = await fetch(`${backendURL}/user/changeName`, {
-        method: "PUT",
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ name: typedName }),
@@ -122,19 +122,19 @@ export default function Settings() {
         setUser(responseData.data);
         console.log(responseData);
       } else {
-        console.log("Error");
+        console.log('Error');
       }
     } catch (error) {
-      console.error("Error", error);
+      console.error('Error', error);
     }
   };
 
   const submitNewPassword = async () => {
     try {
       const response = await fetch(`${backendURL}/user/changePassword`, {
-        method: "PUT",
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ password: typedPassword1 }),
@@ -144,20 +144,20 @@ export default function Settings() {
         setUser(responseData.data);
         console.log(responseData);
       } else {
-        console.log("Error");
+        console.log('Error');
       }
     } catch (error) {
-      console.error("Error", error);
+      console.error('Error', error);
     }
   };
 
   const saveChangedSettings = async (values) => {
-    console.log(values);
+    // console.log(values);
     try {
       const response = await fetch(`${backendURL}/user/settings`, {
-        method: "PUT",
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(values),
@@ -166,20 +166,20 @@ export default function Settings() {
       if (response.ok) {
         const responseData = await response.json();
         setUser(responseData.data);
-        setLight((prev) => !prev);
+        // setLight((prev) => !prev);
       } else {
-        console.log("Error");
+        console.log('Error');
       }
     } catch (error) {
-      console.error("Error", error);
+      console.error('Error', error);
     }
   };
 
   const handleClick = (event) => {
-    console.log("handleclick triggered");
+    console.log('handleclick triggered');
     event.preventDefault();
     console.log(event.target.name);
-    if (event.target.name == "changeAvatar") {
+    if (event.target.name == 'changeAvatar') {
       if (openDrop1) {
         avatarDialog.current.close();
       } else {
@@ -189,7 +189,7 @@ export default function Settings() {
       setOpenDrop2(false);
       setOpenDrop3(false);
     }
-    if (event.target.name == "changeName") {
+    if (event.target.name == 'changeName') {
       if (openDrop1) {
         nameDialog.current.close();
       } else {
@@ -199,7 +199,7 @@ export default function Settings() {
       setOpenDrop2(!openDrop2);
       setOpenDrop3(false);
     }
-    if (event.target.name == "changePassword") {
+    if (event.target.name == 'changePassword') {
       if (openDrop1) {
         passwordDialog.current.close();
       } else {
@@ -220,7 +220,7 @@ export default function Settings() {
     setOpenDrop3(false);
   };
 
-  const fullHeight = "100%";
+  const fullHeight = '100%';
 
   useEffect(() => {
     // openDrop1 ? setModalHeight(avatarDialog.current.offsetHeight) : null;
@@ -250,7 +250,7 @@ export default function Settings() {
       submitNewName();
       handleCloseModel();
     } else {
-      alert("nothing to submit");
+      alert('nothing to submit');
     }
   };
 
@@ -262,10 +262,10 @@ export default function Settings() {
         submitNewPassword();
         handleCloseModel();
       } else {
-        alert("both field do not match");
+        alert('both field do not match');
       }
     } else {
-      alert("nothing to submit");
+      alert('nothing to submit');
     }
   };
 
@@ -279,9 +279,9 @@ export default function Settings() {
   const deleteAccont = async () => {
     try {
       const response = await fetch(`${backendURL}/user/deleteUser`, {
-        method: "DELETE",
+        method: 'DELETE',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(),
@@ -290,147 +290,121 @@ export default function Settings() {
       if (response.ok) {
         const user = await response.json();
       } else {
-        console.log("Error");
+        console.log('Error');
       }
     } catch (error) {
-      console.error("Error", error);
+      console.error('Error', error);
     }
   };
 
-  const toggleDarkMode = () => {
-    setLightMode(!setLight);
-  };
+  // const toggleDarkMode = () => {
+  //   setLightMode(!setLight);
+  // };
 
   return (
     <>
-      <div
-        className={
-          openDrop1 || openDrop2 || openDrop3 ? "showClickAway" : "hide"
-        }
-        onClick={handleCloseModel}
-      ></div>
-      <div className="container settings_page">
-        <button
-          className="settings_page_close_btn"
-          onClick={() => navigate("/home")}
-        >
+      <div className={openDrop1 || openDrop2 || openDrop3 ? 'showClickAway' : 'hide'} onClick={handleCloseModel}></div>
+      <div className='container settings_page'>
+        <button className='settings_page_close_btn' onClick={() => navigate('/home')}>
           <CloseIcon />
         </button>
-        <h1 className="title">Settings</h1>
-        <div className="settings_page_first_element">
-          <div className="settings_page_data">
-            <div className="settings_page_data_row">
+        <h1 className='title'>Settings</h1>
+        <div className='settings_page_first_element'>
+          <div className='settings_page_data'>
+            <div className='settings_page_data_row'>
               <span>name</span>
               <h3>{user?.name}</h3>
-              <button
-                className="svgButton"
-                onClick={handleClick}
-                name="changeName"
-              >
+              <button className='svgButton' onClick={handleClick} name='changeName'>
                 <EditIcon />
               </button>
             </div>
-            <dialog ref={nameDialog} className={openDrop2 ? "modal" : null}>
-              <h2 className="title">Change Name</h2>
+            <dialog ref={nameDialog} className={openDrop2 ? 'modal' : null}>
+              <h2 className='title'>Change Name</h2>
               <CloseIcon func={handleCloseModel} />
-              <form className="modal_container" onSubmit={handleSaveName}>
+              <form className='modal_container' onSubmit={handleSaveName}>
                 <input
-                  type="text"
+                  type='text'
                   value={typedName}
                   onChange={(e) => {
                     setTypedName(e.target.value);
                   }}
                 />
-                <Button txt="Save" />
+                <Button txt='Save' />
               </form>
             </dialog>
-            <div className="settings_page_data_row">
+            <div className='settings_page_data_row'>
               <span>user name</span>
               <h3>{user?.userName}</h3>
             </div>
-            <div className="settings_page_data_row">
+            <div className='settings_page_data_row'>
               <span>email</span>
               <h3>{user?.email}</h3>
             </div>
-            <div className="settings_page_data_row">
+            <div className='settings_page_data_row'>
               <span>change</span>
               <h3>password</h3>
-              <button
-                className="svgButton"
-                onClick={handleClick}
-                name="changePassword"
-              >
+              <button className='svgButton' onClick={handleClick} name='changePassword'>
                 <EditIcon />
               </button>
             </div>
-            <dialog ref={passwordDialog} className={openDrop3 ? "modal" : null}>
-              <h2 className="title">Change Password</h2>
+            <dialog ref={passwordDialog} className={openDrop3 ? 'modal' : null}>
+              <h2 className='title'>Change Password</h2>
               <CloseIcon func={handleCloseModel} />
 
-              <form className="modal_container" onSubmit={handleSavePassword}>
-                <input
-                  value={typedPassword1}
-                  onChange={(e) => setTypedPassword1(e.target.value)}
-                />
-                <input
-                  value={typedPassword2}
-                  onChange={(e) => setTypedPassword2(e.target.value)}
-                />
-                <Button txt="Save" />
+              <form className='modal_container' onSubmit={handleSavePassword}>
+                <input value={typedPassword1} onChange={(e) => setTypedPassword1(e.target.value)} />
+                <input value={typedPassword2} onChange={(e) => setTypedPassword2(e.target.value)} />
+                <Button txt='Save' />
               </form>
             </dialog>
           </div>
-          <div className="avatar">
-            <img src={user?.avatar} onClick={handleClick} name="changeAvatar" />
+          <div className='avatar'>
+            <img src={user?.avatar} onClick={handleClick} name='changeAvatar' role='button' alt='Change your Avatar' />
           </div>
-          <dialog ref={avatarDialog} className={openDrop1 ? "modal" : null}>
-            <h2 className="title">Choose Avatar</h2>
+          <dialog ref={avatarDialog} className={openDrop1 ? 'modal' : null}>
+            <h2 className='title'>Choose Avatar</h2>
             <CloseIcon func={handleCloseModel} />
-            <div className="modal_container avatars">
-              <div className="avatars">
+            <div className='modal_container avatars'>
+              <div className='avatars'>
                 {avatars?.map((avatar, index) => {
                   return (
                     <img
-                      className={
-                        theChosenOne === avatar ? "selectedAvatar" : ""
-                      }
+                      key={`avatar-${index}`}
+                      className={theChosenOne === avatar ? 'selectedAvatar' : ''}
                       src={avatar}
                       onClick={handleChosenOne}
+                      alt=''
                     />
                   );
                 })}
               </div>
-              <div className="avatars_upload">
-                <div className="avatars_upload_btn">
+              <div className='avatars_upload'>
+                <div className='avatars_upload_btn'>
                   {/* <label
                       htmlFor="uploadButton"
                       className="btn inital_setup_upload"
                     >
                       + Upload Image
                     </label> */}
-                  <UploadButton txt="+ upload image" />
-                  <Button txt="Save" func={handleSaveSelectedAvatar} />
+                  <UploadButton txt='+ upload image' />
+                  <Button txt='Save' func={handleSaveSelectedAvatar} />
                 </div>
                 {uploadedImgURL?.length > 0 ? (
                   <img
                     src={uploadedImgURL}
-                    className={
-                      theChosenOne === uploadedImgURL ? "selectedAvatar" : ""
-                    }
+                    className={theChosenOne === uploadedImgURL ? 'selectedAvatar' : ''}
                     onClick={handleChosenOne}
+                    alt='Your choosen avatar'
                   />
                 ) : (
-                  ""
+                  ''
                 )}
               </div>
             </div>
           </dialog>
         </div>
-        <div className="second_element">
-          <Formik
-            initialValues={initialSetupValues}
-            onSubmit={handleFormSubmit}
-          >
+        <div className='second_element'>
+          <Formik initialValues={initialSetupValues} onSubmit={handleFormSubmit}>
             {({
               values,
               errors,
@@ -442,89 +416,66 @@ export default function Settings() {
               submitForm,
               /* and other goodies */
             }) => (
-              <Form
-                className="settings_page_preference"
-                onSubmit={handleSubmit}
-              >
-                <div className="settings_page_customise">
-                  <h2 className="title">Customise</h2>
-                  <div className="settings_page_toggle">
+              <Form className='settings_page_preference' onSubmit={handleSubmit}>
+                <div className='settings_page_customise'>
+                  <h2 className='title'>Customise</h2>
+                  <div className='settings_page_toggle'>
                     <h3>Darkmode</h3>
-                    <label className="toggle">
-                      <Field
-                        type="checkbox"
-                        className="toggle_checkbox"
-                        name="darkMode"
-                      />
-                      <div className="toggle_switch"></div>
+                    <label className='toggle'>
+                      <Field type='checkbox' className='toggle_checkbox' name='darkMode' onClick={toggleLightMode} />
+                      <div className='toggle_switch'></div>
                     </label>
                   </div>
                 </div>
                 <div>
-                  <div className="settings_page_privacy">
-                    <h2 className="title">Privacy</h2>
-                    <div className="settings_page_privacy_row">
+                  <div className='settings_page_privacy'>
+                    <h2 className='title'>Privacy</h2>
+                    <div className='settings_page_privacy_row'>
                       <h3>Can be found by</h3>
-                      <div className="settings_page_radio">
+                      <div className='settings_page_radio'>
                         <label>
                           All
-                          <Field type="radio" name="foundBy" value="all" />
+                          <Field type='radio' name='foundBy' value='all' />
                         </label>
                         <label>
                           Friends
-                          <Field type="radio" name="foundBy" value="friends" />
+                          <Field type='radio' name='foundBy' value='friends' />
                         </label>
                         <label>
                           None
-                          <Field type="radio" name="foundBy" value="none" />
+                          <Field type='radio' name='foundBy' value='none' />
                         </label>
                       </div>
                     </div>
                   </div>
-                  <div className="settings_page_toggle">
+                  <div className='settings_page_toggle'>
                     <h3>Location Services</h3>
-                    <label className="toggle">
-                      <Field
-                        type="checkbox"
-                        className="toggle_checkbox"
-                        name="locationServices"
-                      />
-                      <div className="toggle_switch"></div>
+                    <label className='toggle'>
+                      <Field type='checkbox' className='toggle_checkbox' name='locationServices' />
+                      <div className='toggle_switch'></div>
                     </label>
                   </div>
-                  <div className="settings_page_toggle">
+                  <div className='settings_page_toggle'>
                     <h3>Show email</h3>
-                    <label className="toggle">
-                      <Field
-                        type="checkbox"
-                        className="toggle_checkbox"
-                        name="showEmail"
-                      />
-                      <div className="toggle_switch"></div>
+                    <label className='toggle'>
+                      <Field type='checkbox' className='toggle_checkbox' name='showEmail' />
+                      <div className='toggle_switch'></div>
                     </label>
                   </div>
-                  <div className="settings_page_toggle">
+                  <div className='settings_page_toggle'>
                     <h3>Show name</h3>
-                    <label className="toggle">
-                      <Field
-                        type="checkbox"
-                        className="toggle_checkbox"
-                        name="showName"
-                      />
-                      <div className="toggle_switch"></div>
+                    <label className='toggle'>
+                      <Field type='checkbox' className='toggle_checkbox' name='showName' />
+                      <div className='toggle_switch'></div>
                     </label>
                   </div>
                 </div>
-                <Button
-                  txt="done"
-                  onClick={handleSubmitButtonClick}
-                  func={backToMain}
-                ></Button>
+                <Button txt='done' onClick={handleSubmitButtonClick} func={backToMain}></Button>
               </Form>
             )}
           </Formik>
-          <ButtonDelete txt={"delete account"} func={deleteAccont} />
-          <input onChange={addAvatar} type="file" id="uploadButton" />
+          <ButtonDelete txt={'delete account'} func={deleteAccont} />
+          <input onChange={addAvatar} type='file' id='uploadButton' />
         </div>
       </div>
     </>
