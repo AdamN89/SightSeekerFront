@@ -1,6 +1,6 @@
-import { createContext, useEffect, useState, useRef, useContext } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { AuthContext } from "./AuthContext";
+import { createContext, useEffect, useState, useRef, useContext } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { AuthContext } from './AuthContext';
 
 export const MapContext = createContext();
 
@@ -53,13 +53,13 @@ export default function MapContextProvider({ children }) {
       );
       const data = await res.json();
 
-      if (data.features[0].place_type.includes("poi")) {
+      if (data.features[0].place_type.includes('poi')) {
         const pointObj = {
-          name: data.features[0].place_name.split(",")[0],
+          name: data.features[0].place_name.split(',')[0],
           address: data.features[0].place_name
-            .split(",")
+            .split(',')
             .slice(1)
-            .join(",")
+            .join(',')
             .trim(),
           coords: data.query,
           preference: [data.type],
@@ -67,7 +67,7 @@ export default function MapContextProvider({ children }) {
         return pointObj;
       } else {
         return {
-          name: "",
+          name: '',
           address: data.features[0].place_name,
           coords: data.query,
           preference: [],
@@ -82,9 +82,9 @@ export default function MapContextProvider({ children }) {
     // console.log(pointObj);
     try {
       const res = await fetch(`${backendURL}/point`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(pointObj),
